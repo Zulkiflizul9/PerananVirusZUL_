@@ -1,0 +1,3024 @@
+<!DOCTYPE html>
+<html lang="id" data-tv-mode="true">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>BIO PERANAN VIRUS ZULKIFLIZUL: Portal Materi & LKPD Papan Tulis Multi-Touch 4 Kelompok</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  /* Dynamic TV Palette */
+  --bg: #0B161E;
+  --bg-sub: #10212C;
+  --card: #152A38;
+  --card-sub: #1C3647;
+  --card-hover: #224256;
+  --line: #294A5F;
+  --ink: #F0F7F6;
+  --mute: #92AEBD;
+  
+  --ac: #00E5BE;
+  --ac-glow: rgba(0, 229, 190, 0.35);
+  --on: #071A24;
+  --ok: #10B981;
+  --ok-bg: rgba(16, 185, 129, 0.22);
+  --bad: #F43F5E;
+  --bad-bg: rgba(244, 63, 94, 0.22);
+  --gold: #FBBF24;
+  --gold-bg: rgba(251, 191, 36, 0.22);
+
+  /* Vibrant Neon Team Themes (Sesuai Papan Tulis Multi-Touch) */
+  --t0: #FF2A6D;
+  --t0-grad: linear-gradient(135deg, #FF1E56 0%, #FF5376 100%);
+  --t0-glow: rgba(255, 42, 109, 0.35);
+  --t0-bg: rgba(255, 42, 109, 0.12);
+
+  --t1: #05D5AA;
+  --t1-grad: linear-gradient(135deg, #00BFA5 0%, #00F5D4 100%);
+  --t1-glow: rgba(5, 213, 170, 0.35);
+  --t1-bg: rgba(5, 213, 170, 0.12);
+
+  --t2: #FF9E00;
+  --t2-grad: linear-gradient(135deg, #FF7900 0%, #FFB703 100%);
+  --t2-glow: rgba(255, 158, 0, 0.35);
+  --t2-bg: rgba(255, 158, 0, 0.12);
+
+  --t3: #A066FF;
+  --t3-grad: linear-gradient(135deg, #7928CA 0%, #B886FF 100%);
+  --t3-glow: rgba(160, 102, 255, 0.35);
+  --t3-bg: rgba(160, 102, 255, 0.12);
+
+  --radius: 12px;
+  --radius-lg: 16px;
+  --shadow: 0 4px 16px rgba(0, 0, 0, 0.35);
+  --shadow-tv: 0 6px 24px rgba(0, 0, 0, 0.45);
+  box-sizing: border-box;
+}
+
+[data-theme="light"] {
+  --bg: #EEF5F4;
+  --bg-sub: #E0ECE8;
+  --card: #FFFFFF;
+  --card-sub: #E8F2EF;
+  --card-hover: #ECF7F4;
+  --line: #CFE0DC;
+  --ink: #0E1F2A;
+  --mute: #4A6372;
+  --ac: #0F9D8A;
+  --ac-glow: rgba(15, 157, 138, 0.25);
+  --on: #FFFFFF;
+  --ok: #059669;
+  --ok-bg: #D1FAE5;
+  --bad: #E11D48;
+  --bad-bg: #FFE4E6;
+  --gold: #D97706;
+  --gold-bg: #FEF3C7;
+  --shadow: 0 4px 16px rgba(14, 31, 42, 0.08);
+  --shadow-tv: 0 6px 22px rgba(14, 31, 42, 0.12);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  touch-action: manipulation; /* Cegah double-tap zoom tak sengaja di Papan Tulis Multi-Touch */
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  margin: 0;
+  background-color: var(--bg);
+  color: var(--ink);
+  font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  font-size: 16px;
+  line-height: 1.45;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden; /* Zero scroll untuk multi-touch whiteboard */
+  user-select: none; /* Mencegah teks terblok biru saat banyak tangan menyentuh layar */
+}
+
+/* Background floating virus particles */
+.virus-bg-canvas {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+  opacity: 0.22;
+}
+.bg-v {
+  position: absolute;
+  animation: floatVirus 26s ease-in-out infinite alternate;
+  filter: drop-shadow(0 4px 14px rgba(0,229,190,0.15));
+}
+.bg-v:nth-child(1) { top: 5%; left: 1%; width: 100px; animation-duration: 30s; }
+.bg-v:nth-child(2) { top: 48%; right: 2%; width: 120px; animation-duration: 36s; animation-delay: -5s; }
+.bg-v:nth-child(3) { bottom: 6%; left: 3%; width: 90px; animation-duration: 25s; animation-delay: -8s; }
+.bg-v:nth-child(4) { top: 18%; right: 7%; width: 85px; animation-duration: 32s; animation-delay: -12s; }
+
+@keyframes floatVirus {
+  0% { transform: translateY(0) rotate(0deg) scale(1); }
+  50% { transform: translateY(-20px) rotate(16deg) scale(1.03); }
+  100% { transform: translateY(18px) rotate(-14deg) scale(0.97); }
+}
+
+/* =========================================================
+   TOP NAVBAR (SLIM & TINGGI HANYA 50px)
+   ========================================================= */
+header.site-header {
+  height: 52px;
+  flex-shrink: 0;
+  z-index: 95;
+  background: color-mix(in srgb, var(--card) 92%, transparent);
+  backdrop-filter: blur(12px);
+  border-bottom: 2px solid var(--line);
+  box-shadow: 0 2px 10px rgba(0,0,0,0.15);
+}
+.header-container {
+  max-width: 99%;
+  height: 100%;
+  margin: 0 auto;
+  padding: 0 14px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+.brand-logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  text-decoration: none;
+  color: var(--ink);
+}
+.brand-logo svg { width: 28px; height: 34px; flex-shrink: 0; filter: drop-shadow(0 2px 6px var(--ac-glow)); }
+.brand-text h1 {
+  font: 900 1.05rem 'Bricolage Grotesque', sans-serif;
+  letter-spacing: -0.01em;
+  margin: 0;
+  line-height: 1.1;
+  color: var(--ink);
+  white-space: nowrap;
+}
+.brand-text span {
+  font-size: 0.72rem;
+  color: var(--ac);
+  font-weight: 700;
+  display: block;
+}
+
+/* Nav Menu Tabs */
+nav.main-nav {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  background: var(--card-sub);
+  padding: 3px 5px;
+  border-radius: 99px;
+  border: 1px solid var(--line);
+}
+.nav-tab-btn {
+  background: transparent;
+  border: none;
+  font-family: inherit;
+  font-size: 0.86rem;
+  font-weight: 700;
+  color: var(--mute);
+  padding: 6px 14px;
+  border-radius: 99px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: all .15s ease;
+  white-space: nowrap;
+}
+.nav-tab-btn:hover {
+  color: var(--ink);
+  background: color-mix(in srgb, var(--ac) 15%, transparent);
+}
+.nav-tab-btn.active {
+  background: var(--ac);
+  color: var(--on);
+  font-weight: 800;
+  box-shadow: 0 2px 8px var(--ac-glow);
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.tool-btn {
+  background: var(--card-sub);
+  border: 1.5px solid var(--line);
+  color: var(--ink);
+  font-size: 0.82rem;
+  font-weight: 700;
+  padding: 5px 12px;
+  border-radius: 99px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  transition: all .15s ease;
+}
+.tool-btn:hover {
+  background: var(--card-hover);
+  border-color: var(--ac);
+}
+
+/* =========================================================
+   MAIN VIEWPORT (FLEX 1 & ZERO SCROLL)
+   ========================================================= */
+main.main-content {
+  flex: 1;
+  min-height: 0;
+  padding: 8px 12px 10px;
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.site-section {
+  display: none;
+  height: 100%;
+}
+.site-section.active {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Typography & Headings */
+h1, h2, h3 { font-family: 'Bricolage Grotesque', sans-serif; line-height: 1.15; }
+h1 { font-size: 1.8rem; font-weight: 900; }
+h2 { font-size: 1.4rem; font-weight: 800; }
+h3 { font-size: 1.15rem; font-weight: 700; }
+
+/* Buttons & Inputs */
+button { font: inherit; cursor: pointer; color: inherit; }
+button:focus-visible, input:focus-visible { outline: 3px solid var(--ac); outline-offset: 2px; }
+.btn {
+  background: var(--ac);
+  color: var(--on);
+  border: 0;
+  border-radius: 8px;
+  padding: 10px 18px;
+  font-weight: 800;
+  font-size: 0.95rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  text-decoration: none;
+  box-shadow: 0 3px 10px var(--ac-glow);
+  transition: all .15s ease;
+}
+.btn:hover { filter: brightness(1.08); transform: translateY(-1px); }
+.btn:active { transform: translateY(1px); }
+.btn-sm { padding: 7px 14px; font-size: 0.88rem; border-radius: 8px; }
+
+.chip {
+  display: inline-block;
+  border: 1.5px solid var(--c, var(--ac));
+  border-radius: 99px;
+  padding: 2px 10px;
+  margin: 0 4px 4px 0;
+  font-size: 0.8rem;
+  font-weight: 800;
+  background: color-mix(in srgb, var(--c, var(--ac)) 14%, transparent);
+}
+.mute { color: var(--mute); font-size: 0.86rem; }
+.card {
+  background: var(--card);
+  border: 1.5px solid var(--line);
+  border-radius: var(--radius);
+  padding: 16px;
+  margin-bottom: 12px;
+  box-shadow: var(--shadow);
+}
+input {
+  font: inherit;
+  font-size: 1rem;
+  font-weight: 600;
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: 8px;
+  border: 2px solid var(--line);
+  background: var(--card-sub);
+  color: var(--ink);
+  margin-bottom: 8px;
+}
+input:focus {
+  border-color: var(--ac);
+  box-shadow: 0 0 10px var(--ac-glow);
+  outline: none;
+}
+
+/* =========================================================
+   BARIS STATUS PAPAN TULIS DIGITAL (SLIM TOP BAR)
+   ========================================================= */
+.smartboard-top-bar {
+  flex-shrink: 0;
+  height: 44px;
+  background: var(--card);
+  border: 2px solid var(--line);
+  border-radius: var(--radius);
+  padding: 0 14px;
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  box-shadow: var(--shadow);
+}
+.smartboard-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.95rem;
+  font-weight: 800;
+  white-space: nowrap;
+}
+.live-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #10B981;
+  box-shadow: 0 0 10px #10B981;
+  animation: pulseDot 2s infinite;
+}
+@keyframes pulseDot {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.4; transform: scale(0.85); }
+}
+
+.smartboard-chips-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex: 1;
+  justify-content: center;
+  overflow: hidden;
+}
+.sb-chip {
+  background: var(--card-sub);
+  border: 1.5px solid color-mix(in srgb, var(--c) 40%, var(--line));
+  border-left: 4px solid var(--c);
+  border-radius: 6px;
+  padding: 4px 10px;
+  font-size: 0.85rem;
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.sb-chip b {
+  font-family: 'Bricolage Grotesque', sans-serif;
+  color: var(--c);
+  font-weight: 800;
+}
+
+.smartboard-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.layout-switcher {
+  display: inline-flex;
+  background: var(--card-sub);
+  padding: 2px;
+  border-radius: 8px;
+  border: 1px solid var(--line);
+  gap: 3px;
+}
+.layout-btn {
+  border: none;
+  background: transparent;
+  padding: 4px 10px;
+  font-size: 0.84rem;
+  font-weight: 700;
+  border-radius: 6px;
+  color: var(--mute);
+  cursor: pointer;
+  transition: all .15s ease;
+  white-space: nowrap;
+}
+.layout-btn.active {
+  background: var(--card);
+  color: var(--ink);
+  box-shadow: 0 1px 4px rgba(0,0,0,0.2);
+}
+
+/* =========================================================
+   TIMER & PENALTI NILAI LKPD INTERAKTIF
+   ========================================================= */
+.smartboard-timer-box {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--card-sub);
+  border: 1.5px solid var(--line);
+  padding: 2px 7px;
+  border-radius: 8px;
+  white-space: nowrap;
+}
+.timer-play-btn {
+  background: var(--ac);
+  color: var(--on);
+  border: none;
+  width: 26px;
+  height: 26px;
+  border-radius: 6px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.78rem;
+  cursor: pointer;
+  transition: all .15s ease;
+  flex-shrink: 0;
+}
+.timer-play-btn:hover {
+  filter: brightness(1.15);
+  transform: scale(1.05);
+}
+.timer-display {
+  font-family: 'Bricolage Grotesque', monospace, sans-serif;
+  font-size: 1.12rem;
+  font-weight: 900;
+  color: #fff;
+  letter-spacing: 0.04em;
+  padding: 1px 6px;
+  background: #060e14;
+  border-radius: 5px;
+  border: 1px solid var(--line);
+  cursor: pointer;
+  min-width: 60px;
+  text-align: center;
+  transition: all .2s ease;
+}
+.timer-display.warning {
+  color: #ff4d4d;
+  border-color: #ff4d4d;
+  background: rgba(255, 77, 77, 0.15);
+  animation: timerWarning 1s infinite alternate;
+}
+@keyframes timerWarning {
+  0% { transform: scale(1); box-shadow: 0 0 3px #ff4d4d; }
+  100% { transform: scale(1.06); box-shadow: 0 0 12px #ff4d4d; }
+}
+.timer-btn-sm {
+  background: transparent;
+  border: 1px solid var(--line);
+  color: var(--mute);
+  font-size: 0.76rem;
+  font-weight: 700;
+  padding: 3px 6px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all .15s ease;
+}
+.timer-btn-sm:hover {
+  background: var(--card);
+  color: var(--ink);
+  border-color: var(--ac);
+}
+.penalty-tag {
+  font-size: 0.74rem;
+  font-weight: 800;
+  color: #ff9999;
+  background: rgba(255, 77, 77, 0.15);
+  border: 1px solid rgba(255, 77, 77, 0.35);
+  padding: 2px 7px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all .15s ease;
+}
+.penalty-tag:hover {
+  background: rgba(255, 77, 77, 0.3);
+  border-color: #ff4d4d;
+}
+
+/* Animasi Penalti Salah di Skor */
+@keyframes penaltyFlash {
+  0% { transform: scale(1); background: var(--card-sub); }
+  25% { transform: scale(1.22); background: #ff4d4d; color: #fff; }
+  100% { transform: scale(1); }
+}
+.score-penalized {
+  animation: penaltyFlash 0.6s ease !important;
+}
+
+.music-active {
+  background: color-mix(in srgb, var(--ac) 18%, var(--card)) !important;
+  border-color: var(--ac) !important;
+  color: var(--ac) !important;
+  box-shadow: 0 0 10px var(--ac-glow) !important;
+}
+
+/* Virtual On-Screen Touch Keyboard (Multi-Touch Smartboard) */
+.panel-kb-wrap {
+  background: var(--card-sub);
+  border: 1.5px solid var(--line);
+  border-radius: 8px;
+  padding: 5px 4px;
+  margin-top: 6px;
+  user-select: none;
+  touch-action: manipulation;
+}
+.kb-target-bar {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-top: 2px;
+}
+.kb-target-btn {
+  flex: 1;
+  border: 1px solid var(--line);
+  background: var(--card);
+  color: var(--mute);
+  font-size: 0.74rem;
+  font-weight: 700;
+  padding: 4px 6px;
+  border-radius: 6px;
+  cursor: pointer;
+  text-align: center;
+  transition: all .15s ease;
+  white-space: nowrap;
+}
+.kb-target-btn.active {
+  background: var(--c);
+  color: #fff;
+  border-color: var(--c);
+  font-weight: 800;
+  box-shadow: 0 2px 6px color-mix(in srgb, var(--c) 40%, transparent);
+}
+.kb-row {
+  display: flex;
+  justify-content: center;
+  gap: 2.5px;
+  margin-bottom: 2.5px;
+}
+.kb-row:last-child {
+  margin-bottom: 0;
+}
+.kb-key {
+  flex: 1;
+  min-width: 0;
+  height: 27px;
+  background: var(--card);
+  border: 1px solid color-mix(in srgb, var(--c) 30%, var(--line));
+  color: var(--ink);
+  font-family: inherit;
+  font-size: 0.78rem;
+  font-weight: 800;
+  border-radius: 5px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  padding: 0;
+  transition: background .08s ease, transform .08s ease;
+  touch-action: manipulation;
+}
+.kb-key:hover {
+  background: color-mix(in srgb, var(--c) 20%, var(--card));
+  border-color: var(--c);
+}
+.kb-key:active {
+  transform: scale(0.92);
+  background: var(--c);
+  color: #fff;
+}
+.kb-key.key-wide {
+  flex: 2.2;
+  font-size: 0.72rem;
+}
+.kb-key.key-space {
+  flex: 4;
+  font-size: 0.74rem;
+}
+.kb-key.key-del {
+  flex: 2.2;
+  background: rgba(255, 77, 77, 0.15);
+  border-color: rgba(255, 77, 77, 0.4);
+  color: #ff8585;
+  font-size: 0.74rem;
+}
+.kb-key.key-del:active {
+  background: #ff4d4d;
+  color: #fff;
+}
+
+/* Modal Universal */
+.custom-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(5, 12, 18, 0.82);
+  backdrop-filter: blur(8px);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  animation: fadeInModal .15s ease;
+}
+@keyframes fadeInModal {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+.custom-modal-box {
+  background: var(--card);
+  border: 2px solid var(--ac);
+  border-radius: 14px;
+  max-width: 520px;
+  width: 100%;
+  padding: 20px 22px;
+  box-shadow: 0 12px 40px rgba(0,0,0,0.6);
+  position: relative;
+  text-align: left;
+}
+
+/* =========================================================
+   4 PANEL PENGERJAAN SEIMBANG (PAPAT TULIS MULTI-TOUCH)
+   ========================================================= */
+.lkpd-workspace {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+/* 4 Kolom Berjejer Seimbang (4 Siswa Berdiri Bersama di Papan Tulis) */
+.lkpd-panels-grid {
+  flex: 1;
+  min-height: 0;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+}
+
+/* Mode Grid 2x2 */
+.lkpd-panels-grid.mode-grid {
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  gap: 12px;
+}
+
+/* Mode Tab Fokus */
+.lkpd-panels-grid.mode-tab {
+  grid-template-columns: 1fr;
+}
+.lkpd-panels-grid.mode-tab .team-panel {
+  display: none;
+}
+.lkpd-panels-grid.mode-tab .team-panel.tab-active {
+  display: flex;
+}
+
+/* Individual Team Panel */
+.team-panel {
+  background: radial-gradient(circle at 10% 10%, color-mix(in srgb, var(--c) 14%, var(--card)) 0%, var(--card) 60%);
+  border: 2px solid color-mix(in srgb, var(--c) 50%, var(--line));
+  border-top: 6px solid var(--c);
+  border-radius: var(--radius);
+  padding: 12px 14px;
+  box-shadow: var(--shadow-tv);
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 0;
+  overflow: hidden;
+  position: relative;
+  transition: all .2s ease;
+}
+.team-panel:focus-within, .team-panel:hover {
+  border-color: var(--c);
+  box-shadow: 0 4px 20px color-mix(in srgb, var(--c) 30%, transparent);
+}
+
+/* Team Panel Header (Single Line, Never Wraps) */
+.panel-header {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 8px;
+  border-bottom: 2px solid color-mix(in srgb, var(--c) 25%, var(--line));
+  margin-bottom: 10px;
+  gap: 6px;
+}
+.panel-title-area {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+  flex: 1;
+}
+.panel-team-avatar {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--c);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Bricolage Grotesque', sans-serif;
+  font-weight: 900;
+  font-size: 0.95rem;
+  box-shadow: 0 2px 8px var(--c-glow);
+  flex-shrink: 0;
+}
+.panel-team-name {
+  font-family: 'Bricolage Grotesque', sans-serif;
+  font-weight: 900;
+  font-size: 1.12rem;
+  color: var(--c);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.panel-score-badge {
+  font-family: 'Bricolage Grotesque', sans-serif;
+  font-weight: 800;
+  font-size: 0.95rem;
+  color: var(--ink);
+  margin-left: auto;
+  padding: 2px 8px;
+  background: var(--card-sub);
+  border-radius: 6px;
+  white-space: nowrap;
+}
+.panel-mission-badge {
+  font-size: 0.75rem;
+  font-weight: 800;
+  padding: 2px 8px;
+  border-radius: 99px;
+  background: color-mix(in srgb, var(--c) 20%, var(--card));
+  color: var(--c);
+  border: 1px solid var(--c);
+  white-space: nowrap;
+}
+
+/* Panel Body (Flex 1 & Zero Vertical Overflow) */
+.panel-body {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+}
+.panel-step-box {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+/* Option Buttons in Panels */
+.opt-btn {
+  display: block;
+  width: 100%;
+  text-align: left;
+  background: color-mix(in srgb, var(--c) 8%, var(--card-sub));
+  border: 1.5px solid color-mix(in srgb, var(--c) 30%, var(--line));
+  border-radius: 8px;
+  padding: 9px 10px;
+  margin-bottom: 6px;
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--ink);
+  transition: all .12s ease;
+  position: relative;
+}
+.opt-btn:hover:not(:disabled) {
+  border-color: var(--c);
+  background: color-mix(in srgb, var(--c) 18%, var(--card-sub));
+  transform: translateX(2px);
+}
+.opt-btn.sel {
+  border-color: var(--c);
+  background: color-mix(in srgb, var(--c) 25%, var(--card-sub));
+  box-shadow: 0 0 12px var(--c-glow);
+}
+.opt-btn.ok {
+  border-color: var(--ok);
+  background: var(--ok-bg);
+  color: var(--ok);
+  font-weight: 800;
+}
+.opt-btn.bad {
+  border-color: var(--bad);
+  background: var(--bad-bg);
+  color: var(--bad);
+}
+.opt-btn small {
+  display: block;
+  color: var(--mute);
+  font-size: 0.78rem;
+  font-weight: 500;
+  margin-top: 2px;
+}
+
+/* Matching Columns inside Panel */
+.panel-match-cols {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin-bottom: 6px;
+}
+.panel-match-cols .opt-btn {
+  padding: 8px 8px;
+  font-size: 0.84rem;
+  margin-bottom: 6px;
+  line-height: 1.25;
+}
+
+/* Mystery Cards inside Panel */
+.panel-hero-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+  gap: 8px;
+  margin-bottom: 8px;
+}
+.panel-hero-card {
+  background: var(--card-sub);
+  border: 1.5px solid var(--line);
+  border-radius: 8px;
+  padding: 8px;
+  text-align: left;
+  cursor: pointer;
+  min-height: 80px;
+  transition: all .15s ease;
+}
+.panel-hero-card.open {
+  border-color: var(--c);
+  background: color-mix(in srgb, var(--c) 16%, var(--card));
+  box-shadow: 0 2px 10px color-mix(in srgb, var(--c) 25%, transparent);
+}
+.panel-hero-card b {
+  display: block;
+  font-family: 'Bricolage Grotesque', sans-serif;
+  font-size: 0.88rem;
+  margin: 2px 0;
+  color: var(--ink);
+}
+.panel-hero-card small {
+  color: var(--mute);
+  font-size: 0.76rem;
+  line-height: 1.25;
+}
+
+/* Teacher Score Control */
+.teacher-mini-adj {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+}
+.teacher-mini-adj button {
+  background: var(--card-sub);
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  width: 22px;
+  height: 22px;
+  font-size: 0.85rem;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.teacher-mini-adj button:hover {
+  background: var(--card-hover);
+  border-color: var(--c);
+}
+
+/* Tab Selector Bar */
+.tab-select-bar {
+  display: none;
+  gap: 8px;
+  margin-bottom: 8px;
+  overflow-x: auto;
+}
+.tab-sel-btn {
+  background: var(--card);
+  border: 1.5px solid var(--line);
+  border-radius: 99px;
+  padding: 6px 14px;
+  font-size: 0.86rem;
+  font-weight: 800;
+  cursor: pointer;
+  white-space: nowrap;
+}
+.tab-sel-btn.active {
+  background: var(--c);
+  color: #fff;
+  border-color: var(--c);
+}
+
+/* Confetti */
+#confetti-canvas {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 999;
+}
+
+/* Print Layout */
+@media print {
+  body { background: #fff !important; color: #000 !important; font-size: 11pt !important; height: auto !important; overflow: visible !important; }
+  header.site-header, .virus-bg-canvas, .tool-btn, .btn, .teacher-mini-adj, .layout-switcher, #confetti-canvas, .smartboard-top-bar { display: none !important; }
+  .site-section { display: none !important; }
+  #section-lkpd { display: block !important; }
+  .lkpd-panels-grid { display: block !important; }
+  .team-panel { border: 1px solid #777 !important; break-inside: avoid; margin-bottom: 20px; box-shadow: none !important; }
+/* =========================================================
+   MATERI & POSTER VIRUS EDUKASI KESEHATAN (SESUAI POSTER VIRUS.PDF)
+   ========================================================= */
+.materi-subnav {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--card-sub);
+  padding: 4px;
+  border-radius: 12px;
+  border: 1.5px solid var(--line);
+  margin-bottom: 12px;
+  flex-shrink: 0;
+  flex-wrap: wrap;
+}
+.materi-subnav-btn {
+  background: transparent;
+  border: none;
+  font-family: inherit;
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: var(--mute);
+  padding: 8px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: all .15s ease;
+}
+.materi-subnav-btn:hover {
+  color: var(--ink);
+  background: color-mix(in srgb, var(--ac) 12%, transparent);
+}
+.materi-subnav-btn.active {
+  background: var(--ac);
+  color: var(--on);
+  font-weight: 800;
+  box-shadow: 0 2px 8px var(--ac-glow);
+}
+
+.poster-hero-banner {
+  background: linear-gradient(135deg, #0d1e2b 0%, #132736 100%);
+  border: 2px solid var(--line);
+  border-radius: var(--radius);
+  padding: 16px 20px;
+  margin-bottom: 12px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: var(--shadow);
+}
+.poster-hero-badge {
+  display: inline-block;
+  font-size: 0.74rem;
+  font-weight: 900;
+  letter-spacing: 0.1em;
+  color: #00E5BE;
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+.poster-hero-title {
+  font-size: 1.65rem;
+  font-weight: 900;
+  margin: 0 0 4px;
+  color: #ffffff;
+  letter-spacing: -0.02em;
+}
+.poster-hero-desc {
+  font-size: 0.92rem;
+  color: #9cb5c7;
+  max-width: 80ch;
+  margin: 0 0 12px;
+  line-height: 1.45;
+}
+
+.poster-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+.poster-search-wrap {
+  flex: 1;
+  min-width: 260px;
+  max-width: 480px;
+  position: relative;
+}
+.poster-search-input {
+  width: 100%;
+  padding: 8px 14px 8px 36px !important;
+  font-size: 0.88rem !important;
+  border-radius: 8px !important;
+  border: 1.5px solid var(--line) !important;
+  background: var(--card) !important;
+  color: var(--ink) !important;
+  margin-bottom: 0 !important;
+}
+.poster-search-icon {
+  position: absolute;
+  left: 11px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--mute);
+  font-size: 0.95rem;
+  pointer-events: none;
+}
+.poster-filter-chips {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+.poster-chip-btn {
+  background: var(--card);
+  border: 1.5px solid var(--line);
+  color: var(--mute);
+  font-size: 0.8rem;
+  font-weight: 700;
+  padding: 5px 12px;
+  border-radius: 99px;
+  cursor: pointer;
+  transition: all .15s ease;
+}
+.poster-chip-btn:hover {
+  border-color: var(--ac);
+  color: var(--ink);
+}
+.poster-chip-btn.active {
+  background: var(--ac);
+  border-color: var(--ac);
+  color: var(--on);
+  font-weight: 800;
+}
+
+/* 10 Poster Virus Cards Grid */
+.poster-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(295px, 1fr));
+  gap: 12px;
+  margin-bottom: 14px;
+}
+.poster-virus-card {
+  background: radial-gradient(circle at 12% 18%, color-mix(in srgb, var(--card-color) 14%, #12222E) 0%, #0e1b24 80%);
+  border: 2px solid color-mix(in srgb, var(--card-color) 45%, var(--line));
+  border-radius: var(--radius);
+  padding: 14px 16px;
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+  transition: all .2s ease;
+  position: relative;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+}
+.poster-virus-card:hover {
+  transform: translateY(-2px);
+  border-color: var(--card-color);
+  box-shadow: 0 6px 20px color-mix(in srgb, var(--card-color) 30%, transparent);
+}
+.pvc-icon-wrap {
+  width: 44px;
+  height: 44px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.pvc-content {
+  flex: 1;
+  min-width: 0;
+}
+.pvc-virus-label {
+  font-size: 0.68rem;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  color: #7d96a8;
+  text-transform: uppercase;
+  display: block;
+  margin-bottom: 1px;
+}
+.pvc-virus-name {
+  font-family: 'Bricolage Grotesque', sans-serif;
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: #ffffff;
+  margin: 0 0 3px;
+}
+.pvc-disease-label {
+  font-size: 0.68rem;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  color: color-mix(in srgb, var(--card-color) 80%, white);
+  text-transform: uppercase;
+  display: block;
+  margin-bottom: 1px;
+}
+.pvc-disease-name {
+  font-family: 'Bricolage Grotesque', sans-serif;
+  font-size: 1.25rem;
+  font-weight: 900;
+  color: var(--card-color);
+  margin: 0 0 6px;
+  line-height: 1.2;
+}
+.pvc-desc {
+  font-size: 0.84rem;
+  color: #a3bac9;
+  line-height: 1.45;
+  margin: 0 0 8px;
+}
+.pvc-tag-row {
+  display: flex;
+  gap: 5px;
+  flex-wrap: wrap;
+}
+.pvc-badge {
+  font-size: 0.72rem;
+  font-weight: 800;
+  padding: 2px 8px;
+  border-radius: 99px;
+  background: color-mix(in srgb, var(--card-color) 15%, transparent);
+  border: 1px solid color-mix(in srgb, var(--card-color) 50%, transparent);
+  color: var(--card-color);
+}
+
+.poster-footer-notice {
+  background: color-mix(in srgb, #00E5BE 10%, var(--card));
+  border: 1.5px solid color-mix(in srgb, #00E5BE 40%, var(--line));
+  border-radius: 10px;
+  padding: 12px 18px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 0.92rem;
+  color: var(--ink);
+  margin-top: 10px;
+}
+
+.poster-img-preview-box {
+  background: var(--card);
+  border: 2px solid var(--line);
+  border-radius: var(--radius);
+  padding: 18px;
+  text-align: center;
+}
+.poster-img-element {
+  max-width: 100%;
+  max-height: 65vh;
+  object-fit: contain;
+  border-radius: 8px;
+  box-shadow: 0 6px 24px rgba(0,0,0,0.5);
+  border: 1.5px solid var(--line);
+}
+</style>
+</head>
+<body>
+
+<canvas id="confetti-canvas"></canvas>
+<audio id="bg-music" src="dua%20lipa%20training.mp3" loop preload="auto"></audio>
+
+<!-- SVG Background Floating Virus Particles -->
+<div class="virus-bg-canvas" aria-hidden="true">
+  <!-- Bacteriophage T4 -->
+  <svg class="bg-v" viewBox="0 0 100 120" fill="none">
+    <path d="M50 10 L75 25 L75 55 L50 70 L25 55 L25 25 Z" stroke="var(--ac)" stroke-width="2.5" fill="color-mix(in srgb, var(--ac) 15%, transparent)" />
+    <path d="M38 32 Q50 24 62 32 Q50 48 38 40" stroke="var(--ac)" stroke-width="1.8" />
+    <rect x="46" y="70" width="8" height="20" rx="3" fill="var(--ac)" />
+    <ellipse cx="50" cy="90" rx="9" ry="4" fill="var(--ink)" />
+    <path d="M43 91 L25 115 M47 92 L35 118 M53 92 L65 118 M57 91 L75 115" stroke="var(--ac)" stroke-width="2.2" stroke-linecap="round" />
+  </svg>
+  <!-- Coronavirus -->
+  <svg class="bg-v" viewBox="0 0 120 120" fill="none">
+    <circle cx="60" cy="60" r="38" stroke="var(--t0)" stroke-width="3" fill="color-mix(in srgb, var(--t0) 12%, transparent)" />
+    <g stroke="var(--t0)" stroke-width="3" stroke-linecap="round">
+      <line x1="60" y1="22" x2="60" y2="8" /><circle cx="60" cy="7" r="4.5" fill="var(--t0)" />
+      <line x1="60" y1="98" x2="60" y2="112" /><circle cx="60" cy="113" r="4.5" fill="var(--t0)" />
+      <line x1="22" y1="60" x2="8" y2="60" /><circle cx="7" cy="60" r="4.5" fill="var(--t0)" />
+      <line x1="98" y1="60" x2="112" y2="60" /><circle cx="113" cy="60" r="4.5" fill="var(--t0)" />
+    </g>
+  </svg>
+</div>
+
+<!-- =========================================================
+     SLIM TOP NAVBAR (TINGGI 52px)
+     ========================================================= -->
+<header class="site-header">
+  <div class="header-container">
+    <div class="brand-logo" onclick="switchNav('beranda')">
+      <svg viewBox="0 0 100 120" fill="none">
+        <path d="M50 8 L76 24 L76 56 L50 72 L24 56 L24 24 Z" stroke="var(--ac)" stroke-width="4.5" fill="color-mix(in srgb, var(--ac) 25%, transparent)" />
+        <circle cx="50" cy="40" r="10" fill="var(--ac)" />
+        <rect x="46" y="72" width="8" height="22" rx="3" fill="var(--ac)" />
+        <ellipse cx="50" cy="94" rx="10" ry="4" fill="var(--ink)" />
+        <path d="M43 95 L22 118 M57 95 L78 118" stroke="var(--ac)" stroke-width="4" stroke-linecap="round" />
+      </svg>
+      <div class="brand-text">
+        <h1>BIO PERANAN VIRUS ZULKIFLIZUL</h1>
+        <span>Biologi SMA Kelas X • Fase E</span>
+      </div>
+    </div>
+
+    <!-- Nav Menu Tabs -->
+    <nav class="main-nav">
+      <button class="nav-tab-btn" id="btn-nav-beranda" onclick="switchNav('beranda')">🏠 Beranda</button>
+      <button class="nav-tab-btn" id="btn-nav-materi" onclick="switchNav('materi')">📖 Materi Peranan</button>
+      <button class="nav-tab-btn active" id="btn-nav-lkpd" onclick="switchNav('lkpd')">🖐️ LKPD Papan Tulis (4 Regu)</button>
+      <button class="nav-tab-btn" id="btn-nav-galeri" onclick="switchNav('galeri')">🔬 Galeri Morfologi</button>
+    </nav>
+
+    <div class="header-actions">
+      <button class="tool-btn" onclick="toggleFullscreen()" title="Layar Penuh TV">⛶ Fullscreen</button>
+      <button class="tool-btn" onclick="toggleTheme()" title="Ganti Tema">🌓 Tema</button>
+    </div>
+  </div>
+</header>
+
+<!-- =========================================================
+     MAIN VIEWPORT
+     ========================================================= -->
+<main class="main-content">
+
+  <!-- =====================================================
+       HALAMAN 1: BERANDA
+       ===================================================== -->
+  <section id="section-beranda" class="site-section">
+    <div class="card" style="background:linear-gradient(135deg, color-mix(in srgb, var(--ac) 15%, var(--card)) 0%, var(--card) 100%);padding:28px 24px">
+      <span class="chip" style="--c:var(--ac);background:var(--card)">🧬 Kurikulum Merdeka • Fase E SMA</span>
+      <h1 style="font-size:2.2rem;font-weight:900;margin:8px 0 10px">Portal Materi & LKPD Papan Tulis Multi-Touch</h1>
+      <p style="color:var(--mute);font-size:1.05rem;max-width:70ch;margin-bottom:18px">Desain seimbang yang dioptimalkan untuk papan tulis interaktif layar sentuh (*Interactive Flat Panel / Smartboard*). Pelajari materi biologi virologi, lalu ajak 4 perwakilan kelompok berdiri bersama di depan kelas untuk menyelesaikan 4 misi investigasi serentak!</p>
+      <div style="display:flex;gap:12px;flex-wrap:wrap">
+        <button class="btn" onclick="switchNav('materi')">📖 Buka Materi Peranan Virus ➔</button>
+        <button class="btn" style="background:var(--card-sub);color:var(--ink);border:2px solid var(--line)" onclick="switchNav('lkpd')">🖐️ Buka LKPD Papan Tulis Multi-Touch</button>
+      </div>
+    </div>
+
+    <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(260px, 1fr));gap:14px;margin-top:14px">
+      <div class="card" style="cursor:pointer" onclick="switchNav('materi')">
+        <span style="font-size:2rem">📖</span>
+        <b style="display:block;font-size:1.15rem;margin:6px 0 4px">Materi Peranan Virus</b>
+        <p class="mute" style="margin:0">Patogenitas virus vs manfaat rekayasa bioteknologi kesehatan modern.</p>
+      </div>
+      <div class="card" style="cursor:pointer" onclick="switchNav('lkpd')">
+        <span style="font-size:2rem">🖐️</span>
+        <b style="display:block;font-size:1.15rem;margin:6px 0 4px">LKPD Papan Tulis Multi-Touch</b>
+        <p class="mute" style="margin:0">4 panel seimbang berdampingan, muat dalam 1 layar tanpa scroll untuk disentuh bersamaan!</p>
+      </div>
+      <div class="card" style="cursor:pointer" onclick="switchNav('galeri')">
+        <span style="font-size:2rem">🔬</span>
+        <b style="display:block;font-size:1.15rem;margin:6px 0 4px">Galeri Morfologi Virus</b>
+        <p class="mute" style="margin:0">Bakteriofag T4, Coronavirus, TMV batang, dan Adenovirus.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- =====================================================
+       HALAMAN 2: MATERI PERANAN VIRUS & POSTER EDUKASI KESEHATAN
+       ===================================================== -->
+  <section id="section-materi" class="site-section">
+    <!-- Sub Navigasi Pilihan Tampilan Materi -->
+    <div class="materi-subnav">
+      <button class="materi-subnav-btn active" id="btn-mtab-cards" onclick="switchMateriTab('cards')">
+        <span>🦠</span> 10 Pasangan Virus & Penyakit (Interaktif)
+      </button>
+      <button class="materi-subnav-btn" id="btn-mtab-poster" onclick="switchMateriTab('poster')">
+        <span>🖼️</span> Poster Asli (HD View & PDF)
+      </button>
+      <button class="materi-subnav-btn" id="btn-mtab-theory" onclick="switchMateriTab('theory')">
+        <span>📚</span> Bioteknologi & Konsep Virus
+      </button>
+      <div style="margin-left:auto;display:flex;gap:6px">
+        <a href="Poster Virus.pdf" target="_blank" class="tool-btn" style="text-decoration:none" title="Buka PDF Asli">
+          <span>📄</span> Buka File PDF
+        </a>
+      </div>
+    </div>
+
+    <!-- Kontainer Scroll Materi -->
+    <div style="flex:1;min-height:0;overflow-y:auto;padding-right:4px">
+      
+      <!-- VIEW 1: 10 KARTU INTERAKTIF SESUAI POSTER VIRUS.PDF -->
+      <div id="materi-view-cards">
+        <div class="poster-hero-banner">
+          <span class="poster-hero-badge">POSTER EDUKASI KESEHATAN</span>
+          <h2 class="poster-hero-title">Virus & Penyakit yang Ditimbulkannya</h2>
+          <p class="poster-hero-desc">Kenali pasangan virus dan penyakitnya, cara penularannya, dan lindungi diri dengan kebersihan serta vaksinasi.</p>
+          
+          <!-- Toolbar Pencarian & Filter -->
+          <div class="poster-toolbar">
+            <div class="poster-search-wrap">
+              <span class="poster-search-icon">🔍</span>
+              <input type="text" id="materi-search-input" class="poster-search-input" placeholder="Cari virus, penyakit, atau gejala (cth: batuk, nyamuk, CD4, serviks)..." oninput="filterMateriCards()">
+            </div>
+            <div class="poster-filter-chips">
+              <button class="poster-chip-btn active" data-tag="all" onclick="filterByTag('all', this)">Semua (10)</button>
+              <button class="poster-chip-btn" data-tag="droplet" onclick="filterByTag('droplet', this)">🌬️ Droplet & Udara</button>
+              <button class="poster-chip-btn" data-tag="darah" onclick="filterByTag('darah', this)">💉 Darah & Cairan</button>
+              <button class="poster-chip-btn" data-tag="vektor" onclick="filterByTag('vektor', this)">🦟 Nyamuk & Gigitan</button>
+              <button class="poster-chip-btn" data-tag="kontak" onclick="filterByTag('kontak', this)">🤝 Kontak & Vaksin</button>
+              <button class="poster-chip-btn" data-tag="oral" onclick="filterByTag('oral', this)">🥗 Makanan & Air</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- 10 Kartu Virus (Persis dari Poster Virus.pdf) -->
+        <div class="poster-cards-grid" id="materi-cards-grid">
+          
+          <!-- 1. INFLUENZA -->
+          <div class="poster-virus-card" style="--card-color:#00E5BE" data-tags="droplet">
+            <div class="pvc-icon-wrap">
+              <svg viewBox="0 0 44 44" width="44" height="44" fill="none">
+                <circle cx="22" cy="22" r="11" fill="var(--card-color)" opacity="0.9"/>
+                <circle cx="22" cy="4" r="2.4" fill="var(--card-color)"/><circle cx="31" cy="6.4" r="2.4" fill="var(--card-color)"/><circle cx="37.6" cy="13" r="2.4" fill="var(--card-color)"/><circle cx="40" cy="22" r="2.4" fill="var(--card-color)"/><circle cx="37.6" cy="31" r="2.4" fill="var(--card-color)"/><circle cx="31" cy="37.6" r="2.4" fill="var(--card-color)"/><circle cx="22" cy="40" r="2.4" fill="var(--card-color)"/><circle cx="13" cy="37.6" r="2.4" fill="var(--card-color)"/><circle cx="6.4" cy="31" r="2.4" fill="var(--card-color)"/><circle cx="4" cy="22" r="2.4" fill="var(--card-color)"/><circle cx="6.4" cy="13" r="2.4" fill="var(--card-color)"/><circle cx="13" cy="6.4" r="2.4" fill="var(--card-color)"/>
+              </svg>
+            </div>
+            <div class="pvc-content">
+              <span class="pvc-virus-label">VIRUS</span>
+              <div class="pvc-virus-name">Influenza</div>
+              <span class="pvc-disease-label">PENYAKIT</span>
+              <div class="pvc-disease-name">Flu (Influenza)</div>
+              <p class="pvc-desc">Demam, batuk, nyeri otot. Menular lewat percikan batuk dan bersin.</p>
+              <div class="pvc-tag-row">
+                <span class="pvc-badge">🌬️ Percikan Batuk & Bersin</span>
+                <span class="pvc-badge">Saluran Napas</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- 2. SARS-CoV-2 -->
+          <div class="poster-virus-card" style="--card-color:#FF5252" data-tags="droplet">
+            <div class="pvc-icon-wrap">
+              <svg viewBox="0 0 44 44" width="44" height="44" fill="none">
+                <circle cx="22" cy="22" r="11" fill="var(--card-color)" opacity="0.9"/>
+                <circle cx="22" cy="4" r="2.4" fill="var(--card-color)"/><circle cx="31" cy="6.4" r="2.4" fill="var(--card-color)"/><circle cx="37.6" cy="13" r="2.4" fill="var(--card-color)"/><circle cx="40" cy="22" r="2.4" fill="var(--card-color)"/><circle cx="37.6" cy="31" r="2.4" fill="var(--card-color)"/><circle cx="31" cy="37.6" r="2.4" fill="var(--card-color)"/><circle cx="22" cy="40" r="2.4" fill="var(--card-color)"/><circle cx="13" cy="37.6" r="2.4" fill="var(--card-color)"/><circle cx="6.4" cy="31" r="2.4" fill="var(--card-color)"/><circle cx="4" cy="22" r="2.4" fill="var(--card-color)"/><circle cx="6.4" cy="13" r="2.4" fill="var(--card-color)"/><circle cx="13" cy="6.4" r="2.4" fill="var(--card-color)"/>
+              </svg>
+            </div>
+            <div class="pvc-content">
+              <span class="pvc-virus-label">VIRUS</span>
+              <div class="pvc-virus-name">SARS-CoV-2</div>
+              <span class="pvc-disease-label">PENYAKIT</span>
+              <div class="pvc-disease-name">COVID-19</div>
+              <p class="pvc-desc">Demam, batuk, sesak napas. Menular lewat droplet dan aerosol.</p>
+              <div class="pvc-tag-row">
+                <span class="pvc-badge">🌬️ Droplet & Aerosol</span>
+                <span class="pvc-badge">Paru & Saluran Napas</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- 3. HIV -->
+          <div class="poster-virus-card" style="--card-color:#FFC107" data-tags="darah">
+            <div class="pvc-icon-wrap">
+              <svg viewBox="0 0 44 44" width="44" height="44" fill="none">
+                <circle cx="22" cy="22" r="11" fill="var(--card-color)" opacity="0.9"/>
+                <circle cx="22" cy="4" r="2.4" fill="var(--card-color)"/><circle cx="31" cy="6.4" r="2.4" fill="var(--card-color)"/><circle cx="37.6" cy="13" r="2.4" fill="var(--card-color)"/><circle cx="40" cy="22" r="2.4" fill="var(--card-color)"/><circle cx="37.6" cy="31" r="2.4" fill="var(--card-color)"/><circle cx="31" cy="37.6" r="2.4" fill="var(--card-color)"/><circle cx="22" cy="40" r="2.4" fill="var(--card-color)"/><circle cx="13" cy="37.6" r="2.4" fill="var(--card-color)"/><circle cx="6.4" cy="31" r="2.4" fill="var(--card-color)"/><circle cx="4" cy="22" r="2.4" fill="var(--card-color)"/><circle cx="6.4" cy="13" r="2.4" fill="var(--card-color)"/><circle cx="13" cy="6.4" r="2.4" fill="var(--card-color)"/>
+              </svg>
+            </div>
+            <div class="pvc-content">
+              <span class="pvc-virus-label">VIRUS</span>
+              <div class="pvc-virus-name">HIV</div>
+              <span class="pvc-disease-label">PENYAKIT</span>
+              <div class="pvc-disease-name">AIDS</div>
+              <p class="pvc-desc">Merusak sel CD4 hingga daya tahan tubuh melemah. Menular lewat darah dan cairan tubuh.</p>
+              <div class="pvc-tag-row">
+                <span class="pvc-badge">💉 Darah & Cairan Tubuh</span>
+                <span class="pvc-badge">Sel Limfosit CD4</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- 4. VIRUS DENGUE -->
+          <div class="poster-virus-card" style="--card-color:#69F0AE" data-tags="vektor">
+            <div class="pvc-icon-wrap">
+              <svg viewBox="0 0 44 44" width="44" height="44" fill="none">
+                <circle cx="22" cy="22" r="11" fill="var(--card-color)" opacity="0.9"/>
+                <circle cx="22" cy="4" r="2.4" fill="var(--card-color)"/><circle cx="31" cy="6.4" r="2.4" fill="var(--card-color)"/><circle cx="37.6" cy="13" r="2.4" fill="var(--card-color)"/><circle cx="40" cy="22" r="2.4" fill="var(--card-color)"/><circle cx="37.6" cy="31" r="2.4" fill="var(--card-color)"/><circle cx="31" cy="37.6" r="2.4" fill="var(--card-color)"/><circle cx="22" cy="40" r="2.4" fill="var(--card-color)"/><circle cx="13" cy="37.6" r="2.4" fill="var(--card-color)"/><circle cx="6.4" cy="31" r="2.4" fill="var(--card-color)"/><circle cx="4" cy="22" r="2.4" fill="var(--card-color)"/><circle cx="6.4" cy="13" r="2.4" fill="var(--card-color)"/><circle cx="13" cy="6.4" r="2.4" fill="var(--card-color)"/>
+              </svg>
+            </div>
+            <div class="pvc-content">
+              <span class="pvc-virus-label">VIRUS</span>
+              <div class="pvc-virus-name">Virus Dengue</div>
+              <span class="pvc-disease-label">PENYAKIT</span>
+              <div class="pvc-disease-name">Demam Berdarah (DBD)</div>
+              <p class="pvc-desc">Demam tinggi, trombosit turun. Ditularkan nyamuk Aedes aegypti.</p>
+              <div class="pvc-tag-row">
+                <span class="pvc-badge">🦟 Nyamuk Aedes aegypti</span>
+                <span class="pvc-badge">Trombosit Turun</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- 5. VIRUS HEPATITIS B -->
+          <div class="poster-virus-card" style="--card-color:#7C4DFF" data-tags="darah">
+            <div class="pvc-icon-wrap">
+              <svg viewBox="0 0 44 44" width="44" height="44" fill="none">
+                <circle cx="22" cy="22" r="11" fill="var(--card-color)" opacity="0.9"/>
+                <circle cx="22" cy="4" r="2.4" fill="var(--card-color)"/><circle cx="31" cy="6.4" r="2.4" fill="var(--card-color)"/><circle cx="37.6" cy="13" r="2.4" fill="var(--card-color)"/><circle cx="40" cy="22" r="2.4" fill="var(--card-color)"/><circle cx="37.6" cy="31" r="2.4" fill="var(--card-color)"/><circle cx="31" cy="37.6" r="2.4" fill="var(--card-color)"/><circle cx="22" cy="40" r="2.4" fill="var(--card-color)"/><circle cx="13" cy="37.6" r="2.4" fill="var(--card-color)"/><circle cx="6.4" cy="31" r="2.4" fill="var(--card-color)"/><circle cx="4" cy="22" r="2.4" fill="var(--card-color)"/><circle cx="6.4" cy="13" r="2.4" fill="var(--card-color)"/><circle cx="13" cy="6.4" r="2.4" fill="var(--card-color)"/>
+              </svg>
+            </div>
+            <div class="pvc-content">
+              <span class="pvc-virus-label">VIRUS</span>
+              <div class="pvc-virus-name">Virus Hepatitis B</div>
+              <span class="pvc-disease-label">PENYAKIT</span>
+              <div class="pvc-disease-name">Hepatitis B</div>
+              <p class="pvc-desc">Peradangan hati. Menular lewat darah dan cairan tubuh.</p>
+              <div class="pvc-tag-row">
+                <span class="pvc-badge">💉 Darah & Jarum Suntik</span>
+                <span class="pvc-badge">Organ Hati (Hepar)</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- 6. VIRUS RABIES -->
+          <div class="poster-virus-card" style="--card-color:#FF4081" data-tags="vektor">
+            <div class="pvc-icon-wrap">
+              <svg viewBox="0 0 44 44" width="44" height="44" fill="none">
+                <circle cx="22" cy="22" r="11" fill="var(--card-color)" opacity="0.9"/>
+                <circle cx="22" cy="4" r="2.4" fill="var(--card-color)"/><circle cx="31" cy="6.4" r="2.4" fill="var(--card-color)"/><circle cx="37.6" cy="13" r="2.4" fill="var(--card-color)"/><circle cx="40" cy="22" r="2.4" fill="var(--card-color)"/><circle cx="37.6" cy="31" r="2.4" fill="var(--card-color)"/><circle cx="31" cy="37.6" r="2.4" fill="var(--card-color)"/><circle cx="22" cy="40" r="2.4" fill="var(--card-color)"/><circle cx="13" cy="37.6" r="2.4" fill="var(--card-color)"/><circle cx="6.4" cy="31" r="2.4" fill="var(--card-color)"/><circle cx="4" cy="22" r="2.4" fill="var(--card-color)"/><circle cx="6.4" cy="13" r="2.4" fill="var(--card-color)"/><circle cx="13" cy="6.4" r="2.4" fill="var(--card-color)"/>
+              </svg>
+            </div>
+            <div class="pvc-content">
+              <span class="pvc-virus-label">VIRUS</span>
+              <div class="pvc-virus-name">Virus Rabies</div>
+              <span class="pvc-disease-label">PENYAKIT</span>
+              <div class="pvc-disease-name">Rabies</div>
+              <p class="pvc-desc">Menyerang sistem saraf. Menular lewat gigitan hewan yang terinfeksi.</p>
+              <div class="pvc-tag-row">
+                <span class="pvc-badge">🐕 Gigitan Hewan Liar</span>
+                <span class="pvc-badge">Sistem Saraf Pusat</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- 7. VIRUS CAMPAK -->
+          <div class="poster-virus-card" style="--card-color:#00B0FF" data-tags="droplet">
+            <div class="pvc-icon-wrap">
+              <svg viewBox="0 0 44 44" width="44" height="44" fill="none">
+                <circle cx="22" cy="22" r="11" fill="var(--card-color)" opacity="0.9"/>
+                <circle cx="22" cy="4" r="2.4" fill="var(--card-color)"/><circle cx="31" cy="6.4" r="2.4" fill="var(--card-color)"/><circle cx="37.6" cy="13" r="2.4" fill="var(--card-color)"/><circle cx="40" cy="22" r="2.4" fill="var(--card-color)"/><circle cx="37.6" cy="31" r="2.4" fill="var(--card-color)"/><circle cx="31" cy="37.6" r="2.4" fill="var(--card-color)"/><circle cx="22" cy="40" r="2.4" fill="var(--card-color)"/><circle cx="13" cy="37.6" r="2.4" fill="var(--card-color)"/><circle cx="6.4" cy="31" r="2.4" fill="var(--card-color)"/><circle cx="4" cy="22" r="2.4" fill="var(--card-color)"/><circle cx="6.4" cy="13" r="2.4" fill="var(--card-color)"/><circle cx="13" cy="6.4" r="2.4" fill="var(--card-color)"/>
+              </svg>
+            </div>
+            <div class="pvc-content">
+              <span class="pvc-virus-label">VIRUS</span>
+              <div class="pvc-virus-name">Virus Campak</div>
+              <span class="pvc-disease-label">PENYAKIT</span>
+              <div class="pvc-disease-name">Campak</div>
+              <p class="pvc-desc">Demam dan ruam merah. Menular lewat udara dan droplet.</p>
+              <div class="pvc-tag-row">
+                <span class="pvc-badge">🌬️ Udara & Droplet</span>
+                <span class="pvc-badge">Kulit & Ruam Merah</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- 8. HPV -->
+          <div class="poster-virus-card" style="--card-color:#FF9800" data-tags="kontak">
+            <div class="pvc-icon-wrap">
+              <svg viewBox="0 0 44 44" width="44" height="44" fill="none">
+                <circle cx="22" cy="22" r="11" fill="var(--card-color)" opacity="0.9"/>
+                <circle cx="22" cy="4" r="2.4" fill="var(--card-color)"/><circle cx="31" cy="6.4" r="2.4" fill="var(--card-color)"/><circle cx="37.6" cy="13" r="2.4" fill="var(--card-color)"/><circle cx="40" cy="22" r="2.4" fill="var(--card-color)"/><circle cx="37.6" cy="31" r="2.4" fill="var(--card-color)"/><circle cx="31" cy="37.6" r="2.4" fill="var(--card-color)"/><circle cx="22" cy="40" r="2.4" fill="var(--card-color)"/><circle cx="13" cy="37.6" r="2.4" fill="var(--card-color)"/><circle cx="6.4" cy="31" r="2.4" fill="var(--card-color)"/><circle cx="4" cy="22" r="2.4" fill="var(--card-color)"/><circle cx="6.4" cy="13" r="2.4" fill="var(--card-color)"/><circle cx="13" cy="6.4" r="2.4" fill="var(--card-color)"/>
+              </svg>
+            </div>
+            <div class="pvc-content">
+              <span class="pvc-virus-label">VIRUS</span>
+              <div class="pvc-virus-name">HPV</div>
+              <span class="pvc-disease-label">PENYAKIT</span>
+              <div class="pvc-disease-name">Kanker Serviks</div>
+              <p class="pvc-desc">Sebagian tipe HPV memicu kanker leher rahim. Dapat dicegah dengan vaksin.</p>
+              <div class="pvc-tag-row">
+                <span class="pvc-badge">🛡️ Dapat Dicegah Vaksin</span>
+                <span class="pvc-badge">Leher Rahim (Serviks)</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- 9. VARICELLA-ZOSTER -->
+          <div class="poster-virus-card" style="--card-color:#00BFA5" data-tags="droplet kontak">
+            <div class="pvc-icon-wrap">
+              <svg viewBox="0 0 44 44" width="44" height="44" fill="none">
+                <circle cx="22" cy="22" r="11" fill="var(--card-color)" opacity="0.9"/>
+                <circle cx="22" cy="4" r="2.4" fill="var(--card-color)"/><circle cx="31" cy="6.4" r="2.4" fill="var(--card-color)"/><circle cx="37.6" cy="13" r="2.4" fill="var(--card-color)"/><circle cx="40" cy="22" r="2.4" fill="var(--card-color)"/><circle cx="37.6" cy="31" r="2.4" fill="var(--card-color)"/><circle cx="31" cy="37.6" r="2.4" fill="var(--card-color)"/><circle cx="22" cy="40" r="2.4" fill="var(--card-color)"/><circle cx="13" cy="37.6" r="2.4" fill="var(--card-color)"/><circle cx="6.4" cy="31" r="2.4" fill="var(--card-color)"/><circle cx="4" cy="22" r="2.4" fill="var(--card-color)"/><circle cx="6.4" cy="13" r="2.4" fill="var(--card-color)"/><circle cx="13" cy="6.4" r="2.4" fill="var(--card-color)"/>
+              </svg>
+            </div>
+            <div class="pvc-content">
+              <span class="pvc-virus-label">VIRUS</span>
+              <div class="pvc-virus-name">Varicella-zoster</div>
+              <span class="pvc-disease-label">PENYAKIT</span>
+              <div class="pvc-disease-name">Cacar Air</div>
+              <p class="pvc-desc">Lenting berisi cairan yang gatal. Menular lewat udara dan kontak.</p>
+              <div class="pvc-tag-row">
+                <span class="pvc-badge">🌬️ Udara & Kontak Lenting</span>
+                <span class="pvc-badge">Kulit Berair</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- 10. POLIOVIRUS -->
+          <div class="poster-virus-card" style="--card-color:#FF6E40" data-tags="oral">
+            <div class="pvc-icon-wrap">
+              <svg viewBox="0 0 44 44" width="44" height="44" fill="none">
+                <circle cx="22" cy="22" r="11" fill="var(--card-color)" opacity="0.9"/>
+                <circle cx="22" cy="4" r="2.4" fill="var(--card-color)"/><circle cx="31" cy="6.4" r="2.4" fill="var(--card-color)"/><circle cx="37.6" cy="13" r="2.4" fill="var(--card-color)"/><circle cx="40" cy="22" r="2.4" fill="var(--card-color)"/><circle cx="37.6" cy="31" r="2.4" fill="var(--card-color)"/><circle cx="31" cy="37.6" r="2.4" fill="var(--card-color)"/><circle cx="22" cy="40" r="2.4" fill="var(--card-color)"/><circle cx="13" cy="37.6" r="2.4" fill="var(--card-color)"/><circle cx="6.4" cy="31" r="2.4" fill="var(--card-color)"/><circle cx="4" cy="22" r="2.4" fill="var(--card-color)"/><circle cx="6.4" cy="13" r="2.4" fill="var(--card-color)"/><circle cx="13" cy="6.4" r="2.4" fill="var(--card-color)"/>
+              </svg>
+            </div>
+            <div class="pvc-content">
+              <span class="pvc-virus-label">VIRUS</span>
+              <div class="pvc-virus-name">Poliovirus</div>
+              <span class="pvc-disease-label">PENYAKIT</span>
+              <div class="pvc-disease-name">Polio</div>
+              <p class="pvc-desc">Dapat menyebabkan kelumpuhan. Menular lewat air dan makanan tercemar.</p>
+              <div class="pvc-tag-row">
+                <span class="pvc-badge">🥗 Fekal-Oral / Makanan</span>
+                <span class="pvc-badge">Kelumpuhan Otot</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <div id="materi-empty-msg" style="display:none;text-align:center;padding:30px;background:var(--card);border-radius:var(--radius);border:1.5px dashed var(--line);margin-bottom:14px">
+          <p style="font-size:1.1rem;color:var(--mute);margin:0">🔍 Tidak ditemukan virus atau penyakit yang sesuai kata kunci pencarian.</p>
+        </div>
+
+        <!-- Banner Pencegahan Sesuai Poster -->
+        <div class="poster-footer-notice">
+          <span style="font-size:1.6rem">🛡️</span>
+          <div>
+            <b style="color:var(--ac);display:block;font-size:0.98rem;margin-bottom:2px">Protokol Pencegahan Edukasi Kesehatan:</b>
+            <span>Cuci tangan dengan sabun, ikuti jadwal vaksinasi, dan periksakan diri ke tenaga kesehatan bila bergejala.</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- VIEW 2: POSTER ASLI (HD IMAGE PREVIEW) -->
+      <div id="materi-view-poster" style="display:none">
+        <div class="poster-img-preview-box">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;flex-wrap:wrap;gap:8px">
+            <span class="chip" style="--c:var(--ac)">🖼️ Berkas Asli: Poster Virus.pdf</span>
+            <div style="display:flex;gap:8px">
+              <a href="poster_virus.png" target="_blank" class="btn btn-sm">🔍 Lihat Gambar Penuh</a>
+              <a href="Poster Virus.pdf" download class="btn btn-sm" style="background:var(--card-sub);color:var(--ink);border:1px solid var(--line)">📥 Unduh PDF</a>
+            </div>
+          </div>
+          <img src="poster_virus.png" alt="Poster Edukasi Kesehatan: Virus & Penyakit yang Ditimbulkannya" class="poster-img-element" />
+          <p class="mute" style="margin-top:10px;font-size:0.85rem">Poster digital resolusi tinggi 2084x3250 piksel diekstrak langsung dari dokumen resmi <code>Poster Virus.pdf</code>.</p>
+        </div>
+      </div>
+
+      <!-- VIEW 3: KONSEP BIOLOGI & BIOTEKNOLOGI -->
+      <div id="materi-view-theory" style="display:none">
+        <div style="display:grid;gap:12px">
+          <div class="card" style="border-left:6px solid var(--ac)">
+            <h3 style="color:var(--ac)">1. Karakteristik & Siklus Reproduksi Virus</h3>
+            <p>Virus adalah partikel aseluler (bukan sel) dan parasit obligat intraseluler. Hanya memiliki satu jenis asam nukleat (DNA atau RNA) yang diselubungi kapsid protein.</p>
+            <ul style="margin-left:20px;line-height:1.6;color:var(--mute)">
+              <li><b>Siklus Litik:</b> Virus memperbanyak diri cepat dan melisiskan sel inang. Terdiri dari fase Adsorpsi, Penetrasi, Replikasi/Sintesis, Perakitan, dan Lisis.</li>
+              <li><b>Siklus Lisogenik:</b> Asam nukleat virus menyisip ke genom inang membentuk <i>profag</i> tanpa langsung mematikan inang, lalu ikut membelah saat sel inang bermitosis.</li>
+            </ul>
+          </div>
+
+          <div class="card" style="border-left:6px solid var(--bad)">
+            <h3 style="color:var(--bad)">2. Peranan Merugikan (Patogen Manusia, Hewan & Tumbuhan)</h3>
+            <ul style="margin-left:20px;line-height:1.6;color:var(--mute)">
+              <li><b>Manusia:</b> Influenza, SARS-CoV-2, HIV, Dengue, Hepatitis B, Rabies, Campak, HPV, Varicella, Poliovirus (Lihat 10 kartu interaktif).</li>
+              <li><b>Hewan:</b> H5N1 (Flu Burung pada unggas), FMDV (Penyakit Mulut & Kuku pada ternak sapi), Rhabdovirus (Rabies anjing/kucing).</li>
+              <li><b>Tumbuhan:</b> TMV (Bercak mosaik tembakau), Tungro (Kerdil pada tanaman padi oleh wereng cokelat), TYLCV (Kuning keriting cabai/tomat).</li>
+            </ul>
+          </div>
+
+          <div class="card" style="border-left:6px solid var(--ok)">
+            <h3 style="color:var(--ok)">3. Peranan Menguntungkan (Bioteknologi Modern)</h3>
+            <ul style="margin-left:20px;line-height:1.6;color:var(--mute)">
+              <li><b>Vaksin Rekombinan & mRNA:</b> Melatih sel memori limfosit B & T mengenali antigen tanpa menyebabkan sakit berat.</li>
+              <li><b>Vektor Terapi Gen:</b> Virus yang dilemahkan/direkayasa digunakan sebagai kurir untuk menyisipkan gen normal ke penderita kelainan genetik.</li>
+              <li><b>Terapi Bakteriofag:</b> Menggunakan virus fag pemangsa bakteri untuk mengatasi infeksi bakteri resisten antibiotik (*Superbug*).</li>
+              <li><b>Bio-Insektisida:</b> Baculovirus digunakan sebagai pengendali hama ulat ramah lingkungan tanpa pestisida kimia.</li>
+            </ul>
+          </div>
+
+          <div class="card" style="border-left:6px solid var(--gold)">
+            <h3 style="color:var(--gold)">4. Mengapa Antibiotik Gagal Membunuh Virus?</h3>
+            <p class="mute" style="margin:0">Antibiotik bekerja merusak dinding sel peptidoglikan, menghambat sintesis protein pada ribosom 70S, atau metabolisme bakteri. Karena virus <b>bersifat aseluler, tidak memiliki dinding sel, sitoplasma, maupun ribosom</b>, antibiotik sama sekali tidak efektif. Pencegahan paling efektif adalah <b>vaksinasi dan PHBS (Perilaku Hidup Bersih & Sehat)</b>.</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Tombol Cepat Menuju LKPD -->
+    <div style="text-align:center;margin-top:10px;flex-shrink:0">
+      <button class="btn" onclick="switchNav('lkpd')">🖐️ Mulai Tantangan LKPD Papan Tulis (4 Kelompok) ➔</button>
+    </div>
+  </section>
+
+  <!-- =====================================================
+       HALAMAN 3: LKPD INTERAKTIF PAPAN TULIS MULTI-TOUCH
+       ===================================================== -->
+  <section id="section-lkpd" class="site-section active">
+    
+    <!-- Ultra-Slim Status Bar Papan Tulis (Tinggi 44px) -->
+    <div class="smartboard-top-bar">
+      <div class="smartboard-title">
+        <span class="live-dot"></span>
+        <span>LKPD Multi-Touch</span>
+      </div>
+
+      <!-- Skor Ringkas 4 Kelompok -->
+      <div class="smartboard-chips-row">
+        <div class="sb-chip" style="--c:var(--t0)">🔴 <span id="chip-name-0">K1</span>: <b id="top-pts-0">0 pts</b></div>
+        <div class="sb-chip" style="--c:var(--t1)">🟢 <span id="chip-name-1">K2</span>: <b id="top-pts-1">0 pts</b></div>
+        <div class="sb-chip" style="--c:var(--t2)">🟡 <span id="chip-name-2">K3</span>: <b id="top-pts-2">0 pts</b></div>
+        <div class="sb-chip" style="--c:var(--t3)">🟣 <span id="chip-name-3">K4</span>: <b id="top-pts-3">0 pts</b></div>
+      </div>
+
+      <!-- Timer Pengerjaan & Pengaturan Penalti -->
+      <div class="smartboard-timer-box">
+        <button class="timer-play-btn" id="btn-timer-toggle" onclick="toggleTimer()" title="Mulai / Jeda Waktu">▶️</button>
+        <div class="timer-display" id="timer-display" onclick="openTimerModal()" title="Klik untuk ubah waktu">10:00</div>
+        <button class="timer-btn-sm" onclick="openTimerModal()" title="Atur durasi waktu">⚙️ Waktu</button>
+        <span class="penalty-tag" id="penalty-badge" onclick="openTimerModal()" title="Pengurangan nilai jawaban salah">⚠️ Salah: -5 pts</span>
+      </div>
+
+      <!-- Kontrol Layout & Aksi -->
+      <div class="smartboard-actions">
+        <button class="tool-btn music-active" id="btn-music-toggle" onclick="toggleBgMusic()" title="Musik Latar: Dua Lipa - Training Season">🎵 <span id="music-btn-label">Musik: ON</span></button>
+        <div class="layout-switcher">
+          <button class="layout-btn active" id="btn-layout-cols" onclick="setLayoutMode('cols')">▥ 4 Kolom</button>
+          <button class="layout-btn" id="btn-layout-grid" onclick="setLayoutMode('grid')">🔲 Grid 2x2</button>
+          <button class="layout-btn" id="btn-layout-tab" onclick="setLayoutMode('tab')">📑 Tab</button>
+        </div>
+        <button class="tool-btn" onclick="resetAllTeams()" title="Reset Nilai & Misi">🔄</button>
+        <button class="tool-btn" onclick="window.print()" title="Cetak Rekap">🖨️</button>
+      </div>
+    </div>
+
+    <!-- Tab Bar (Hanya muncul jika mode tab aktif) -->
+    <div class="tab-select-bar" id="tab-bar-wrap">
+      <button class="tab-sel-btn active" style="--c:var(--t0)" onclick="selectTeamTab(0)">🔴 Kelompok 1</button>
+      <button class="tab-sel-btn" style="--c:var(--t1)" onclick="selectTeamTab(1)">🟢 Kelompok 2</button>
+      <button class="tab-sel-btn" style="--c:var(--t2)" onclick="selectTeamTab(2)">🟡 Kelompok 3</button>
+      <button class="tab-sel-btn" style="--c:var(--t3)" onclick="selectTeamTab(3)">🟣 Kelompok 4</button>
+    </div>
+
+    <!-- AREA WORKSPACE: 4 PANEL SEIMBANG TANPA SCROLL -->
+    <div class="lkpd-workspace">
+      <div class="lkpd-panels-grid" id="panels-container">
+        
+        <!-- Panel 1: Ruby Rose -->
+        <div class="team-panel tab-active" id="panel-0" style="--c:var(--t0);--c-glow:var(--t0-glow);--c-bg:var(--t0-bg)">
+          <div class="panel-header">
+            <div class="panel-title-area">
+              <div class="panel-team-avatar">1</div>
+              <div class="panel-team-name" id="p-name-0">Kelompok 1</div>
+            </div>
+            <div class="panel-score-badge" id="p-pts-0">0 pts</div>
+            <span class="panel-mission-badge" id="p-badge-0">Misi 1</span>
+            <div class="teacher-mini-adj">
+              <button onclick="adjScore(0, -5)" title="Kurang 5 poin">−</button>
+              <button onclick="adjScore(0, 5)" title="Tambah 5 poin">+</button>
+            </div>
+          </div>
+          <div class="panel-body" id="p-body-0"></div>
+        </div>
+
+        <!-- Panel 2: Emerald Teal -->
+        <div class="team-panel" id="panel-1" style="--c:var(--t1);--c-glow:var(--t1-glow);--c-bg:var(--t1-bg)">
+          <div class="panel-header">
+            <div class="panel-title-area">
+              <div class="panel-team-avatar">2</div>
+              <div class="panel-team-name" id="p-name-1">Kelompok 2</div>
+            </div>
+            <div class="panel-score-badge" id="p-pts-1">0 pts</div>
+            <span class="panel-mission-badge" id="p-badge-1">Misi 1</span>
+            <div class="teacher-mini-adj">
+              <button onclick="adjScore(1, -5)" title="Kurang 5 poin">−</button>
+              <button onclick="adjScore(1, 5)" title="Tambah 5 poin">+</button>
+            </div>
+          </div>
+          <div class="panel-body" id="p-body-1"></div>
+        </div>
+
+        <!-- Panel 3: Solar Amber -->
+        <div class="team-panel" id="panel-2" style="--c:var(--t2);--c-glow:var(--t2-glow);--c-bg:var(--t2-bg)">
+          <div class="panel-header">
+            <div class="panel-title-area">
+              <div class="panel-team-avatar">3</div>
+              <div class="panel-team-name" id="p-name-2">Kelompok 3</div>
+            </div>
+            <div class="panel-score-badge" id="p-pts-2">0 pts</div>
+            <span class="panel-mission-badge" id="p-badge-2">Misi 1</span>
+            <div class="teacher-mini-adj">
+              <button onclick="adjScore(2, -5)" title="Kurang 5 poin">−</button>
+              <button onclick="adjScore(2, 5)" title="Tambah 5 poin">+</button>
+            </div>
+          </div>
+          <div class="panel-body" id="p-body-2"></div>
+        </div>
+
+        <!-- Panel 4: Cyber Violet -->
+        <div class="team-panel" id="panel-3" style="--c:var(--t3);--c-glow:var(--t3-glow);--c-bg:var(--t3-bg)">
+          <div class="panel-header">
+            <div class="panel-title-area">
+              <div class="panel-team-avatar">4</div>
+              <div class="panel-team-name" id="p-name-3">Kelompok 4</div>
+            </div>
+            <div class="panel-score-badge" id="p-pts-3">0 pts</div>
+            <span class="panel-mission-badge" id="p-badge-3">Misi 1</span>
+            <div class="teacher-mini-adj">
+              <button onclick="adjScore(3, -5)" title="Kurang 5 poin">−</button>
+              <button onclick="adjScore(3, 5)" title="Tambah 5 poin">+</button>
+            </div>
+          </div>
+          <div class="panel-body" id="p-body-3"></div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- =====================================================
+       HALAMAN 4: GALERI MORFOLOGI VIRUS
+       ===================================================== -->
+  <section id="section-galeri" class="site-section">
+    <div style="margin-bottom:14px">
+      <span class="chip" style="--c:var(--ac)">Galeri Morfologi</span>
+      <h2>Visualisasi 4 Bentuk Morfologi Virus</h2>
+    </div>
+
+    <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(240px, 1fr));gap:12px;overflow-y:auto">
+      <div class="card" style="text-align:center">
+        <svg viewBox="0 0 100 120" fill="none" style="width:90px;height:90px;margin:0 auto 8px">
+          <path d="M50 10 L75 25 L75 55 L50 70 L25 55 L25 25 Z" stroke="var(--ac)" stroke-width="2.5" fill="color-mix(in srgb, var(--ac) 20%, transparent)" />
+          <path d="M38 32 Q50 24 62 32 Q50 48 38 40" stroke="var(--ac)" stroke-width="2" />
+          <rect x="46" y="70" width="8" height="20" rx="3" fill="var(--ac)" />
+          <ellipse cx="50" cy="90" rx="9" ry="4" fill="var(--ink)" />
+          <path d="M43 91 L25 115 M47 92 L35 118 M53 92 L65 118 M57 91 L75 115" stroke="var(--ac)" stroke-width="2.2" stroke-linecap="round" />
+        </svg>
+        <b style="font-size:1.05rem;display:block">1. Bakteriofag T4 (Kompleks)</b>
+        <p class="mute" style="font-size:0.84rem;margin-top:4px">Kepala ikosahedral (DNA), leher kontraktil, lempeng dasar, dan serabut ekor.</p>
+      </div>
+
+      <div class="card" style="text-align:center">
+        <svg viewBox="0 0 120 120" fill="none" style="width:90px;height:90px;margin:0 auto 8px">
+          <circle cx="60" cy="60" r="36" stroke="var(--t0)" stroke-width="3" fill="color-mix(in srgb, var(--t0) 18%, transparent)" />
+          <g stroke="var(--t0)" stroke-width="2.5" stroke-linecap="round">
+            <line x1="60" y1="24" x2="60" y2="10" /><circle cx="60" cy="9" r="4" fill="var(--t0)" />
+            <line x1="60" y1="96" x2="60" y2="110" /><circle cx="60" cy="111" r="4" fill="var(--t0)" />
+            <line x1="24" y1="60" x2="10" y2="60" /><circle cx="9" cy="60" r="4" fill="var(--t0)" />
+            <line x1="96" y1="60" x2="110" y2="60" /><circle cx="111" cy="60" r="4" fill="var(--t0)" />
+          </g>
+          <path d="M48 48 Q60 40 72 48 Q78 60 70 68" stroke="var(--t0)" stroke-width="2.2" />
+        </svg>
+        <b style="font-size:1.05rem;display:block">2. Coronavirus (Berselubung)</b>
+        <p class="mute" style="font-size:0.84rem;margin-top:4px">Bulat beramplop lipid dengan glikoprotein spike penempel reseptor ACE2.</p>
+      </div>
+
+      <div class="card" style="text-align:center">
+        <svg viewBox="0 0 90 120" fill="none" style="width:90px;height:90px;margin:0 auto 8px">
+          <rect x="25" y="10" width="40" height="100" rx="10" stroke="var(--t2)" stroke-width="2.5" fill="color-mix(in srgb, var(--t2) 20%, transparent)" />
+          <line x1="25" y1="30" x2="65" y2="30" stroke="var(--t2)" stroke-width="2" />
+          <line x1="25" y1="50" x2="65" y2="50" stroke="var(--t2)" stroke-width="2" />
+          <line x1="25" y1="70" x2="65" y2="70" stroke="var(--t2)" stroke-width="2" />
+          <line x1="25" y1="90" x2="65" y2="90" stroke="var(--t2)" stroke-width="2" />
+          <path d="M45 15 V105" stroke="var(--gold)" stroke-width="2.5" stroke-dasharray="3 3" />
+        </svg>
+        <b style="font-size:1.05rem;display:block">3. TMV (Batang Heliks)</b>
+        <p class="mute" style="font-size:0.84rem;margin-top:4px">Kapsomer protein tersusun melingkari sumbu heliks pelindung RNA.</p>
+      </div>
+
+      <div class="card" style="text-align:center">
+        <svg viewBox="0 0 100 100" fill="none" style="width:90px;height:90px;margin:0 auto 8px">
+          <polygon points="50,15 80,32 80,68 50,85 20,68 20,32" stroke="var(--t3)" stroke-width="2.5" fill="color-mix(in srgb, var(--t3) 20%, transparent)" />
+          <line x1="50" y1="15" x2="50" y2="50" stroke="var(--t3)" stroke-width="1.8" />
+          <line x1="80" y1="32" x2="50" y2="50" stroke="var(--t3)" stroke-width="1.8" />
+          <line x1="80" y1="68" x2="50" y2="50" stroke="var(--t3)" stroke-width="1.8" />
+          <line x1="50" y1="85" x2="50" y2="50" stroke="var(--t3)" stroke-width="1.8" />
+          <line x1="20" y1="68" x2="50" y2="50" stroke="var(--t3)" stroke-width="1.8" />
+          <line x1="20" y1="32" x2="50" y2="50" stroke="var(--t3)" stroke-width="1.8" />
+        </svg>
+        <b style="font-size:1.05rem;display:block">4. Adenovirus (Ikosahedral)</b>
+        <p class="mute" style="font-size:0.84rem;margin-top:4px">Polihedron simetris 20 sisi segitiga tanpa selubung membran lipid.</p>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<script>
+// Router Navigasi
+function switchNav(sec) {
+  ['beranda','materi','lkpd','galeri'].forEach(function(s) {
+    var el = document.getElementById('section-' + s);
+    var btn = document.getElementById('btn-nav-' + s);
+    if (el) el.classList.remove('active');
+    if (btn) btn.classList.remove('active');
+  });
+  var t = document.getElementById('section-' + sec);
+  var b = document.getElementById('btn-nav-' + sec);
+  if (t) t.classList.add('active');
+  if (b) b.classList.add('active');
+
+  if (sec !== 'lkpd') {
+    pauseBgMusic();
+  } else if (timerRunning && musicEnabled) {
+    playBgMusic();
+  }
+}
+
+function toggleTheme() {
+  var c = document.documentElement.getAttribute('data-theme');
+  document.documentElement.setAttribute('data-theme', c === 'light' ? 'dark' : 'light');
+}
+
+function toggleFullscreen() {
+  if (!document.fullscreenElement) {
+    document.documentElement.requestFullscreen().catch(function() {});
+  } else {
+    document.exitFullscreen().catch(function() {});
+  }
+}
+
+/* =========================================================
+   MATERI & POSTER VIRUS INTERACTION
+   ========================================================= */
+function switchMateriTab(tabId) {
+  var views = ['cards', 'poster', 'theory'];
+  views.forEach(function(v) {
+    var el = document.getElementById('materi-view-' + v);
+    var btn = document.getElementById('btn-mtab-' + v);
+    if (el) el.style.display = (v === tabId ? 'block' : 'none');
+    if (btn) {
+      if (v === tabId) btn.classList.add('active');
+      else btn.classList.remove('active');
+    }
+  });
+}
+
+function filterByTag(tag, btn) {
+  document.querySelectorAll('.poster-chip-btn').forEach(function(b) { b.classList.remove('active'); });
+  if (btn) btn.classList.add('active');
+  var query = (document.getElementById('materi-search-input') ? document.getElementById('materi-search-input').value.toLowerCase().trim() : '');
+  applyMateriFilter(tag, query);
+}
+
+function filterMateriCards() {
+  var activeBtn = document.querySelector('.poster-chip-btn.active');
+  var tag = activeBtn ? activeBtn.getAttribute('data-tag') || 'all' : 'all';
+  var query = (document.getElementById('materi-search-input') ? document.getElementById('materi-search-input').value.toLowerCase().trim() : '');
+  applyMateriFilter(tag, query);
+}
+
+function applyMateriFilter(tag, query) {
+  var cards = document.querySelectorAll('.poster-virus-card');
+  var visibleCount = 0;
+  cards.forEach(function(card) {
+    var cardTags = card.getAttribute('data-tags') || '';
+    var cardText = card.innerText.toLowerCase();
+    var matchTag = (tag === 'all' || cardTags.indexOf(tag) !== -1);
+    var matchQuery = (!query || cardText.indexOf(query) !== -1);
+    if (matchTag && matchQuery) {
+      card.style.display = 'flex';
+      visibleCount++;
+    } else {
+      card.style.display = 'none';
+    }
+  });
+  var emptyMsg = document.getElementById('materi-empty-msg');
+  if (emptyMsg) emptyMsg.style.display = (visibleCount === 0 ? 'block' : 'none');
+}
+
+/* =========================================================
+   AUDIO SOUND EFFECTS (WEB AUDIO API - 100% OFFLINE)
+   ========================================================= */
+var audioCtx = null;
+function getAudioContext() {
+  if (!audioCtx) {
+    var AudioContext = window.AudioContext || window.webkitAudioContext;
+    if (AudioContext) audioCtx = new AudioContext();
+  }
+  if (audioCtx && audioCtx.state === 'suspended') {
+    audioCtx.resume();
+  }
+  return audioCtx;
+}
+
+function playSound(type) {
+  try {
+    var ctx = getAudioContext();
+    if (!ctx) return;
+    var now = ctx.currentTime;
+    var osc = ctx.createOscillator();
+    var gain = ctx.createGain();
+    osc.connect(gain);
+    gain.connect(ctx.destination);
+
+    if (type === 'wrong') {
+      // Penalti salah: nada turun tajam peringatan
+      osc.type = 'sawtooth';
+      osc.frequency.setValueAtTime(220, now);
+      osc.frequency.exponentialRampToValueAtTime(110, now + 0.22);
+      gain.gain.setValueAtTime(0.2, now);
+      gain.gain.exponentialRampToValueAtTime(0.01, now + 0.22);
+      osc.start(now);
+      osc.stop(now + 0.22);
+    } else if (type === 'correct') {
+      // Benar: nada tinggi cerah
+      osc.type = 'triangle';
+      osc.frequency.setValueAtTime(587.33, now); // D5
+      osc.frequency.setValueAtTime(880, now + 0.08); // A5
+      gain.gain.setValueAtTime(0.25, now);
+      gain.gain.exponentialRampToValueAtTime(0.01, now + 0.35);
+      osc.start(now);
+      osc.stop(now + 0.35);
+    } else if (type === 'timeout') {
+      // Waktu habis: alarm 3 ketukan
+      osc.type = 'square';
+      osc.frequency.setValueAtTime(523.25, now);
+      osc.frequency.setValueAtTime(392, now + 0.2);
+      osc.frequency.setValueAtTime(523.25, now + 0.4);
+      osc.frequency.setValueAtTime(392, now + 0.6);
+      gain.gain.setValueAtTime(0.25, now);
+      gain.gain.exponentialRampToValueAtTime(0.01, now + 0.85);
+      osc.start(now);
+      osc.stop(now + 0.85);
+    }
+  } catch(e) {}
+}
+
+/* =========================================================
+   BACKGROUND MUSIC ENGINE (DUA LIPA - TRAINING SEASON)
+   ========================================================= */
+var musicEnabled = true;
+var musicVolume = 0.4;
+
+function playBgMusic() {
+  if (!musicEnabled) return;
+  var aud = document.getElementById('bg-music');
+  if (!aud) return;
+  aud.volume = musicVolume;
+  aud.play().then(function() {
+    updateMusicUI(true);
+  }).catch(function(e) {
+    // Autoplay prevented until user gesture
+  });
+}
+
+function pauseBgMusic() {
+  var aud = document.getElementById('bg-music');
+  if (!aud) return;
+  aud.pause();
+  updateMusicUI(false);
+}
+
+function stopBgMusic() {
+  var aud = document.getElementById('bg-music');
+  if (!aud) return;
+  aud.pause();
+  aud.currentTime = 0;
+  updateMusicUI(false);
+}
+
+function toggleBgMusic() {
+  var aud = document.getElementById('bg-music');
+  if (!aud) return;
+  if (aud.paused) {
+    musicEnabled = true;
+    aud.volume = musicVolume;
+    aud.play().then(function() {
+      updateMusicUI(true);
+    }).catch(function() {});
+  } else {
+    musicEnabled = false;
+    aud.pause();
+    updateMusicUI(false);
+  }
+}
+
+function setMusicVolume(val) {
+  musicVolume = parseFloat(val);
+  var aud = document.getElementById('bg-music');
+  if (aud) aud.volume = musicVolume;
+  var volLabel = document.getElementById('vol-label-text');
+  if (volLabel) volLabel.innerText = Math.round(musicVolume * 100) + '%';
+  var inp = document.getElementById('inp-music-vol');
+  if (inp && inp.value != val) inp.value = val;
+}
+
+function updateMusicUI(isPlaying) {
+  var btn = document.getElementById('btn-music-toggle');
+  var lbl = document.getElementById('music-btn-label');
+  if (lbl) {
+    lbl.innerText = isPlaying ? 'Musik: ON 🎵' : 'Musik: OFF 🔇';
+  }
+  if (btn) {
+    if (isPlaying) {
+      btn.classList.add('music-active');
+    } else {
+      btn.classList.remove('music-active');
+    }
+  }
+}
+
+/* =========================================================
+   COUNTDOWN TIMER ENGINE & PENALTI ATURAN
+   ========================================================= */
+var TIMER_TOTAL_SEC = 600; // 10 menit default
+var timerRemainingSec = 600;
+var timerRunning = false;
+var timerInterval = null;
+var PENALTY_PTS = 5; // Pengurangan nilai default jika salah: -5 poin
+
+function formatTimer(sec) {
+  var m = Math.floor(sec / 60);
+  var s = sec % 60;
+  return (m < 10 ? '0' : '') + m + ':' + (s < 10 ? '0' : '') + s;
+}
+
+function updateTimerDisplay() {
+  var el = document.getElementById('timer-display');
+  if (!el) return;
+  el.innerText = formatTimer(timerRemainingSec);
+  if (timerRemainingSec <= 60 && timerRemainingSec > 0) {
+    el.classList.add('warning');
+  } else {
+    el.classList.remove('warning');
+  }
+}
+
+function toggleTimer() {
+  if (timerRunning) {
+    pauseTimer();
+  } else {
+    startTimer();
+  }
+}
+
+function startTimer() {
+  if (timerRunning) return;
+  if (timerRemainingSec <= 0) {
+    timerRemainingSec = TIMER_TOTAL_SEC;
+  }
+  timerRunning = true;
+  var btn = document.getElementById('btn-timer-toggle');
+  if (btn) btn.innerText = '⏸️';
+  playBgMusic();
+  clearInterval(timerInterval);
+  timerInterval = setInterval(function() {
+    if (timerRemainingSec > 0) {
+      timerRemainingSec--;
+      updateTimerDisplay();
+      if (timerRemainingSec === 0) {
+        onTimerComplete();
+      }
+    }
+  }, 1000);
+}
+
+function pauseTimer() {
+  timerRunning = false;
+  clearInterval(timerInterval);
+  var btn = document.getElementById('btn-timer-toggle');
+  if (btn) btn.innerText = '▶️';
+  pauseBgMusic();
+}
+
+function resetTimer() {
+  pauseTimer();
+  stopBgMusic();
+  timerRemainingSec = TIMER_TOTAL_SEC;
+  updateTimerDisplay();
+}
+
+function onTimerComplete() {
+  pauseTimer();
+  stopBgMusic();
+  playSound('timeout');
+  triggerConfetti();
+  showTimeoutModal();
+}
+
+function setTimerDurationMinutes(mins) {
+  mins = parseInt(mins, 10);
+  if (isNaN(mins) || mins < 1) mins = 1;
+  TIMER_TOTAL_SEC = mins * 60;
+  timerRemainingSec = TIMER_TOTAL_SEC;
+  updateTimerDisplay();
+}
+
+function adjustTimerMinutes(delta) {
+  var currentMins = Math.floor(timerRemainingSec / 60) + delta;
+  if (currentMins < 1) currentMins = 1;
+  timerRemainingSec = currentMins * 60;
+  TIMER_TOTAL_SEC = Math.max(TIMER_TOTAL_SEC, timerRemainingSec);
+  updateTimerDisplay();
+}
+
+function flashScorePenalty(teamIdx) {
+  var el = document.getElementById('p-pts-' + teamIdx);
+  var topEl = document.getElementById('top-pts-' + teamIdx);
+  if (el) {
+    el.classList.add('score-penalized');
+    setTimeout(function() { el.classList.remove('score-penalized'); }, 600);
+  }
+  if (topEl) {
+    topEl.classList.add('score-penalized');
+    setTimeout(function() { topEl.classList.remove('score-penalized'); }, 600);
+  }
+}
+
+function cyclePenalty() {
+  var penalties = [5, 10, 2, 0];
+  var idx = penalties.indexOf(PENALTY_PTS);
+  setPenaltyPts(penalties[(idx + 1) % penalties.length]);
+}
+
+function setPenaltyPts(pts) {
+  PENALTY_PTS = pts;
+  updatePenaltyBadge();
+  highlightPenaltyBtn();
+}
+
+function updatePenaltyBadge() {
+  var b = document.getElementById('penalty-badge');
+  if (b) {
+    if (PENALTY_PTS === 0) {
+      b.innerText = '🛡️ Penalti: 0';
+      b.style.color = 'var(--ok)';
+    } else {
+      b.innerText = '⚠️ Salah: -' + PENALTY_PTS + ' pts';
+      b.style.color = '#ff9999';
+    }
+  }
+}
+
+function openTimerModal() {
+  var modal = document.getElementById('modal-timer-settings');
+  if (modal) {
+    var inp = document.getElementById('inp-custom-mins');
+    if (inp) inp.value = Math.ceil(timerRemainingSec / 60);
+    highlightPenaltyBtn();
+    modal.style.display = 'flex';
+  }
+}
+
+function closeTimerModal() {
+  var modal = document.getElementById('modal-timer-settings');
+  if (modal) modal.style.display = 'none';
+}
+
+function highlightPenaltyBtn() {
+  [0, 2, 5, 10].forEach(function(p) {
+    var b = document.getElementById('btn-pen-' + p);
+    if (b) {
+      if (PENALTY_PTS === p) {
+        b.style.background = 'var(--ac)';
+        b.style.color = 'var(--on)';
+        b.style.borderColor = 'var(--ac)';
+      } else {
+        b.style.background = 'var(--card-sub)';
+        b.style.color = 'var(--ink)';
+        b.style.borderColor = 'var(--line)';
+      }
+    }
+  });
+}
+
+function showTimeoutModal() {
+  var modal = document.getElementById('modal-timeout');
+  var box = document.getElementById('timeout-standings-box');
+  if (!modal || !box) return;
+
+  var sorted = TEAMS.slice().sort(function(a, b) { return b.score - a.score; });
+  var icons = ['🥇', '🥈', '🥉', '🎖️'];
+  var h = '<div style="display:grid;gap:8px;text-align:left">';
+  sorted.forEach(function(t, idx) {
+    h += '<div style="display:flex;align-items:center;justify-content:space-between;background:var(--card-sub);border:1.5px solid color-mix(in srgb, var(--t' + t.id + ') 40%, var(--line));border-left:6px solid var(--t' + t.id + ');padding:10px 14px;border-radius:8px">';
+    h += '<div style="display:flex;align-items:center;gap:10px">';
+    h += '<span style="font-size:1.4rem">' + icons[idx] + '</span>';
+    h += '<div><b style="font-size:1.05rem;color:var(--t' + t.id + ')">' + t.name + '</b>' + (t.members ? '<br><small style="color:var(--ink);font-weight:700">👥 ' + t.members + '</small>' : '') + '<br><small class="mute">Progres: ' + (t.step >= 6 ? 'Selesai 🏆' : 'Misi ' + (t.step - 1)) + '</small></div>';
+    h += '</div>';
+    h += '<div style="font-family:Bricolage Grotesque,sans-serif;font-size:1.35rem;font-weight:900;color:var(--ink)">' + t.score + ' <span style="font-size:0.85rem;color:var(--mute)">pts</span></div>';
+    h += '</div>';
+  });
+  h += '</div>';
+  box.innerHTML = h;
+  modal.style.display = 'flex';
+}
+
+function closeTimeoutModal() {
+  var modal = document.getElementById('modal-timeout');
+  if (modal) modal.style.display = 'none';
+}
+
+/* =========================================================
+   LKPD DATA & STATE ENGINE
+   ========================================================= */
+
+var pairs = [
+  ['HIV', 'AIDS (Menyerang CD4+)'],
+  ['Virus Dengue', 'Demam Berdarah (DBD)'],
+  ['Virus Flu', 'Infeksi Saluran Napas'],
+  ['Hepatitis B', 'Kerusakan Sel Hati'],
+  ['Poliovirus', 'Kelumpuhan Motorik'],
+  ['TMV', 'Mosaik Daun Tembakau']
+];
+var ro = [4, 1, 5, 0, 3, 2];
+
+var H = [
+  ['💉', 'Vaksin Generasi Baru', 'Melatih sel memori imun tanpa sakit.'],
+  ['🧬', 'Terapi Gen Presisi', 'Virus kurir pembawa gen sehat.'],
+  ['🎯', 'Bakteriofag On-Target', 'Pembunuh bakteri kebal antibiotik.'],
+  ['🐛', 'Insektisida Hayati', 'Membasmi ulat tanpa merusak lebah.'],
+  ['🔬', 'Viroterapi Kanker', 'Meledakkan sel kanker secara selektif.']
+];
+
+var SC = [
+  {
+    q: 'Puskesmasmu menerima 12 warga demam mendadak & bintik merah, trombosit <100.000. Langkah prioritas?',
+    o: [
+      ['Menunggu 3 hari dulu di rumah.', 0, 'Menunda berisiko Dengue Shock Syndrome fatal.'],
+      ['Lapor Dinkes, cek darah/NS1, infus cairan & edukasi warga.', 1, 'Tepat! Respon cepat membatasi morbiditas.'],
+      ['Beri antibiotik dosis tinggi untuk semua warga.', 0, 'Keliru! Dengue adalah virus; antibiotik tidak mempan.']
+    ]
+  },
+  {
+    q: 'Dengue terkonfirmasi via vektor nyamuk Aedes aegypti. Cara mutlak memutus rantai penularan lingkungan?',
+    o: [
+      ['Fogging sekali lalu selesai.', 0, 'Fogging hanya bunuh nyamuk dewasa, jentik tetap ada.'],
+      ['Gerakan 3M Plus serentak dan pemantauan jentik Jumantik.', 1, 'Tepat! Membasmi sarang jentik memutus siklus hidup nyamuk.'],
+      ['Meliburkan sekolah sebulan penuh.', 0, 'Berlebihan dan tidak menghilangkan sarang nyamuk.']
+    ]
+  }
+];
+
+var Q = [
+  ['Mengapa antibiotik tidak efektif untuk infeksi virus?', ['Ukuran virus terlalu kecil', 'Virus aseluler tanpa dinding sel & metabolisme target antibiotik', 'Virus selalu kebal obat', 'Antibiotik hanya untuk jamur'], 1],
+  ['Prinsip utama kerja vaksin adalah...', ['Mengenalkan antigen dilemahkan agar tubuh membentuk antibodi & sel memori', 'Memasukkan bakteri pemakan virus', 'Mensterilkan tubuh selamanya', 'Menghancurkan sel tubuh'], 0],
+  ['Bakteriofag adalah virus yang menyerang...', ['Sel darah manusia', 'Jaringan tumbuhan', 'Sel bakteri prokariotik', 'Hifa jamur'], 2],
+  ['Baculovirus dimanfaatkan dalam pertanian sebagai...', ['Pupuk organik', 'Insektisida hayati hama ulat', 'Pengawet buah', 'Antibiotik tanaman'], 1],
+  ['Dalam terapi gen, peran utama virus adalah...', ['Penghancur organ tubuh', 'Pengganti vaksin', 'Vektor pembawa gen sehat ke inti sel target', 'Sumber energi sel'], 2]
+];
+
+// STATE 4 KELOMPOK
+var TEAMS = [];
+function initTeams() {
+  TEAMS = [];
+  for (var i = 0; i < 4; i++) {
+    TEAMS.push({
+      id: i,
+      name: 'Kelompok ' + (i + 1),
+      members: '',
+      score: 0,
+      step: 0, // 0=Register, 1=Briefing, 2=Misi1, 3=Misi2, 4=Misi3, 5=Misi4, 6=Selesai
+      m1_done: {},
+      m1_sel: null,
+      m1_msg: '',
+      m2_open: {},
+      m3_idx: 0,
+      m3_choice: null,
+      m4_idx: 0,
+      m4_choice: null,
+      finishedAt: null
+    });
+  }
+}
+initTeams();
+
+var currentLayout = 'cols'; // 'cols' (Default Papan Tulis!), 'grid', 'tab'
+var activeTabTeam = 0;
+
+function setLayoutMode(mode) {
+  currentLayout = mode;
+  ['cols','grid','tab'].forEach(function(m) {
+    var b = document.getElementById('btn-layout-' + m);
+    if (b) b.classList.remove('active');
+  });
+  var btn = document.getElementById('btn-layout-' + mode);
+  if (btn) btn.classList.add('active');
+
+  var container = document.getElementById('panels-container');
+  var tabBar = document.getElementById('tab-bar-wrap');
+
+  container.className = 'lkpd-panels-grid';
+  if (mode === 'grid') {
+    container.classList.add('mode-grid');
+    if (tabBar) tabBar.style.display = 'none';
+  } else if (mode === 'tab') {
+    container.classList.add('mode-tab');
+    if (tabBar) tabBar.style.display = 'flex';
+  } else {
+    // 4 Kolom Berjejer
+    if (tabBar) tabBar.style.display = 'none';
+  }
+  updatePanelsVisibility();
+}
+
+function selectTeamTab(idx) {
+  activeTabTeam = idx;
+  var btns = document.querySelectorAll('.tab-sel-btn');
+  btns.forEach(function(b, i) {
+    if (i === idx) b.classList.add('active');
+    else b.classList.remove('active');
+  });
+  updatePanelsVisibility();
+}
+
+function updatePanelsVisibility() {
+  for (var i = 0; i < 4; i++) {
+    var p = document.getElementById('panel-' + i);
+    if (p) {
+      if (currentLayout === 'tab') {
+        if (i === activeTabTeam) p.classList.add('tab-active');
+        else p.classList.remove('tab-active');
+      } else {
+        p.classList.add('tab-active');
+      }
+    }
+  }
+}
+
+function updateRaceSummary() {
+  TEAMS.forEach(function(t, i) {
+    var topPts = document.getElementById('top-pts-' + i);
+    var chipName = document.getElementById('chip-name-' + i);
+    if (topPts) topPts.innerText = t.score + ' pts';
+    if (chipName) chipName.innerText = t.name;
+  });
+}
+
+function adjScore(teamIdx, delta) {
+  TEAMS[teamIdx].score += delta;
+  if (TEAMS[teamIdx].score < 0) TEAMS[teamIdx].score = 0;
+  renderTeamPanel(teamIdx);
+  updateRaceSummary();
+}
+
+function resetAllTeams() {
+  if (confirm('Mulai ulang perlombaan untuk 4 kelompok dan reset waktu pengerjaan?')) {
+    initTeams();
+    resetTimer();
+    for (var i = 0; i < 4; i++) renderTeamPanel(i);
+    updateRaceSummary();
+  }
+}
+
+/* =========================================================
+   PANEL VIEWS RENDERER (PER KELOMPOK)
+   ========================================================= */
+function renderTeamPanel(i) {
+  var t = TEAMS[i];
+  var nameEl = document.getElementById('p-name-' + i);
+  var ptsEl = document.getElementById('p-pts-' + i);
+  var badgeEl = document.getElementById('p-badge-' + i);
+  var bodyEl = document.getElementById('p-body-' + i);
+
+  if (nameEl) nameEl.innerText = t.name;
+  if (ptsEl) ptsEl.innerText = t.score + ' pts';
+  
+  var badges = ['Daftar', 'Briefing', 'Misi 1', 'Misi 2', 'Misi 3', 'Misi 4', 'Selesai 🏆'];
+  if (badgeEl) badgeEl.innerText = badges[t.step];
+
+  if (!bodyEl) return;
+  var views = [tv0, tv1, tv2, tv3, tv4, tv5, tv6];
+  bodyEl.innerHTML = views[t.step](i);
+}
+
+var kbTargetField = {}; // teamIdx -> 'name' or 'members'
+
+function setKbTarget(teamIdx, field) {
+  kbTargetField[teamIdx] = field;
+  var btnName = document.getElementById('kb-tgt-name-' + teamIdx);
+  var btnMemb = document.getElementById('kb-tgt-memb-' + teamIdx);
+  var inpName = document.getElementById('inp-name-' + teamIdx);
+  var inpMemb = document.getElementById('inp-members-' + teamIdx);
+
+  if (btnName) btnName.classList.toggle('active', field === 'name');
+  if (btnMemb) btnMemb.classList.toggle('active', field === 'members');
+
+  if (field === 'name') {
+    if (inpName) {
+      inpName.style.borderColor = 'var(--t' + teamIdx + ')';
+      inpName.style.boxShadow = '0 0 8px var(--t' + teamIdx + '-glow)';
+    }
+    if (inpMemb) {
+      inpMemb.style.borderColor = 'var(--line)';
+      inpMemb.style.boxShadow = 'none';
+    }
+  } else {
+    if (inpMemb) {
+      inpMemb.style.borderColor = 'var(--t' + teamIdx + ')';
+      inpMemb.style.boxShadow = '0 0 8px var(--t' + teamIdx + '-glow)';
+    }
+    if (inpName) {
+      inpName.style.borderColor = 'var(--line)';
+      inpName.style.boxShadow = 'none';
+    }
+  }
+}
+
+function kbType(teamIdx, char) {
+  var target = kbTargetField[teamIdx] || 'name';
+  var inp = document.getElementById(target === 'name' ? 'inp-name-' + teamIdx : 'inp-members-' + teamIdx);
+  if (!inp) return;
+
+  if (char === 'BACKSPACE') {
+    inp.value = inp.value.slice(0, -1);
+  } else if (char === 'CLEAR') {
+    inp.value = '';
+  } else if (char === 'SPACE') {
+    inp.value += ' ';
+  } else {
+    inp.value += char;
+  }
+
+  // Sync to TEAMS state
+  if (target === 'name') {
+    TEAMS[teamIdx].name = inp.value;
+    var nameEl = document.getElementById('p-name-' + teamIdx);
+    if (nameEl) nameEl.innerText = inp.value || ('Kelompok ' + (teamIdx + 1));
+  } else {
+    TEAMS[teamIdx].members = inp.value;
+  }
+}
+
+// STEP 0: Registrasi Nama Kelompok & Anggota dengan Virtual Keyboard Sendiri
+function tv0(i) {
+  var t = TEAMS[i];
+  var currTarget = kbTargetField[i] || 'name';
+
+  var h = '<div class="panel-step-box" style="display:flex;flex-direction:column;height:100%">';
+  h += '<div>';
+  h += '<h4 style="font-size:0.95rem;margin-bottom:2px;color:var(--t' + i + ')">Registrasi Regu ' + (i + 1) + '</h4>';
+  h += '<p class="mute" style="font-size:0.75rem;margin-bottom:5px">Ketik nama regu & anggota menggunakan keyboard sentuh:</p>';
+  
+  // Field 1: Nama Kelompok
+  h += '<label style="font-size:0.73rem;font-weight:800;color:var(--mute);display:block;margin-bottom:1px">Nama Kelompok / Regu:</label>';
+  h += '<input id="inp-name-' + i + '" maxlength="22" value="' + (t.name || ('Kelompok ' + (i + 1))) + '" onclick="setKbTarget(' + i + ', \'name\')" onfocus="setKbTarget(' + i + ', \'name\')" oninput="TEAMS[' + i + '].name=this.value" style="font-size:0.86rem;padding:5px 8px;margin-bottom:5px;border-left:5px solid var(--t' + i + ');' + (currTarget === 'name' ? 'border-color:var(--t' + i + ');box-shadow:0 0 8px var(--t' + i + '-glow)' : '') + '">';
+
+  // Field 2: Nama Anggota
+  h += '<label style="font-size:0.73rem;font-weight:800;color:var(--mute);display:block;margin-bottom:1px">Nama-Nama Anggota Kelompok:</label>';
+  h += '<input id="inp-members-' + i + '" placeholder="Cth: Andi, Siti, Budi, Rian" value="' + (t.members || '') + '" onclick="setKbTarget(' + i + ', \'members\')" onfocus="setKbTarget(' + i + ', \'members\')" oninput="TEAMS[' + i + '].members=this.value" style="font-size:0.82rem;padding:5px 8px;margin-bottom:5px;border-left:5px solid var(--t' + i + ');' + (currTarget === 'members' ? 'border-color:var(--t' + i + ');box-shadow:0 0 8px var(--t' + i + '-glow)' : '') + '">';
+  h += '</div>';
+
+  // Target Switcher Bar
+  h += '<div class="kb-target-bar">';
+  h += '<button type="button" id="kb-tgt-name-' + i + '" class="kb-target-btn' + (currTarget === 'name' ? ' active' : '') + '" onclick="setKbTarget(' + i + ', \'name\')">📝 Edit Nama Regu</button>';
+  h += '<button type="button" id="kb-tgt-memb-' + i + '" class="kb-target-btn' + (currTarget === 'members' ? ' active' : '') + '" onclick="setKbTarget(' + i + ', \'members\')">👥 Edit Anggota</button>';
+  h += '</div>';
+
+  // Keyboard Virtual Sentuh Regu i
+  h += '<div class="panel-kb-wrap" style="--c:var(--t' + i + ')">';
+  
+  // Row 1: Numbers
+  var numRow = ['1','2','3','4','5','6','7','8','9','0'];
+  h += '<div class="kb-row">';
+  numRow.forEach(function(k) {
+    h += '<button type="button" class="kb-key" onclick="kbType(' + i + ', \'' + k + '\')">' + k + '</button>';
+  });
+  h += '</div>';
+
+  // Row 2: QWERTY
+  var r1 = ['Q','W','E','R','T','Y','U','I','O','P'];
+  h += '<div class="kb-row">';
+  r1.forEach(function(k) {
+    h += '<button type="button" class="kb-key" onclick="kbType(' + i + ', \'' + k + '\')">' + k + '</button>';
+  });
+  h += '</div>';
+
+  // Row 3: ASDF
+  var r2 = ['A','S','D','F','G','H','J','K','L'];
+  h += '<div class="kb-row">';
+  r2.forEach(function(k) {
+    h += '<button type="button" class="kb-key" onclick="kbType(' + i + ', \'' + k + '\')">' + k + '</button>';
+  });
+  h += '</div>';
+
+  // Row 4: ZXCV
+  var r3 = ['Z','X','C','V','B','N','M',',','.'];
+  h += '<div class="kb-row">';
+  r3.forEach(function(k) {
+    h += '<button type="button" class="kb-key" onclick="kbType(' + i + ', \'' + k + '\')">' + k + '</button>';
+  });
+  h += '</div>';
+
+  // Row 5: Actions
+  h += '<div class="kb-row">';
+  h += '<button type="button" class="kb-key key-space" onclick="kbType(' + i + ', \'SPACE\')">␣ SPASI</button>';
+  h += '<button type="button" class="kb-key key-del" onclick="kbType(' + i + ', \'BACKSPACE\')">⌫ HAPUS</button>';
+  h += '<button type="button" class="kb-key key-wide" onclick="kbType(' + i + ', \'CLEAR\')">CLEAR</button>';
+  h += '</div>';
+
+  h += '</div>'; // end panel-kb-wrap
+
+  // Tombol MULAI
+  h += '<div style="margin-top:auto;padding-top:6px">';
+  h += '<button class="btn" style="width:100%;font-size:1.02rem;padding:10px;box-shadow:0 3px 12px var(--t' + i + '-glow);background:var(--t' + i + ');color:#fff" onclick="startTeam(' + i + ')">MULAI ➔</button>';
+  h += '</div>';
+
+  h += '</div>';
+  return h;
+}
+
+function startTeam(i) {
+  var inpName = document.getElementById('inp-name-' + i);
+  var inpMembers = document.getElementById('inp-members-' + i);
+  if (inpName) TEAMS[i].name = inpName.value.trim() || ('Kelompok ' + (i + 1));
+  if (inpMembers) TEAMS[i].members = inpMembers.value.trim();
+  TEAMS[i].step = 1;
+  if (!timerRunning && timerRemainingSec === TIMER_TOTAL_SEC) {
+    startTimer();
+  } else if (timerRunning) {
+    playBgMusic();
+  }
+  renderTeamPanel(i);
+  updateRaceSummary();
+}
+
+// STEP 1: Briefing Kasus
+function tv1(i) {
+  var t = TEAMS[i];
+  var h = '<div class="panel-step-box">';
+  h += '<div>';
+  h += '<div style="border-left:4px solid var(--t' + i + ');padding:8px 10px;background:var(--card-sub);border-radius:0 8px 8px 0;margin-bottom:8px">';
+  h += '<b style="font-size:0.92rem;color:var(--t' + i + ')">🚨 Kasus:</b>';
+  h += '<p style="margin:2px 0 0;font-size:0.84rem;color:var(--ink)">Puluhan warga mendadak demam. Di lab lain, virus dipakai melawan kanker!</p>';
+  h += '</div>';
+  if (t.members) {
+    h += '<div style="background:var(--card);border:1px solid var(--line);border-radius:6px;padding:5px 8px;margin-bottom:8px;font-size:0.8rem">';
+    h += '<span class="mute">👥 Anggota: </span><b style="color:var(--t' + i + ')">' + t.members + '</b>';
+    h += '</div>';
+  }
+  h += '<h4 style="font-size:0.95rem">Hipotesis Regu:</h4>';
+  h += '<p class="mute" style="font-size:0.82rem">Apakah virus selalu merugikan? Buktikan tebakan kelompok Anda di 4 misi ini!</p>';
+  h += '</div>';
+
+  h += '<div style="margin-top:auto;padding-top:8px">';
+  h += '<button class="btn btn-sm" style="width:100%" onclick="setTeamStep(' + i + ', 2)">Mulai Misi 1 (Pasangan Patogen) ➔</button>';
+  h += '</div>';
+  h += '</div>';
+  return h;
+}
+
+// STEP 2: Misi 1 (Pencocokan Virus & Penyakit)
+function tv2(i) {
+  var t = TEAMS[i];
+  var doneCount = Object.keys(t.m1_done).length;
+  var h = '<div class="panel-step-box">';
+  h += '<div>';
+  h += '<div style="font-size:0.84rem;font-weight:800;margin-bottom:6px">Cocokkan virus & penyakit (+10 pts/pasang):</div>';
+  
+  h += '<div class="panel-match-cols">';
+  // Kiri: Virus
+  h += '<div>';
+  pairs.forEach(function(p, pIdx) {
+    var isDone = !!t.m1_done[pIdx];
+    var isSel = (t.m1_sel === pIdx);
+    h += '<button class="opt-btn' + (isDone ? ' ok' : '') + (isSel ? ' sel' : '') + '"' + (isDone ? ' disabled' : '') + ' onclick="teamMatch(' + i + ', 0, ' + pIdx + ')">';
+    h += p[0];
+    h += '</button>';
+  });
+  h += '</div>';
+
+  // Kanan: Penyakit
+  h += '<div>';
+  ro.forEach(function(rIdx) {
+    var isDone = !!t.m1_done[rIdx];
+    h += '<button class="opt-btn' + (isDone ? ' ok' : '') + '"' + (isDone ? ' disabled' : '') + ' onclick="teamMatch(' + i + ', 1, ' + rIdx + ')">';
+    h += pairs[rIdx][1];
+    h += '</button>';
+  });
+  h += '</div>';
+  h += '</div>';
+
+  h += '<div class="mute" style="font-size:0.78rem">' + (t.m1_msg || 'Pilih virus (kiri), lalu penyakit (kanan). Cocok: ' + doneCount + '/6') + '</div>';
+  h += '</div>';
+
+  if (doneCount === 6) {
+    h += '<div style="background:var(--ok-bg);border:1.5px solid var(--ok);color:var(--ok);padding:8px;border-radius:8px;font-size:0.84rem;margin-top:auto">';
+    h += '<b>🎉 Lengkap!</b> Semua pasangan cocok (+60 pts).';
+    h += '<button class="btn btn-sm" style="width:100%;margin-top:6px" onclick="setTeamStep(' + i + ', 3)">Lanjut Misi 2 (Pahlawan) ➔</button>';
+    h += '</div>';
+  }
+  h += '</div>';
+  return h;
+}
+
+function teamMatch(teamIdx, side, idx) {
+  var t = TEAMS[teamIdx];
+  if (t.m1_done[idx]) return;
+
+  if (side === 0) {
+    t.m1_sel = idx;
+    t.m1_msg = 'Memilih <b>' + pairs[idx][0] + '</b>. Sekarang klik pasangannya di kanan!';
+  } else if (t.m1_sel === null) {
+    t.m1_msg = 'Pilih virus di kolom kiri terlebih dahulu!';
+  } else if (t.m1_sel === idx) {
+    t.m1_done[idx] = 1;
+    t.score += 10;
+    t.m1_msg = '✅ Benar: ' + pairs[idx][0] + ' (+10 pts)';
+    t.m1_sel = null;
+    playSound('correct');
+  } else {
+    if (PENALTY_PTS > 0) {
+      t.score = Math.max(0, t.score - PENALTY_PTS);
+      flashScorePenalty(teamIdx);
+      playSound('wrong');
+      t.m1_msg = '❌ Pasangan tidak tepat! Nilai berkurang (-' + PENALTY_PTS + ' pts). Coba lagi!';
+    } else {
+      t.m1_msg = '❌ Belum tepat. Coba lagi!';
+    }
+    t.m1_sel = null;
+  }
+  renderTeamPanel(teamIdx);
+  updateRaceSummary();
+}
+
+// STEP 3: Misi 2 (Buka Kotak Misteri Bioteknologi)
+function tv3(i) {
+  var t = TEAMS[i];
+  var openedCount = Object.keys(t.m2_open).length;
+  var h = '<div class="panel-step-box">';
+  h += '<div>';
+  h += '<div style="font-size:0.84rem;font-weight:800;margin-bottom:6px">Buka kotak misteri teknologi (+4 pts/kotak):</div>';
+
+  h += '<div class="panel-hero-grid">';
+  H.forEach(function(item, hIdx) {
+    var isOpen = !!t.m2_open[hIdx];
+    h += '<div class="panel-hero-card' + (isOpen ? ' open' : '') + '" onclick="teamOpenHero(' + i + ', ' + hIdx + ')">';
+    h += '<span style="font-size:1.3rem">' + item[0] + '</span>';
+    h += '<b>' + (isOpen ? item[1] : 'Kotak #' + (hIdx + 1)) + '</b>';
+    h += '<small>' + (isOpen ? item[2] : 'Sentuh untuk membuka...') + '</small>';
+    h += '</div>';
+  });
+  h += '</div>';
+
+  h += '<div class="mute" style="font-size:0.8rem">Terbuka: ' + openedCount + ' dari 5 kotak</div>';
+  h += '</div>';
+
+  if (openedCount === 5) {
+    h += '<div style="background:var(--ok-bg);border:1.5px solid var(--ok);color:var(--ok);padding:8px;border-radius:8px;font-size:0.84rem;margin-top:auto">';
+    h += '<b>💡 Berhasil!</b> Bukti bioteknologi terungkap (+20 pts).';
+    h += '<button class="btn btn-sm" style="width:100%;margin-top:6px" onclick="setTeamStep(' + i + ', 4)">Lanjut Misi 3 (Puskesmas) ➔</button>';
+    h += '</div>';
+  }
+  h += '</div>';
+  return h;
+}
+
+function teamOpenHero(teamIdx, heroIdx) {
+  var t = TEAMS[teamIdx];
+  if (!t.m2_open[heroIdx]) {
+    t.m2_open[heroIdx] = 1;
+    t.score += 4;
+    renderTeamPanel(teamIdx);
+    updateRaceSummary();
+  }
+}
+
+// STEP 4: Misi 3 (Kepala Puskesmas)
+function tv4(i) {
+  var t = TEAMS[i];
+  var sc = SC[t.m3_idx];
+  var isAnswered = (t.m3_choice !== null);
+
+  var h = '<div class="panel-step-box">';
+  h += '<div>';
+  h += '<div style="font-size:0.82rem;font-weight:800;color:var(--c);margin-bottom:4px">Skenario ' + (t.m3_idx + 1) + ' dari 2:</div>';
+  h += '<div style="background:var(--card-sub);padding:8px 10px;border-radius:8px;font-size:0.86rem;font-weight:700;margin-bottom:8px;border-left:4px solid var(--c)">';
+  h += sc.q;
+  h += '</div>';
+
+  sc.o.forEach(function(opt, oIdx) {
+    var cls = 'opt-btn';
+    var isChosen = (t.m3_choice === oIdx);
+    if (isAnswered) {
+      if (opt[1] === 1) cls += ' ok';
+      else if (isChosen) cls += ' bad';
+    }
+    h += '<button class="' + cls + '"' + (isAnswered ? ' disabled' : '') + ' onclick="teamChoosePuskesmas(' + i + ', ' + oIdx + ')">';
+    h += opt[0];
+    if (isAnswered) {
+      var penNote = (isChosen && opt[1] !== 1 && PENALTY_PTS > 0) ? ' <b style="color:#ff6b6b">[-' + PENALTY_PTS + ' pts]</b>' : (opt[1] === 1 ? ' <b style="color:var(--ok)">[+15 pts]</b>' : '');
+      h += '<small>' + opt[2] + penNote + '</small>';
+    }
+    h += '</button>';
+  });
+  h += '</div>';
+
+  if (isAnswered) {
+    h += '<div style="margin-top:auto;padding-top:6px">';
+    if (t.m3_idx === 0) {
+      h += '<button class="btn btn-sm" style="width:100%" onclick="teamNextPuskesmas(' + i + ')">Lanjut Skenario 2 ➔</button>';
+    } else {
+      h += '<button class="btn btn-sm" style="width:100%" onclick="setTeamStep(' + i + ', 5)">Lanjut Misi 4 (Kuis) ➔</button>';
+    }
+    h += '</div>';
+  }
+  h += '</div>';
+  return h;
+}
+
+function teamChoosePuskesmas(teamIdx, oIdx) {
+  var t = TEAMS[teamIdx];
+  if (t.m3_choice !== null) return;
+  t.m3_choice = oIdx;
+  var isCorrect = (SC[t.m3_idx].o[oIdx][1] === 1);
+  if (isCorrect) {
+    t.score += 15;
+    playSound('correct');
+  } else {
+    if (PENALTY_PTS > 0) {
+      t.score = Math.max(0, t.score - PENALTY_PTS);
+      flashScorePenalty(teamIdx);
+      playSound('wrong');
+    }
+  }
+  renderTeamPanel(teamIdx);
+  updateRaceSummary();
+}
+
+function teamNextPuskesmas(teamIdx) {
+  var t = TEAMS[teamIdx];
+  t.m3_idx = 1;
+  t.m3_choice = null;
+  renderTeamPanel(teamIdx);
+}
+
+// STEP 5: Misi 4 (Kuis Ilmuwan Virologi)
+function tv5(i) {
+  var t = TEAMS[i];
+  if (t.m4_idx >= Q.length) {
+    return '<div class="panel-step-box"><h4 style="color:var(--ok)">Misi 4 Selesai!</h4><p class="mute" style="font-size:0.84rem">Seluruh soal kuis telah selesai dijawab.</p><div style="margin-top:auto"><button class="btn btn-sm" style="width:100%" onclick="finishTeam(' + i + ')">Lihat Rekap Peringkat ➔</button></div></div>';
+  }
+
+  var q = Q[t.m4_idx];
+  var isAnswered = (t.m4_choice !== null);
+
+  var h = '<div class="panel-step-box">';
+  h += '<div>';
+  h += '<div style="font-size:0.82rem;font-weight:800;color:var(--c);margin-bottom:4px">Soal ' + (t.m4_idx + 1) + ' dari ' + Q.length + ' (+10 pts):</div>';
+  h += '<div style="background:var(--card-sub);padding:8px 10px;border-radius:8px;font-size:0.86rem;font-weight:700;margin-bottom:8px;border-left:4px solid var(--c)">';
+  h += q[0];
+  h += '</div>';
+
+  q[1].forEach(function(optText, oIdx) {
+    var cls = 'opt-btn';
+    var isChosen = (t.m4_choice === oIdx);
+    var isCorrect = (oIdx === q[2]);
+    var badgeText = '';
+    if (isAnswered) {
+      if (isCorrect) {
+        cls += ' ok';
+        badgeText = ' <b style="color:var(--ok)">[+10 pts]</b>';
+      } else if (isChosen) {
+        cls += ' bad';
+        badgeText = (PENALTY_PTS > 0) ? ' <b style="color:#ff6b6b">[-' + PENALTY_PTS + ' pts]</b>' : ' <b style="color:#ff6b6b">[Salah]</b>';
+      }
+    }
+    h += '<button class="' + cls + '"' + (isAnswered ? ' disabled' : '') + ' onclick="teamAnswerQuiz(' + i + ', ' + oIdx + ')">';
+    h += optText + badgeText;
+    h += '</button>';
+  });
+  h += '</div>';
+
+  if (isAnswered) {
+    h += '<div style="margin-top:auto;padding-top:6px">';
+    h += '<button class="btn btn-sm" style="width:100%" onclick="teamNextQuiz(' + i + ')">' + (t.m4_idx < Q.length - 1 ? 'Soal Berikutnya ➔' : 'Selesai & Kunci Hasil ➔') + '</button>';
+    h += '</div>';
+  }
+  h += '</div>';
+  return h;
+}
+
+function teamAnswerQuiz(teamIdx, oIdx) {
+  var t = TEAMS[teamIdx];
+  if (t.m4_choice !== null) return;
+  t.m4_choice = oIdx;
+  var isCorrect = (oIdx === Q[t.m4_idx][2]);
+  if (isCorrect) {
+    t.score += 10;
+    playSound('correct');
+  } else {
+    if (PENALTY_PTS > 0) {
+      t.score = Math.max(0, t.score - PENALTY_PTS);
+      flashScorePenalty(teamIdx);
+      playSound('wrong');
+    }
+  }
+  renderTeamPanel(teamIdx);
+  updateRaceSummary();
+}
+
+function teamNextQuiz(teamIdx) {
+  var t = TEAMS[teamIdx];
+  t.m4_idx++;
+  t.m4_choice = null;
+  if (t.m4_idx >= Q.length) {
+    finishTeam(teamIdx);
+  } else {
+    renderTeamPanel(teamIdx);
+  }
+}
+
+function finishTeam(teamIdx) {
+  var t = TEAMS[teamIdx];
+  t.step = 6;
+  if (!t.finishedAt) t.finishedAt = new Date();
+  renderTeamPanel(teamIdx);
+  updateRaceSummary();
+  triggerConfetti();
+}
+
+// STEP 6: Hasil & Rekap Tim Ini
+function tv6(i) {
+  var t = TEAMS[i];
+  var sorted = TEAMS.slice().sort(function(a, b) { return b.score - a.score; });
+  var rank = sorted.findIndex(function(x) { return x.id === i; }) + 1;
+
+  var h = '<div class="panel-step-box" style="text-align:center">';
+  h += '<div>';
+  h += '<span style="font-size:2.5rem">🏆</span>';
+  h += '<h4 style="font-size:1.15rem;margin:2px 0">' + t.name + ' Selesai!</h4>';
+  if (t.members) {
+    h += '<p class="mute" style="font-size:0.8rem;margin:2px 0 6px">Anggota: <b style="color:var(--ink)">' + t.members + '</b></p>';
+  }
+  h += '<div style="font-size:1.25rem;font-weight:900;color:var(--c);margin-bottom:6px">Peringkat #' + rank + ' (' + t.score + ' pts)</div>';
+  h += '</div>';
+
+  h += '<div style="background:var(--card-sub);padding:8px 10px;border-radius:8px;font-size:0.8rem;text-align:left;margin-top:auto;border-left:4px solid var(--c)">';
+  h += '<b>Peran Debat Ilmiah:</b><br>';
+  h += (i % 2 === 0) ? '• Membela: <i>"Virus adalah Lawan"</i> (siapkan 2 bukti patogen).' : '• Membela: <i>"Virus adalah Kawan"</i> (siapkan 2 bukti bioteknologi).';
+  h += '</div>';
+
+  h += '<div style="margin-top:8px">';
+  h += '<button class="btn btn-sm" style="width:100%" onclick="setTeamStep(' + i + ', 2)">Ulangi Misi ➔</button>';
+  h += '</div>';
+  h += '</div>';
+  return h;
+}
+
+function setTeamStep(teamIdx, nextStep) {
+  TEAMS[teamIdx].step = nextStep;
+  renderTeamPanel(teamIdx);
+  updateRaceSummary();
+}
+
+/* =========================================================
+   CANVAS CONFETTI
+   ========================================================= */
+function triggerConfetti() {
+  var canvas = document.getElementById('confetti-canvas');
+  if (!canvas) return;
+  var ctx = canvas.getContext('2d');
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+
+  var pieces = [];
+  var colors = ['#FF2A6D', '#05D5AA', '#FF9E00', '#A066FF', '#00E5BE', '#FFD000'];
+  for (var i = 0; i < 90; i++) {
+    pieces.push({
+      x: Math.random() * canvas.width,
+      y: Math.random() * canvas.height * -0.8,
+      w: Math.random() * 9 + 4,
+      h: Math.random() * 8 + 4,
+      color: colors[Math.floor(Math.random() * colors.length)],
+      vy: Math.random() * 3 + 2,
+      vx: Math.random() * 2 - 1,
+      rot: Math.random() * 360,
+      vrot: Math.random() * 6 - 3
+    });
+  }
+
+  var frame = 0;
+  function draw() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    pieces.forEach(function(p) {
+      ctx.save();
+      ctx.translate(p.x, p.y);
+      ctx.rotate((p.rot * Math.PI) / 180);
+      ctx.fillStyle = p.color;
+      ctx.fillRect(-p.w / 2, -p.h / 2, p.w, p.h);
+      ctx.restore();
+      p.y += p.vy;
+      p.x += p.vx;
+      p.rot += p.vrot;
+    });
+
+    frame++;
+    if (frame < 180) {
+      requestAnimationFrame(draw);
+    } else {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+    }
+  }
+  requestAnimationFrame(draw);
+}
+
+// Initial Boot
+setLayoutMode('cols'); // 4 Kolom Berjejer Seimbang secara default untuk Papan Tulis
+for (var i = 0; i < 4; i++) renderTeamPanel(i);
+updateRaceSummary();
+updateTimerDisplay();
+updatePenaltyBadge();
+</script>
+
+<!-- =========================================================
+     MODAL PENGATURAN WAKTU & PENALTI SALAH
+     ========================================================= -->
+<div id="modal-timer-settings" class="custom-modal-overlay" style="display:none">
+  <div class="custom-modal-box">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px">
+      <h3 style="margin:0;font-size:1.25rem">⏱️ Pengaturan Waktu & Penalti LKPD</h3>
+      <button class="tool-btn" onclick="closeTimerModal()">✕</button>
+    </div>
+    
+    <div style="margin-bottom:14px">
+      <label style="font-size:0.88rem;font-weight:700;display:block;margin-bottom:6px">Pilih Cepat Durasi Pengerjaan:</label>
+      <div style="display:flex;gap:6px;margin-bottom:10px;flex-wrap:wrap">
+        <button class="btn btn-sm" onclick="setTimerDurationMinutes(3);closeTimerModal()">3 Menit</button>
+        <button class="btn btn-sm" onclick="setTimerDurationMinutes(5);closeTimerModal()">5 Menit</button>
+        <button class="btn btn-sm" onclick="setTimerDurationMinutes(10);closeTimerModal()">10 Menit</button>
+        <button class="btn btn-sm" onclick="setTimerDurationMinutes(15);closeTimerModal()">15 Menit</button>
+        <button class="btn btn-sm" onclick="setTimerDurationMinutes(20);closeTimerModal()">20 Menit</button>
+      </div>
+      <label style="font-size:0.88rem;font-weight:700;display:block;margin-bottom:6px">Atur Menit Kustom:</label>
+      <div style="display:flex;gap:8px;align-items:center">
+        <button class="tool-btn" onclick="adjustTimerMinutes(-1)">-1 Menit</button>
+        <input type="number" id="inp-custom-mins" min="1" max="120" value="10" style="width:85px;text-align:center;margin-bottom:0" onchange="setTimerDurationMinutes(this.value)">
+        <span class="mute">Menit</span>
+        <button class="tool-btn" onclick="adjustTimerMinutes(1)">+1 Menit</button>
+      </div>
+    </div>
+
+    <div style="margin-bottom:16px;border-top:1px solid var(--line);padding-top:12px">
+      <label style="font-size:0.88rem;font-weight:700;display:block;margin-bottom:6px">Otomatis Pengurangan Nilai Jawaban Salah (Penalti):</label>
+      <div style="display:flex;gap:6px;flex-wrap:wrap">
+        <button class="tool-btn" id="btn-pen-0" onclick="setPenaltyPts(0)">0 (Tanpa Penalti)</button>
+        <button class="tool-btn" id="btn-pen-2" onclick="setPenaltyPts(2)">-2 Poin</button>
+        <button class="tool-btn" id="btn-pen-5" onclick="setPenaltyPts(5)">-5 Poin (Default)</button>
+        <button class="tool-btn" id="btn-pen-10" onclick="setPenaltyPts(10)">-10 Poin</button>
+      </div>
+      <p class="mute" style="font-size:0.78rem;margin:6px 0 0">Nilai akan otomatis dipotong setiap kali siswa memilih pasangan salah di Misi 1, salah diagnosa di Misi 3, atau salah kuis di Misi 4.</p>
+    </div>
+
+    <div style="margin-bottom:16px;border-top:1px solid var(--line);padding-top:12px">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
+        <label style="font-size:0.88rem;font-weight:700">🎵 Musik Pengerjaan LKPD (Dua Lipa - Training Season):</label>
+        <button class="tool-btn" style="padding:2px 8px;font-size:0.78rem" onclick="toggleBgMusic()">Putar / Jeda</button>
+      </div>
+      <div style="display:flex;align-items:center;gap:10px">
+        <span style="font-size:1.15rem">🔊</span>
+        <input type="range" id="inp-music-vol" min="0" max="1" step="0.05" value="0.4" oninput="setMusicVolume(this.value)" style="flex:1;cursor:pointer;margin-bottom:0">
+        <span id="vol-label-text" style="font-size:0.88rem;font-weight:800;min-width:38px;color:var(--ac)">40%</span>
+      </div>
+      <p class="mute" style="font-size:0.78rem;margin:6px 0 0">Musik otomatis berputar saat timer LKPD berjalan dan berhenti saat waktu habis.</p>
+    </div>
+
+    <div style="display:flex;justify-content:flex-end;gap:8px">
+      <button class="btn btn-sm" style="background:var(--card-sub);color:var(--ink);border:1px solid var(--line)" onclick="resetTimer();closeTimerModal()">🔄 Reset Waktu</button>
+      <button class="btn btn-sm" onclick="closeTimerModal()">✓ Simpan & Tutup</button>
+    </div>
+  </div>
+</div>
+
+<!-- =========================================================
+     MODAL WAKTU HABIS & REKAP JUARA
+     ========================================================= -->
+<div id="modal-timeout" class="custom-modal-overlay" style="display:none">
+  <div class="custom-modal-box" style="text-align:center;max-width:550px">
+    <span style="font-size:3rem">⏰</span>
+    <h2 style="margin:4px 0 6px;font-size:1.75rem;color:var(--gold)">WAKTU PENGERJAAN SELESAI!</h2>
+    <p class="mute" style="margin-bottom:14px;font-size:0.9rem">Batas waktu pengerjaan telah berakhir. Berikut adalah rekap skor dan peringkat seluruh kelompok:</p>
+    
+    <div id="timeout-standings-box" style="margin-bottom:16px"></div>
+    
+    <div style="display:flex;justify-content:center;gap:8px;flex-wrap:wrap">
+      <button class="btn btn-sm" onclick="adjustTimerMinutes(2);startTimer();closeTimeoutModal()">➕ Tambah 2 Menit</button>
+      <button class="btn btn-sm" style="background:var(--card-sub);color:var(--ink);border:1px solid var(--line)" onclick="closeTimeoutModal()">Tutup & Evaluasi</button>
+      <button class="btn btn-sm" onclick="window.print()">🖨️ Cetak Hasil</button>
+    </div>
+  </div>
+</div>
+</body>
+</html>
