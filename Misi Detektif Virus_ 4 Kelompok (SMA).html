@@ -1662,6 +1662,7 @@ input:focus {
 
       <!-- Kontrol Layout & Aksi -->
       <div class="smartboard-actions">
+        <button class="tool-btn" onclick="showTimeoutModal()" title="Lihat Papan Klasemen & Peringkat Juara">🏆 Peringkat</button>
         <button class="tool-btn music-active" id="btn-music-toggle" onclick="toggleBgMusic()" title="Musik Latar: Dua Lipa - Training Season">🎵 <span id="music-btn-label">Musik: ON</span></button>
         <div class="layout-switcher">
           <button class="layout-btn active" id="btn-layout-cols" onclick="setLayoutMode('cols')">▥ 4 Kolom</button>
@@ -2048,6 +2049,7 @@ var timerRemainingSec = 600;
 var timerRunning = false;
 var timerInterval = null;
 var PENALTY_PTS = 5; // Pengurangan nilai default jika salah: -5 poin
+var raceStartTime = null; // Waktu pertama kali perlombaan dimulai
 
 function formatTimer(sec) {
   var m = Math.floor(sec / 60);
@@ -2076,6 +2078,7 @@ function toggleTimer() {
 
 function startTimer() {
   if (timerRunning) return;
+  if (!raceStartTime) raceStartTime = new Date();
   if (timerRemainingSec <= 0) {
     timerRemainingSec = TIMER_TOTAL_SEC;
   }
@@ -2113,9 +2116,20 @@ function resetTimer() {
 function onTimerComplete() {
   pauseTimer();
   stopBgMusic();
+  var now = new Date();
+  TEAMS.forEach(function(t) {
+    if (t.step < 6 && !t.durationSec) {
+      var start = t.startedAt || raceStartTime;
+      if (start) {
+        t.durationSec = Math.max(1, Math.round((now.getTime() - start.getTime()) / 1000));
+      } else {
+        t.durationSec = TIMER_TOTAL_SEC;
+      }
+    }
+  });
   playSound('timeout');
   triggerConfetti();
-  showTimeoutModal();
+  showTimeoutModal('timeout');
 }
 
 function setTimerDurationMinutes(mins) {
@@ -2204,24 +2218,125 @@ function highlightPenaltyBtn() {
   });
 }
 
-function showTimeoutModal() {
+function formatDurationText(sec) {
+  if (sec === null || sec === undefined || isNaN(sec)) return '-';
+  var m = Math.floor(sec / 60);
+  var s = sec % 60;
+  return (m < 10 ? '0' : '') + m + 'm ' + (s < 10 ? '0' : '') + s + 'd';
+}
+
+function getRankedTeams() {
+  return TEAMS.slice().sort(function(a, b) {
+    // 1. Kriteria Utama: Akumulasi skor tertinggi
+    if (b.score !== a.score) {
+      return b.score - a.score;
+    }
+    // 2. Kriteria Kedua: Status selesai (step 6 = selesai)
+    var aDone = (a.step >= 6);
+    var bDone = (b.step >= 6);
+    if (aDone && !bDone) return -1;
+    if (!aDone && bDone) return 1;
+
+    // 3. Kriteria Penentu / Pemecah Seri: Waktu tercepat menyelesaikan seluruh misi (durasi terkecil)
+    var aDur = (a.durationSec !== null && a.durationSec !== undefined) ? a.durationSec : 999999;
+    var bDur = (b.durationSec !== null && b.durationSec !== undefined) ? b.durationSec : 999999;
+    if (aDur !== bDur) {
+      return aDur - bDur; // Durasi lebih kecil = lebih cepat = peringkat lebih tinggi
+    }
+
+    // 4. Tahap Misi Tertinggi
+    if (b.step !== a.step) {
+      return b.step - a.step;
+    }
+    return a.id - b.id;
+  });
+}
+
+function showTimeoutModal(mode) {
   var modal = document.getElementById('modal-timeout');
   var box = document.getElementById('timeout-standings-box');
+  var titleEl = document.getElementById('timeout-modal-title');
+  var descEl = document.getElementById('timeout-modal-desc');
+  var iconEl = document.getElementById('timeout-modal-icon');
   if (!modal || !box) return;
 
-  var sorted = TEAMS.slice().sort(function(a, b) { return b.score - a.score; });
+  var allDone = TEAMS.every(function(t) { return t.step >= 6; });
+  if (iconEl) {
+    iconEl.innerText = (mode === 'timeout') ? '⏰' : '🏆';
+  }
+  if (titleEl) {
+    if (mode === 'timeout') {
+      titleEl.innerText = 'WAKTU PENGERJAAN SELESAI!';
+      titleEl.style.color = 'var(--gold)';
+    } else if (allDone) {
+      titleEl.innerText = '🎉 PERLOMBAAN SELESAI: KLASEMEN JUARA!';
+      titleEl.style.color = 'var(--ok)';
+    } else {
+      titleEl.innerText = '🏆 KLASEMEN & PERINGKAT JUARA LKPD';
+      titleEl.style.color = 'var(--gold)';
+    }
+  }
+  if (descEl) {
+    descEl.innerHTML = 'Penentuan peringkat ditentukan berdasarkan <b>skor tertinggi</b> & <b>waktu tercepat</b> menyelesaikan LKPD:';
+  }
+
+  var sorted = getRankedTeams();
   var icons = ['🥇', '🥈', '🥉', '🎖️'];
-  var h = '<div style="display:grid;gap:8px;text-align:left">';
+  var rankTitles = ['JUARA 1', 'JUARA 2', 'JUARA 3', 'PERINGKAT 4'];
+  var h = '<div style="display:grid;gap:10px;text-align:left">';
+
   sorted.forEach(function(t, idx) {
-    h += '<div style="display:flex;align-items:center;justify-content:space-between;background:var(--card-sub);border:1.5px solid color-mix(in srgb, var(--t' + t.id + ') 40%, var(--line));border-left:6px solid var(--t' + t.id + ');padding:10px 14px;border-radius:8px">';
-    h += '<div style="display:flex;align-items:center;gap:10px">';
-    h += '<span style="font-size:1.4rem">' + icons[idx] + '</span>';
-    h += '<div><b style="font-size:1.05rem;color:var(--t' + t.id + ')">' + t.name + '</b>' + (t.members ? '<br><small style="color:var(--ink);font-weight:700">👥 ' + t.members + '</small>' : '') + '<br><small class="mute">Progres: ' + (t.step >= 6 ? 'Selesai 🏆' : 'Misi ' + (t.step - 1)) + '</small></div>';
+    var isDone = (t.step >= 6);
+    var durText = formatDurationText(t.durationSec);
+    var isFastest = (idx === 0 && isDone);
+
+    h += '<div style="display:flex;align-items:center;justify-content:space-between;background:var(--card-sub);border:1.5px solid color-mix(in srgb, var(--t' + t.id + ') 45%, var(--line));border-left:6px solid var(--t' + t.id + ');padding:10px 14px;border-radius:10px;box-shadow:0 3px 10px rgba(0,0,0,0.15)">';
+    
+    // Kiri: Medali & Info Kelompok
+    h += '<div style="display:flex;align-items:center;gap:12px">';
+    h += '<div style="text-align:center;min-width:44px">';
+    h += '<span style="font-size:1.85rem;display:block;line-height:1">' + icons[idx] + '</span>';
+    h += '<span style="font-size:0.68rem;font-weight:900;letter-spacing:0.5px;color:var(--mute)">' + rankTitles[idx] + '</span>';
     h += '</div>';
-    h += '<div style="font-family:Bricolage Grotesque,sans-serif;font-size:1.35rem;font-weight:900;color:var(--ink)">' + t.score + ' <span style="font-size:0.85rem;color:var(--mute)">pts</span></div>';
+
+    h += '<div>';
+    h += '<div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap">';
+    h += '<b style="font-size:1.08rem;color:var(--t' + t.id + ')">' + t.name + '</b>';
+    if (isDone) {
+      h += '<span style="background:var(--ok-bg);color:var(--ok);border:1px solid var(--ok);border-radius:99px;font-size:0.7rem;font-weight:800;padding:1px 6px">✓ SELESAI</span>';
+    } else {
+      h += '<span style="background:var(--card);color:var(--mute);border:1px solid var(--line);border-radius:99px;font-size:0.7rem;font-weight:700;padding:1px 6px">Misi ' + Math.max(1, t.step - 1) + '</span>';
+    }
+    h += '</div>';
+
+    if (t.members) {
+      h += '<div style="font-size:0.78rem;color:var(--ink);margin-top:2px">👥 <b>' + t.members + '</b></div>';
+    }
+
+    h += '<div style="display:flex;align-items:center;gap:8px;margin-top:4px;font-size:0.78rem;flex-wrap:wrap">';
+    h += '<span style="background:color-mix(in srgb, var(--t' + t.id + ') 15%, transparent);color:var(--ink);padding:2px 7px;border-radius:6px;font-weight:700;border:1px solid color-mix(in srgb, var(--t' + t.id + ') 30%, transparent)">⏱️ Durasi: <b>' + durText + '</b></span>';
+    if (isFastest) {
+      h += '<span style="color:var(--gold);font-weight:800">⚡ Waktu Tercepat!</span>';
+    }
+    h += '</div>';
+
+    h += '</div>';
+    h += '</div>';
+
+    // Kanan: Skor Poin
+    h += '<div style="text-align:right;min-width:60px">';
+    h += '<div style="font-family:Bricolage Grotesque,sans-serif;font-size:1.6rem;font-weight:900;color:var(--ink);line-height:1">' + t.score + '</div>';
+    h += '<div style="font-size:0.72rem;font-weight:800;color:var(--mute)">POIN</div>';
+    h += '</div>';
+
     h += '</div>';
   });
   h += '</div>';
+
+  h += '<div style="background:var(--card);border:1px solid var(--line);border-radius:8px;padding:8px 12px;margin-top:12px;font-size:0.78rem;color:var(--mute);text-align:left">';
+  h += '⚖️ <b>Penentuan Peringkat:</b> Prioritas 1: <b>Jumlah Skor Tertinggi</b>. Prioritas 2 (Pemecah Seri): <b>Waktu Tercepat</b> menyelesaikan seluruh misi LKPD.';
+  h += '</div>';
+
   box.innerHTML = h;
   modal.style.display = 'flex';
 }
@@ -2299,7 +2414,9 @@ function initTeams() {
       m3_choice: null,
       m4_idx: 0,
       m4_choice: null,
-      finishedAt: null
+      startedAt: null,
+      finishedAt: null,
+      durationSec: null
     });
   }
 }
@@ -2376,6 +2493,7 @@ function adjScore(teamIdx, delta) {
 
 function resetAllTeams() {
   if (confirm('Mulai ulang perlombaan untuk 4 kelompok dan reset waktu pengerjaan?')) {
+    raceStartTime = null;
     initTeams();
     resetTimer();
     for (var i = 0; i < 4; i++) renderTeamPanel(i);
@@ -2546,6 +2664,8 @@ function startTeam(i) {
   if (inpName) TEAMS[i].name = inpName.value.trim() || ('Kelompok ' + (i + 1));
   if (inpMembers) TEAMS[i].members = inpMembers.value.trim();
   TEAMS[i].step = 1;
+  if (!raceStartTime) raceStartTime = new Date();
+  if (!TEAMS[i].startedAt) TEAMS[i].startedAt = new Date();
   if (!timerRunning && timerRemainingSec === TIMER_TOTAL_SEC) {
     startTimer();
   } else if (timerRunning) {
@@ -2844,35 +2964,61 @@ function teamNextQuiz(teamIdx) {
 function finishTeam(teamIdx) {
   var t = TEAMS[teamIdx];
   t.step = 6;
-  if (!t.finishedAt) t.finishedAt = new Date();
+  t.finishedAt = new Date();
+  var start = t.startedAt || raceStartTime || t.finishedAt;
+  t.durationSec = Math.max(1, Math.round((t.finishedAt.getTime() - start.getTime()) / 1000));
   renderTeamPanel(teamIdx);
   updateRaceSummary();
   triggerConfetti();
+
+  // Cek jika semua 4 kelompok telah menyelesaikan misi
+  var allDone = TEAMS.every(function(x) { return x.step >= 6; });
+  if (allDone) {
+    pauseTimer();
+    stopBgMusic();
+    playSound('correct');
+    setTimeout(function() {
+      showTimeoutModal('all_done');
+    }, 1200);
+  }
 }
 
 // STEP 6: Hasil & Rekap Tim Ini
 function tv6(i) {
   var t = TEAMS[i];
-  var sorted = TEAMS.slice().sort(function(a, b) { return b.score - a.score; });
+  var sorted = getRankedTeams();
   var rank = sorted.findIndex(function(x) { return x.id === i; }) + 1;
+  var medals = ['🥇 Juara 1', '🥈 Juara 2', '🥉 Juara 3', '🎖️ Peringkat 4'];
+  var medalLabel = medals[rank - 1] || ('Peringkat #' + rank);
+  var durText = formatDurationText(t.durationSec);
 
   var h = '<div class="panel-step-box" style="text-align:center">';
   h += '<div>';
-  h += '<span style="font-size:2.5rem">🏆</span>';
-  h += '<h4 style="font-size:1.15rem;margin:2px 0">' + t.name + ' Selesai!</h4>';
+  h += '<span style="font-size:2.2rem;line-height:1;display:block">🏆</span>';
+  h += '<h4 style="font-size:1.05rem;margin:2px 0;color:var(--t' + i + ')">' + t.name + ' Selesai!</h4>';
   if (t.members) {
-    h += '<p class="mute" style="font-size:0.8rem;margin:2px 0 6px">Anggota: <b style="color:var(--ink)">' + t.members + '</b></p>';
+    h += '<p class="mute" style="font-size:0.75rem;margin:2px 0 5px">Anggota: <b style="color:var(--ink)">' + t.members + '</b></p>';
   }
-  h += '<div style="font-size:1.25rem;font-weight:900;color:var(--c);margin-bottom:6px">Peringkat #' + rank + ' (' + t.score + ' pts)</div>';
+
+  // Box Hasil Juara, Poin, & Waktu Selesai
+  h += '<div style="background:var(--card-sub);border:1.5px solid var(--t' + i + ');border-radius:8px;padding:6px 8px;margin-bottom:6px">';
+  h += '<div style="font-size:1.15rem;font-weight:900;color:var(--t' + i + ')">' + medalLabel + '</div>';
+  h += '<div style="font-size:1.35rem;font-weight:900;font-family:Bricolage Grotesque,sans-serif;color:var(--ink);margin:1px 0">' + t.score + ' <span style="font-size:0.8rem;color:var(--mute)">pts</span></div>';
+  h += '<div style="font-size:0.75rem;font-weight:700;color:var(--mute);background:var(--card);display:inline-block;padding:2px 8px;border-radius:99px;border:1px solid var(--line)">⏱️ Waktu: <b style="color:var(--ink)">' + durText + '</b></div>';
   h += '</div>';
 
-  h += '<div style="background:var(--card-sub);padding:8px 10px;border-radius:8px;font-size:0.8rem;text-align:left;margin-top:auto;border-left:4px solid var(--c)">';
+  h += '</div>';
+
+  // Peran Debat Ilmiah
+  h += '<div style="background:var(--card-sub);padding:6px 8px;border-radius:8px;font-size:0.75rem;text-align:left;margin-top:auto;border-left:4px solid var(--t' + i + ')">';
   h += '<b>Peran Debat Ilmiah:</b><br>';
   h += (i % 2 === 0) ? '• Membela: <i>"Virus adalah Lawan"</i> (siapkan 2 bukti patogen).' : '• Membela: <i>"Virus adalah Kawan"</i> (siapkan 2 bukti bioteknologi).';
   h += '</div>';
 
-  h += '<div style="margin-top:8px">';
-  h += '<button class="btn btn-sm" style="width:100%" onclick="setTeamStep(' + i + ', 2)">Ulangi Misi ➔</button>';
+  // Tombol Aksi: Klasemen Lengkap & Ulangi
+  h += '<div style="margin-top:6px;display:flex;gap:4px;flex-direction:column">';
+  h += '<button class="btn btn-sm" style="width:100%;background:var(--t' + i + ');color:#fff;box-shadow:0 2px 8px var(--t' + i + '-glow);padding:6px" onclick="showTimeoutModal()">🏆 Papan Peringkat Lengkap</button>';
+  h += '<button class="btn btn-sm" style="width:100%;background:var(--card-sub);color:var(--ink);border:1px solid var(--line);padding:5px;font-size:0.78rem" onclick="setTeamStep(' + i + ', 2)">🔄 Ulangi Misi</button>';
   h += '</div>';
   h += '</div>';
   return h;
@@ -2880,6 +3026,10 @@ function tv6(i) {
 
 function setTeamStep(teamIdx, nextStep) {
   TEAMS[teamIdx].step = nextStep;
+  if (nextStep < 6) {
+    TEAMS[teamIdx].finishedAt = null;
+    TEAMS[teamIdx].durationSec = null;
+  }
   renderTeamPanel(teamIdx);
   updateRaceSummary();
 }
@@ -3006,10 +3156,10 @@ updatePenaltyBadge();
      MODAL WAKTU HABIS & REKAP JUARA
      ========================================================= -->
 <div id="modal-timeout" class="custom-modal-overlay" style="display:none">
-  <div class="custom-modal-box" style="text-align:center;max-width:550px">
-    <span style="font-size:3rem">⏰</span>
-    <h2 style="margin:4px 0 6px;font-size:1.75rem;color:var(--gold)">WAKTU PENGERJAAN SELESAI!</h2>
-    <p class="mute" style="margin-bottom:14px;font-size:0.9rem">Batas waktu pengerjaan telah berakhir. Berikut adalah rekap skor dan peringkat seluruh kelompok:</p>
+  <div class="custom-modal-box" style="text-align:center;max-width:560px">
+    <span id="timeout-modal-icon" style="font-size:3rem">🏆</span>
+    <h2 id="timeout-modal-title" style="margin:4px 0 6px;font-size:1.75rem;color:var(--gold)">PAPAN PERINGKAT JUARA LKPD</h2>
+    <p id="timeout-modal-desc" class="mute" style="margin-bottom:14px;font-size:0.88rem">Penentuan peringkat ditentukan dari akumulasi skor tertinggi dan waktu tercepat menyelesaikan seluruh misi:</p>
     
     <div id="timeout-standings-box" style="margin-bottom:16px"></div>
     
