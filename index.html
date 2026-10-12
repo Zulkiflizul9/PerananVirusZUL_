@@ -545,6 +545,17 @@ input:focus {
   box-shadow: 0 0 10px var(--ac-glow) !important;
 }
 
+/* Cegah Virtual Keyboard Bawaan Smart TV / Android / Windows Touch */
+.no-tv-osk, input[readonly] {
+  -webkit-touch-callout: none !important;
+  -webkit-user-select: none !important;
+  -moz-user-select: none !important;
+  -ms-user-select: none !important;
+  user-select: none !important;
+  touch-action: manipulation !important;
+  caret-color: transparent !important;
+}
+
 /* Virtual On-Screen Touch Keyboard (Multi-Touch Smartboard) */
 .panel-kb-wrap {
   background: var(--card-sub);
@@ -2708,19 +2719,27 @@ function setKbTarget(teamIdx, field) {
     if (inpName) {
       inpName.style.borderColor = 'var(--t' + teamIdx + ')';
       inpName.style.boxShadow = '0 0 8px var(--t' + teamIdx + '-glow)';
+      inpName.style.background = 'var(--card)';
+      inpName.blur();
     }
     if (inpMemb) {
       inpMemb.style.borderColor = 'var(--line)';
       inpMemb.style.boxShadow = 'none';
+      inpMemb.style.background = 'var(--card-sub)';
+      inpMemb.blur();
     }
   } else {
     if (inpMemb) {
       inpMemb.style.borderColor = 'var(--t' + teamIdx + ')';
       inpMemb.style.boxShadow = '0 0 8px var(--t' + teamIdx + '-glow)';
+      inpMemb.style.background = 'var(--card)';
+      inpMemb.blur();
     }
     if (inpName) {
       inpName.style.borderColor = 'var(--line)';
       inpName.style.boxShadow = 'none';
+      inpName.style.background = 'var(--card-sub)';
+      inpName.blur();
     }
   }
 }
@@ -2760,19 +2779,19 @@ function tv0(i) {
   h += '<h4 style="font-size:0.95rem;margin-bottom:2px;color:var(--t' + i + ')">🧬 Registrasi Tim Peneliti ' + (i + 1) + '</h4>';
   h += '<p class="mute" style="font-size:0.75rem;margin-bottom:5px">Inisialisasi kode strain & anggota virolog via keyboard sentuh:</p>';
   
-  // Field 1: Nama Kelompok / Kode Strain
+  // Field 1: Nama Kelompok / Kode Strain (Smart TV OSK Suppressed)
   h += '<label style="font-size:0.73rem;font-weight:800;color:var(--mute);display:block;margin-bottom:1px">Nama Tim / Kode Strain Virus:</label>';
-  h += '<input id="inp-name-' + i + '" maxlength="22" value="' + (t.name || ('Kelompok ' + (i + 1))) + '" onclick="setKbTarget(' + i + ', \'name\')" onfocus="setKbTarget(' + i + ', \'name\')" oninput="TEAMS[' + i + '].name=this.value" style="font-size:0.86rem;padding:5px 8px;margin-bottom:5px;border-left:5px solid var(--t' + i + ');' + (currTarget === 'name' ? 'border-color:var(--t' + i + ');box-shadow:0 0 8px var(--t' + i + '-glow)' : '') + '">';
+  h += '<input id="inp-name-' + i + '" class="no-tv-osk" maxlength="22" readonly inputmode="none" tabindex="-1" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" value="' + (t.name || ('Kelompok ' + (i + 1))) + '" onclick="setKbTarget(' + i + ', \'name\');this.blur()" ontouchstart="setKbTarget(' + i + ', \'name\');if(event.cancelable)event.preventDefault();" onfocus="this.blur()" style="font-size:0.86rem;padding:5px 8px;margin-bottom:5px;border-left:5px solid var(--t' + i + ');cursor:pointer;' + (currTarget === 'name' ? 'border-color:var(--t' + i + ');box-shadow:0 0 8px var(--t' + i + '-glow);background:var(--card);' : 'background:var(--card-sub);') + '">';
 
-  // Field 2: Nama Anggota Peneliti
+  // Field 2: Nama Anggota Peneliti (Smart TV OSK Suppressed)
   h += '<label style="font-size:0.73rem;font-weight:800;color:var(--mute);display:block;margin-bottom:1px">Nama Peneliti Virologiwan:</label>';
-  h += '<input id="inp-members-' + i + '" placeholder="Cth: Andi (Virolog), Siti, Budi" value="' + (t.members || '') + '" onclick="setKbTarget(' + i + ', \'members\')" onfocus="setKbTarget(' + i + ', \'members\')" oninput="TEAMS[' + i + '].members=this.value" style="font-size:0.82rem;padding:5px 8px;margin-bottom:5px;border-left:5px solid var(--t' + i + ');' + (currTarget === 'members' ? 'border-color:var(--t' + i + ');box-shadow:0 0 8px var(--t' + i + '-glow)' : '') + '">';
+  h += '<input id="inp-members-' + i + '" class="no-tv-osk" placeholder="Cth: Andi (Virolog), Siti, Budi" readonly inputmode="none" tabindex="-1" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" value="' + (t.members || '') + '" onclick="setKbTarget(' + i + ', \'members\');this.blur()" ontouchstart="setKbTarget(' + i + ', \'members\');if(event.cancelable)event.preventDefault();" onfocus="this.blur()" style="font-size:0.82rem;padding:5px 8px;margin-bottom:5px;border-left:5px solid var(--t' + i + ');cursor:pointer;' + (currTarget === 'members' ? 'border-color:var(--t' + i + ');box-shadow:0 0 8px var(--t' + i + '-glow);background:var(--card);' : 'background:var(--card-sub);') + '">';
   h += '</div>';
 
   // Target Switcher Bar
   h += '<div class="kb-target-bar">';
-  h += '<button type="button" id="kb-tgt-name-' + i + '" class="kb-target-btn' + (currTarget === 'name' ? ' active' : '') + '" onclick="setKbTarget(' + i + ', \'name\')">📝 Edit Kode Strain</button>';
-  h += '<button type="button" id="kb-tgt-memb-' + i + '" class="kb-target-btn' + (currTarget === 'members' ? ' active' : '') + '" onclick="setKbTarget(' + i + ', \'members\')">👥 Edit Peneliti</button>';
+  h += '<button type="button" tabindex="-1" id="kb-tgt-name-' + i + '" class="kb-target-btn' + (currTarget === 'name' ? ' active' : '') + '" onclick="setKbTarget(' + i + ', \'name\')" ontouchstart="setKbTarget(' + i + ', \'name\');if(event.cancelable)event.preventDefault();">📝 Edit Kode Strain</button>';
+  h += '<button type="button" tabindex="-1" id="kb-tgt-memb-' + i + '" class="kb-target-btn' + (currTarget === 'members' ? ' active' : '') + '" onclick="setKbTarget(' + i + ', \'members\')" ontouchstart="setKbTarget(' + i + ', \'members\');if(event.cancelable)event.preventDefault();">👥 Edit Peneliti</button>';
   h += '</div>';
 
   // Keyboard Virtual Sentuh Regu i
@@ -2782,7 +2801,7 @@ function tv0(i) {
   var numRow = ['1','2','3','4','5','6','7','8','9','0'];
   h += '<div class="kb-row">';
   numRow.forEach(function(k) {
-    h += '<button type="button" class="kb-key" onclick="kbType(' + i + ', \'' + k + '\')">' + k + '</button>';
+    h += '<button type="button" tabindex="-1" class="kb-key" onclick="kbType(' + i + ', \'' + k + '\')">' + k + '</button>';
   });
   h += '</div>';
 
@@ -2790,7 +2809,7 @@ function tv0(i) {
   var r1 = ['Q','W','E','R','T','Y','U','I','O','P'];
   h += '<div class="kb-row">';
   r1.forEach(function(k) {
-    h += '<button type="button" class="kb-key" onclick="kbType(' + i + ', \'' + k + '\')">' + k + '</button>';
+    h += '<button type="button" tabindex="-1" class="kb-key" onclick="kbType(' + i + ', \'' + k + '\')">' + k + '</button>';
   });
   h += '</div>';
 
@@ -2798,7 +2817,7 @@ function tv0(i) {
   var r2 = ['A','S','D','F','G','H','J','K','L'];
   h += '<div class="kb-row">';
   r2.forEach(function(k) {
-    h += '<button type="button" class="kb-key" onclick="kbType(' + i + ', \'' + k + '\')">' + k + '</button>';
+    h += '<button type="button" tabindex="-1" class="kb-key" onclick="kbType(' + i + ', \'' + k + '\')">' + k + '</button>';
   });
   h += '</div>';
 
@@ -2806,15 +2825,15 @@ function tv0(i) {
   var r3 = ['Z','X','C','V','B','N','M',',','.'];
   h += '<div class="kb-row">';
   r3.forEach(function(k) {
-    h += '<button type="button" class="kb-key" onclick="kbType(' + i + ', \'' + k + '\')">' + k + '</button>';
+    h += '<button type="button" tabindex="-1" class="kb-key" onclick="kbType(' + i + ', \'' + k + '\')">' + k + '</button>';
   });
   h += '</div>';
 
   // Row 5: Actions
   h += '<div class="kb-row">';
-  h += '<button type="button" class="kb-key key-space" onclick="kbType(' + i + ', \'SPACE\')">␣ SPASI</button>';
-  h += '<button type="button" class="kb-key key-del" onclick="kbType(' + i + ', \'BACKSPACE\')">⌫ HAPUS</button>';
-  h += '<button type="button" class="kb-key key-wide" onclick="kbType(' + i + ', \'CLEAR\')">CLEAR</button>';
+  h += '<button type="button" tabindex="-1" class="kb-key key-space" onclick="kbType(' + i + ', \'SPACE\')">␣ SPASI</button>';
+  h += '<button type="button" tabindex="-1" class="kb-key key-del" onclick="kbType(' + i + ', \'BACKSPACE\')">⌫ HAPUS</button>';
+  h += '<button type="button" tabindex="-1" class="kb-key key-wide" onclick="kbType(' + i + ', \'CLEAR\')">CLEAR</button>';
   h += '</div>';
 
   h += '</div>'; // end panel-kb-wrap
@@ -3285,7 +3304,7 @@ updatePenaltyBadge();
       <label style="font-size:0.88rem;font-weight:700;display:block;margin-bottom:6px">Atur Menit Kustom:</label>
       <div style="display:flex;gap:8px;align-items:center">
         <button class="tool-btn" onclick="adjustTimerMinutes(-1)">-1 Menit</button>
-        <input type="number" id="inp-custom-mins" min="1" max="120" value="10" style="width:85px;text-align:center;margin-bottom:0" onchange="setTimerDurationMinutes(this.value)">
+        <input type="number" id="inp-custom-mins" class="no-tv-osk" min="1" max="120" value="10" readonly inputmode="none" tabindex="-1" onfocus="this.blur()" ontouchstart="if(event.cancelable)event.preventDefault();" style="width:85px;text-align:center;margin-bottom:0;cursor:default" onchange="setTimerDurationMinutes(this.value)">
         <span class="mute">Menit</span>
         <button class="tool-btn" onclick="adjustTimerMinutes(1)">+1 Menit</button>
       </div>
