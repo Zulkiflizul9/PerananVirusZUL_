@@ -556,21 +556,23 @@ input:focus {
   caret-color: transparent !important;
 }
 
-/* Virtual On-Screen Touch Keyboard (Multi-Touch Smartboard) */
+/* Virtual On-Screen Touch Keyboard (Multi-Touch Smartboard Concurrency) */
 .panel-kb-wrap {
   background: var(--card-sub);
   border: 1.5px solid var(--line);
   border-radius: 8px;
   padding: 5px 4px;
   margin-top: 6px;
-  user-select: none;
-  touch-action: manipulation;
+  user-select: none !important;
+  -webkit-user-select: none !important;
+  touch-action: none !important;
 }
 .kb-target-bar {
   display: flex;
   align-items: center;
   gap: 4px;
   margin-top: 2px;
+  touch-action: manipulation;
 }
 .kb-target-btn {
   flex: 1;
@@ -585,6 +587,7 @@ input:focus {
   text-align: center;
   transition: all .15s ease;
   white-space: nowrap;
+  touch-action: manipulation;
 }
 .kb-target-btn.active {
   background: var(--c);
@@ -598,6 +601,7 @@ input:focus {
   justify-content: center;
   gap: 2.5px;
   margin-bottom: 2.5px;
+  touch-action: none !important;
 }
 .kb-row:last-child {
   margin-bottom: 0;
@@ -618,17 +622,21 @@ input:focus {
   justify-content: center;
   cursor: pointer;
   padding: 0;
-  transition: background .08s ease, transform .08s ease;
-  touch-action: manipulation;
+  transition: background .06s ease, transform .06s ease;
+  touch-action: none !important;
+  user-select: none !important;
+  -webkit-user-select: none !important;
+  -webkit-tap-highlight-color: transparent;
 }
 .kb-key:hover {
   background: color-mix(in srgb, var(--c) 20%, var(--card));
   border-color: var(--c);
 }
-.kb-key:active {
-  transform: scale(0.92);
-  background: var(--c);
-  color: #fff;
+.kb-key:active, .kb-key.touch-active {
+  transform: scale(0.90) !important;
+  background: var(--c) !important;
+  color: #fff !important;
+  box-shadow: 0 0 8px var(--c-glow) !important;
 }
 .kb-key.key-wide {
   flex: 2.2;
@@ -2773,6 +2781,24 @@ function setKbTarget(teamIdx, field) {
   }
 }
 
+function kbPress(e, teamIdx, char) {
+  if (e) {
+    if (e.cancelable) e.preventDefault();
+    e.stopPropagation();
+  }
+  
+  var now = Date.now();
+  var keyEl = (e && (e.currentTarget || e.target)) ? (e.currentTarget || e.target).closest('.kb-key') : null;
+  if (keyEl) {
+    if (keyEl._lastPress && (now - keyEl._lastPress < 140)) return;
+    keyEl._lastPress = now;
+    keyEl.classList.add('touch-active');
+    setTimeout(function() { keyEl.classList.remove('touch-active'); }, 90);
+  }
+
+  kbType(teamIdx, char);
+}
+
 function kbType(teamIdx, char) {
   var target = kbTargetField[teamIdx] || 'name';
   var inp = document.getElementById(target === 'name' ? 'inp-name-' + teamIdx : 'inp-members-' + teamIdx);
@@ -2810,27 +2836,27 @@ function tv0(i) {
   
   // Field 1: Nama Kelompok / Kode Strain (Smart TV OSK Suppressed)
   h += '<label style="font-size:0.73rem;font-weight:800;color:var(--mute);display:block;margin-bottom:1px">Nama Tim / Kode Strain Virus:</label>';
-  h += '<input id="inp-name-' + i + '" class="no-tv-osk" maxlength="22" readonly inputmode="none" tabindex="-1" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" value="' + (t.name || ('Kelompok ' + (i + 1))) + '" onclick="setKbTarget(' + i + ', \'name\');this.blur()" ontouchstart="setKbTarget(' + i + ', \'name\');if(event.cancelable)event.preventDefault();" onfocus="this.blur()" style="font-size:0.86rem;padding:5px 8px;margin-bottom:5px;border-left:5px solid var(--t' + i + ');cursor:pointer;' + (currTarget === 'name' ? 'border-color:var(--t' + i + ');box-shadow:0 0 8px var(--t' + i + '-glow);background:var(--card);' : 'background:var(--card-sub);') + '">';
+  h += '<input id="inp-name-' + i + '" class="no-tv-osk" maxlength="22" readonly inputmode="none" tabindex="-1" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" value="' + (t.name || ('Kelompok ' + (i + 1))) + '" onpointerdown="setKbTarget(' + i + ', \'name\');if(event.cancelable)event.preventDefault();this.blur()" ontouchstart="setKbTarget(' + i + ', \'name\');if(event.cancelable)event.preventDefault();this.blur()" onclick="setKbTarget(' + i + ', \'name\');this.blur()" onfocus="this.blur()" style="font-size:0.86rem;padding:5px 8px;margin-bottom:5px;border-left:5px solid var(--t' + i + ');cursor:pointer;' + (currTarget === 'name' ? 'border-color:var(--t' + i + ');box-shadow:0 0 8px var(--t' + i + '-glow);background:var(--card);' : 'background:var(--card-sub);') + '">';
 
   // Field 2: Nama Anggota Peneliti (Smart TV OSK Suppressed)
   h += '<label style="font-size:0.73rem;font-weight:800;color:var(--mute);display:block;margin-bottom:1px">Nama Peneliti Virologiwan:</label>';
-  h += '<input id="inp-members-' + i + '" class="no-tv-osk" placeholder="Cth: Andi (Virolog), Siti, Budi" readonly inputmode="none" tabindex="-1" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" value="' + (t.members || '') + '" onclick="setKbTarget(' + i + ', \'members\');this.blur()" ontouchstart="setKbTarget(' + i + ', \'members\');if(event.cancelable)event.preventDefault();" onfocus="this.blur()" style="font-size:0.82rem;padding:5px 8px;margin-bottom:5px;border-left:5px solid var(--t' + i + ');cursor:pointer;' + (currTarget === 'members' ? 'border-color:var(--t' + i + ');box-shadow:0 0 8px var(--t' + i + '-glow);background:var(--card);' : 'background:var(--card-sub);') + '">';
+  h += '<input id="inp-members-' + i + '" class="no-tv-osk" placeholder="Cth: Andi (Virolog), Siti, Budi" readonly inputmode="none" tabindex="-1" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" value="' + (t.members || '') + '" onpointerdown="setKbTarget(' + i + ', \'members\');if(event.cancelable)event.preventDefault();this.blur()" ontouchstart="setKbTarget(' + i + ', \'members\');if(event.cancelable)event.preventDefault();this.blur()" onclick="setKbTarget(' + i + ', \'members\');this.blur()" onfocus="this.blur()" style="font-size:0.82rem;padding:5px 8px;margin-bottom:5px;border-left:5px solid var(--t' + i + ');cursor:pointer;' + (currTarget === 'members' ? 'border-color:var(--t' + i + ');box-shadow:0 0 8px var(--t' + i + '-glow);background:var(--card);' : 'background:var(--card-sub);') + '">';
   h += '</div>';
 
   // Target Switcher Bar
   h += '<div class="kb-target-bar">';
-  h += '<button type="button" tabindex="-1" id="kb-tgt-name-' + i + '" class="kb-target-btn' + (currTarget === 'name' ? ' active' : '') + '" onclick="setKbTarget(' + i + ', \'name\')" ontouchstart="setKbTarget(' + i + ', \'name\');if(event.cancelable)event.preventDefault();">📝 Edit Kode Strain</button>';
-  h += '<button type="button" tabindex="-1" id="kb-tgt-memb-' + i + '" class="kb-target-btn' + (currTarget === 'members' ? ' active' : '') + '" onclick="setKbTarget(' + i + ', \'members\')" ontouchstart="setKbTarget(' + i + ', \'members\');if(event.cancelable)event.preventDefault();">👥 Edit Peneliti</button>';
+  h += '<button type="button" tabindex="-1" id="kb-tgt-name-' + i + '" class="kb-target-btn' + (currTarget === 'name' ? ' active' : '') + '" onpointerdown="setKbTarget(' + i + ', \'name\');if(event.cancelable)event.preventDefault();" ontouchstart="setKbTarget(' + i + ', \'name\');if(event.cancelable)event.preventDefault();" onclick="setKbTarget(' + i + ', \'name\')">📝 Edit Kode Strain</button>';
+  h += '<button type="button" tabindex="-1" id="kb-tgt-memb-' + i + '" class="kb-target-btn' + (currTarget === 'members' ? ' active' : '') + '" onpointerdown="setKbTarget(' + i + ', \'members\');if(event.cancelable)event.preventDefault();" ontouchstart="setKbTarget(' + i + ', \'members\');if(event.cancelable)event.preventDefault();" onclick="setKbTarget(' + i + ', \'members\')">👥 Edit Peneliti</button>';
   h += '</div>';
 
-  // Keyboard Virtual Sentuh Regu i
+  // Keyboard Virtual Sentuh Regu i (Multi-Touch Concurrency)
   h += '<div class="panel-kb-wrap" style="--c:var(--t' + i + ')">';
   
   // Row 1: Numbers
   var numRow = ['1','2','3','4','5','6','7','8','9','0'];
   h += '<div class="kb-row">';
   numRow.forEach(function(k) {
-    h += '<button type="button" tabindex="-1" class="kb-key" onclick="kbType(' + i + ', \'' + k + '\')">' + k + '</button>';
+    h += '<button type="button" tabindex="-1" class="kb-key" onpointerdown="kbPress(event, ' + i + ', \'' + k + '\')" ontouchstart="kbPress(event, ' + i + ', \'' + k + '\')" onclick="kbPress(event, ' + i + ', \'' + k + '\')">' + k + '</button>';
   });
   h += '</div>';
 
@@ -2838,7 +2864,7 @@ function tv0(i) {
   var r1 = ['Q','W','E','R','T','Y','U','I','O','P'];
   h += '<div class="kb-row">';
   r1.forEach(function(k) {
-    h += '<button type="button" tabindex="-1" class="kb-key" onclick="kbType(' + i + ', \'' + k + '\')">' + k + '</button>';
+    h += '<button type="button" tabindex="-1" class="kb-key" onpointerdown="kbPress(event, ' + i + ', \'' + k + '\')" ontouchstart="kbPress(event, ' + i + ', \'' + k + '\')" onclick="kbPress(event, ' + i + ', \'' + k + '\')">' + k + '</button>';
   });
   h += '</div>';
 
@@ -2846,7 +2872,7 @@ function tv0(i) {
   var r2 = ['A','S','D','F','G','H','J','K','L'];
   h += '<div class="kb-row">';
   r2.forEach(function(k) {
-    h += '<button type="button" tabindex="-1" class="kb-key" onclick="kbType(' + i + ', \'' + k + '\')">' + k + '</button>';
+    h += '<button type="button" tabindex="-1" class="kb-key" onpointerdown="kbPress(event, ' + i + ', \'' + k + '\')" ontouchstart="kbPress(event, ' + i + ', \'' + k + '\')" onclick="kbPress(event, ' + i + ', \'' + k + '\')">' + k + '</button>';
   });
   h += '</div>';
 
@@ -2854,15 +2880,15 @@ function tv0(i) {
   var r3 = ['Z','X','C','V','B','N','M',',','.'];
   h += '<div class="kb-row">';
   r3.forEach(function(k) {
-    h += '<button type="button" tabindex="-1" class="kb-key" onclick="kbType(' + i + ', \'' + k + '\')">' + k + '</button>';
+    h += '<button type="button" tabindex="-1" class="kb-key" onpointerdown="kbPress(event, ' + i + ', \'' + k + '\')" ontouchstart="kbPress(event, ' + i + ', \'' + k + '\')" onclick="kbPress(event, ' + i + ', \'' + k + '\')">' + k + '</button>';
   });
   h += '</div>';
 
   // Row 5: Actions
   h += '<div class="kb-row">';
-  h += '<button type="button" tabindex="-1" class="kb-key key-space" onclick="kbType(' + i + ', \'SPACE\')">␣ SPASI</button>';
-  h += '<button type="button" tabindex="-1" class="kb-key key-del" onclick="kbType(' + i + ', \'BACKSPACE\')">⌫ HAPUS</button>';
-  h += '<button type="button" tabindex="-1" class="kb-key key-wide" onclick="kbType(' + i + ', \'CLEAR\')">CLEAR</button>';
+  h += '<button type="button" tabindex="-1" class="kb-key key-space" onpointerdown="kbPress(event, ' + i + ', \'SPACE\')" ontouchstart="kbPress(event, ' + i + ', \'SPACE\')" onclick="kbPress(event, ' + i + ', \'SPACE\')">␣ SPASI</button>';
+  h += '<button type="button" tabindex="-1" class="kb-key key-del" onpointerdown="kbPress(event, ' + i + ', \'BACKSPACE\')" ontouchstart="kbPress(event, ' + i + ', \'BACKSPACE\')" onclick="kbPress(event, ' + i + ', \'BACKSPACE\')">⌫ HAPUS</button>';
+  h += '<button type="button" tabindex="-1" class="kb-key key-wide" onpointerdown="kbPress(event, ' + i + ', \'CLEAR\')" ontouchstart="kbPress(event, ' + i + ', \'CLEAR\')" onclick="kbPress(event, ' + i + ', \'CLEAR\')">CLEAR</button>';
   h += '</div>';
 
   h += '</div>'; // end panel-kb-wrap
@@ -3342,7 +3368,7 @@ function startAllTeamsTogether(targetStep) {
 
 /* =========================================================
    TRUE MULTI-TOUCH CONCURRENCY ENGINE FOR SMART BOARDS
-   (Memungkinkan 4 Siswa Menekan Tombol Bersamaan Tanpa Konflik)
+   (Memungkinkan 4 Siswa Menekan Tombol & Keyboard Bersamaan Tanpa Konflik)
    ========================================================= */
 (function setupMultiTouchEngine() {
   function triggerAction(target, e) {
@@ -3350,7 +3376,7 @@ function startAllTeamsTogether(targetStep) {
     if (target.disabled || target.getAttribute('disabled') !== null) return;
     
     var now = Date.now();
-    if (target._mtLastTrigger && (now - target._mtLastTrigger < 250)) {
+    if (target._mtLastTrigger && (now - target._mtLastTrigger < 180)) {
       return;
     }
     target._mtLastTrigger = now;
@@ -3358,7 +3384,7 @@ function startAllTeamsTogether(targetStep) {
     target.classList.add('touch-active');
     setTimeout(function() {
       target.classList.remove('touch-active');
-    }, 120);
+    }, 90);
 
     if (typeof target.onclick === 'function') {
       try {
@@ -3371,16 +3397,16 @@ function startAllTeamsTogether(targetStep) {
     }
   }
 
-  // Intercept pointerdown for touch/pen inputs inside LKPD panels
+  // 1. Universal PointerDown (Windows Touch, Android, Chrome, Edge)
   document.addEventListener('pointerdown', function(e) {
-    if (e.pointerType !== 'touch' && e.pointerType !== 'pen') return;
+    if (e.button && e.button !== 0) return; // Abaikan klik kanan
 
     var target = e.target.closest(
       '.kb-key, .opt-btn, .panel-hero-card, .kb-target-btn, .btn, .tool-btn, .timer-play-btn, .timer-btn-sm, .tab-sel-btn'
     );
     if (!target) return;
 
-    var inLkpd = target.closest('.lkpd-workspace, .smartboard-top-bar, #section-lkpd, .custom-modal-box');
+    var inLkpd = target.closest('.lkpd-workspace, .smartboard-top-bar, #section-lkpd, .panel-kb-wrap, .custom-modal-box');
     if (!inLkpd) return;
 
     if (e.cancelable) {
@@ -3390,13 +3416,30 @@ function startAllTeamsTogether(targetStep) {
     triggerAction(target, e);
   }, { passive: false, capture: true });
 
-  // Suppress delayed synthetic click from touch
+  // 2. Native Multi-Touch TouchStart (Smart TV, Android TV, IFPD, WebOS, Tizen)
+  document.addEventListener('touchstart', function(e) {
+    var inLkpd = e.target.closest('.lkpd-workspace, .smartboard-top-bar, #section-lkpd, .panel-kb-wrap, .custom-modal-box');
+    if (!inLkpd) return;
+
+    for (var i = 0; i < e.changedTouches.length; i++) {
+      var touch = e.changedTouches[i];
+      var target = document.elementFromPoint(touch.clientX, touch.clientY);
+      if (!target) continue;
+      var btn = target.closest('.kb-key, .opt-btn, .panel-hero-card, .kb-target-btn, .btn, .tool-btn');
+      if (btn) {
+        if (e.cancelable) e.preventDefault();
+        triggerAction(btn, e);
+      }
+    }
+  }, { passive: false, capture: true });
+
+  // 3. Cegah Synthetic Delayed Click jika sudah diproses multi-touch
   document.addEventListener('click', function(e) {
     var target = e.target.closest(
       '.kb-key, .opt-btn, .panel-hero-card, .kb-target-btn, .btn, .tool-btn, .timer-play-btn, .timer-btn-sm, .tab-sel-btn'
     );
     if (!target) return;
-    if (target._mtLastTrigger && (Date.now() - target._mtLastTrigger < 350)) {
+    if (target._mtLastTrigger && (Date.now() - target._mtLastTrigger < 300)) {
       if (e.cancelable) e.preventDefault();
       e.stopPropagation();
     }
