@@ -90,6 +90,11 @@
 body {
   margin: 0;
   background-color: var(--bg);
+  background-image:
+    radial-gradient(color-mix(in srgb, var(--ac) 9%, transparent) 1px, transparent 1px),
+    radial-gradient(color-mix(in srgb, var(--t3) 6%, transparent) 1px, transparent 1px);
+  background-size: 32px 32px, 64px 64px;
+  background-position: 0 0, 16px 16px;
   color: var(--ink);
   font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
   font-size: 16px;
@@ -101,6 +106,22 @@ body {
   user-select: none; /* Mencegah teks terblok biru saat banyak tangan menyentuh layar */
 }
 
+/* Custom Virology Sleek Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg-sub);
+}
+::-webkit-scrollbar-thumb {
+  background: color-mix(in srgb, var(--ac) 45%, var(--line));
+  border-radius: 99px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--ac);
+}
+
 /* Background floating virus particles */
 .virus-bg-canvas {
   position: fixed;
@@ -108,22 +129,24 @@ body {
   pointer-events: none;
   z-index: 0;
   overflow: hidden;
-  opacity: 0.22;
+  opacity: 0.28;
 }
 .bg-v {
   position: absolute;
   animation: floatVirus 26s ease-in-out infinite alternate;
-  filter: drop-shadow(0 4px 14px rgba(0,229,190,0.15));
+  filter: drop-shadow(0 4px 14px rgba(0,229,190,0.18));
 }
-.bg-v:nth-child(1) { top: 5%; left: 1%; width: 100px; animation-duration: 30s; }
-.bg-v:nth-child(2) { top: 48%; right: 2%; width: 120px; animation-duration: 36s; animation-delay: -5s; }
-.bg-v:nth-child(3) { bottom: 6%; left: 3%; width: 90px; animation-duration: 25s; animation-delay: -8s; }
-.bg-v:nth-child(4) { top: 18%; right: 7%; width: 85px; animation-duration: 32s; animation-delay: -12s; }
+.bg-v:nth-child(1) { top: 4%; left: 1%; width: 105px; animation-duration: 32s; }
+.bg-v:nth-child(2) { top: 46%; right: 1.5%; width: 125px; animation-duration: 38s; animation-delay: -5s; }
+.bg-v:nth-child(3) { bottom: 5%; left: 3%; width: 95px; animation-duration: 27s; animation-delay: -8s; }
+.bg-v:nth-child(4) { top: 16%; right: 8%; width: 90px; animation-duration: 34s; animation-delay: -12s; }
+.bg-v:nth-child(5) { bottom: 18%; right: 28%; width: 80px; animation-duration: 29s; animation-delay: -15s; }
+.bg-v:nth-child(6) { top: 62%; left: 24%; width: 75px; animation-duration: 35s; animation-delay: -20s; }
 
 @keyframes floatVirus {
   0% { transform: translateY(0) rotate(0deg) scale(1); }
-  50% { transform: translateY(-20px) rotate(16deg) scale(1.03); }
-  100% { transform: translateY(18px) rotate(-14deg) scale(0.97); }
+  50% { transform: translateY(-22px) rotate(18deg) scale(1.05); }
+  100% { transform: translateY(20px) rotate(-16deg) scale(0.96); }
 }
 
 /* =========================================================
@@ -1199,9 +1222,9 @@ input:focus {
 <canvas id="confetti-canvas"></canvas>
 <audio id="bg-music" src="dua%20lipa%20training.mp3" loop preload="auto"></audio>
 
-<!-- SVG Background Floating Virus Particles -->
+<!-- SVG Background Floating Virus Particles (6 Spesimen Virion Beragam) -->
 <div class="virus-bg-canvas" aria-hidden="true">
-  <!-- Bacteriophage T4 -->
+  <!-- 1. Bakteriofag T4 (Kompleks) -->
   <svg class="bg-v" viewBox="0 0 100 120" fill="none">
     <path d="M50 10 L75 25 L75 55 L50 70 L25 55 L25 25 Z" stroke="var(--ac)" stroke-width="2.5" fill="color-mix(in srgb, var(--ac) 15%, transparent)" />
     <path d="M38 32 Q50 24 62 32 Q50 48 38 40" stroke="var(--ac)" stroke-width="1.8" />
@@ -1209,15 +1232,57 @@ input:focus {
     <ellipse cx="50" cy="90" rx="9" ry="4" fill="var(--ink)" />
     <path d="M43 91 L25 115 M47 92 L35 118 M53 92 L65 118 M57 91 L75 115" stroke="var(--ac)" stroke-width="2.2" stroke-linecap="round" />
   </svg>
-  <!-- Coronavirus -->
+  <!-- 2. Coronavirus SARS-CoV-2 (Berselubung + Spikes) -->
   <svg class="bg-v" viewBox="0 0 120 120" fill="none">
-    <circle cx="60" cy="60" r="38" stroke="var(--t0)" stroke-width="3" fill="color-mix(in srgb, var(--t0) 12%, transparent)" />
+    <circle cx="60" cy="60" r="38" stroke="var(--t0)" stroke-width="3" fill="color-mix(in srgb, var(--t0) 14%, transparent)" />
     <g stroke="var(--t0)" stroke-width="3" stroke-linecap="round">
       <line x1="60" y1="22" x2="60" y2="8" /><circle cx="60" cy="7" r="4.5" fill="var(--t0)" />
       <line x1="60" y1="98" x2="60" y2="112" /><circle cx="60" cy="113" r="4.5" fill="var(--t0)" />
       <line x1="22" y1="60" x2="8" y2="60" /><circle cx="7" cy="60" r="4.5" fill="var(--t0)" />
       <line x1="98" y1="60" x2="112" y2="60" /><circle cx="113" cy="60" r="4.5" fill="var(--t0)" />
+      <line x1="33" y1="33" x2="22" y2="22" /><circle cx="21" cy="21" r="4.5" fill="var(--t0)" />
+      <line x1="87" y1="87" x2="98" y2="98" /><circle cx="99" cy="99" r="4.5" fill="var(--t0)" />
+      <line x1="33" y1="87" x2="22" y2="98" /><circle cx="21" cy="99" r="4.5" fill="var(--t0)" />
+      <line x1="87" y1="33" x2="98" y2="22" /><circle cx="99" cy="21" r="4.5" fill="var(--t0)" />
     </g>
+  </svg>
+  <!-- 3. Adenovirus (Ikosahedral dengan Fiber Antenna) -->
+  <svg class="bg-v" viewBox="0 0 100 100" fill="none">
+    <polygon points="50,15 80,32 80,68 50,85 20,68 20,32" stroke="var(--t3)" stroke-width="2.5" fill="color-mix(in srgb, var(--t3) 16%, transparent)" />
+    <line x1="50" y1="15" x2="50" y2="50" stroke="var(--t3)" stroke-width="1.8" />
+    <line x1="80" y1="32" x2="50" y2="50" stroke="var(--t3)" stroke-width="1.8" />
+    <line x1="80" y1="68" x2="50" y2="50" stroke="var(--t3)" stroke-width="1.8" />
+    <line x1="50" y1="85" x2="50" y2="50" stroke="var(--t3)" stroke-width="1.8" />
+    <line x1="20" y1="68" x2="50" y2="50" stroke="var(--t3)" stroke-width="1.8" />
+    <line x1="20" y1="32" x2="50" y2="50" stroke="var(--t3)" stroke-width="1.8" />
+    <circle cx="50" cy="5" r="3" fill="var(--t3)" /><line x1="50" y1="15" x2="50" y2="8" stroke="var(--t3)" stroke-width="2" />
+    <circle cx="90" cy="28" r="3" fill="var(--t3)" /><line x1="80" y1="32" x2="88" y2="29" stroke="var(--t3)" stroke-width="2" />
+  </svg>
+  <!-- 4. TMV (Batang Heliks Berpilin) -->
+  <svg class="bg-v" viewBox="0 0 70 110" fill="none">
+    <rect x="20" y="10" width="30" height="90" rx="8" stroke="var(--t2)" stroke-width="2.5" fill="color-mix(in srgb, var(--t2) 16%, transparent)" />
+    <line x1="20" y1="28" x2="50" y2="28" stroke="var(--t2)" stroke-width="2" />
+    <line x1="20" y1="46" x2="50" y2="46" stroke="var(--t2)" stroke-width="2" />
+    <line x1="20" y1="64" x2="50" y2="64" stroke="var(--t2)" stroke-width="2" />
+    <line x1="20" y1="82" x2="50" y2="82" stroke="var(--t2)" stroke-width="2" />
+    <path d="M35 12 V98" stroke="var(--gold)" stroke-width="2" stroke-dasharray="3 3" />
+  </svg>
+  <!-- 5. Influenza Virion (Orthomyxovirus) -->
+  <svg class="bg-v" viewBox="0 0 100 100" fill="none">
+    <circle cx="50" cy="50" r="30" stroke="var(--t1)" stroke-width="2.5" fill="color-mix(in srgb, var(--t1) 14%, transparent)" />
+    <path d="M40 45 Q50 35 60 45 Q50 55 40 45" stroke="var(--t1)" stroke-width="2" />
+    <path d="M42 55 Q50 65 58 55" stroke="var(--t1)" stroke-width="2" />
+    <line x1="50" y1="20" x2="50" y2="10" stroke="var(--t1)" stroke-width="2.5" stroke-linecap="round" />
+    <line x1="50" y1="80" x2="50" y2="90" stroke="var(--t1)" stroke-width="2.5" stroke-linecap="round" />
+    <line x1="20" y1="50" x2="10" y2="50" stroke="var(--t1)" stroke-width="2.5" stroke-linecap="round" />
+    <line x1="80" y1="50" x2="90" y2="50" stroke="var(--t1)" stroke-width="2.5" stroke-linecap="round" />
+  </svg>
+  <!-- 6. Rhabdovirus (Kapsid Peluru Rabies) -->
+  <svg class="bg-v" viewBox="0 0 80 110" fill="none">
+    <path d="M20 95 L20 40 Q20 15 40 15 Q60 15 60 40 L60 95 Z" stroke="var(--t0)" stroke-width="2.5" fill="color-mix(in srgb, var(--t0) 15%, transparent)" />
+    <path d="M25 45 Q40 35 55 45" stroke="var(--t0)" stroke-width="2" />
+    <path d="M25 65 Q40 55 55 65" stroke="var(--t0)" stroke-width="2" />
+    <path d="M25 85 Q40 75 55 85" stroke="var(--t0)" stroke-width="2" />
   </svg>
 </div>
 
@@ -1236,19 +1301,20 @@ input:focus {
       </svg>
       <div class="brand-text">
         <h1>BIO PERANAN VIRUS PAK ZUL</h1>
-        <span>Biologi SMA Kelas X • Fase E</span>
+        <span>Biologi SMA Kelas X • 🧫 Viro-Lab Simulator</span>
       </div>
     </div>
 
     <!-- Nav Menu Tabs -->
     <nav class="main-nav">
-      <button class="nav-tab-btn" id="btn-nav-beranda" onclick="switchNav('beranda')">🏠 Beranda</button>
-      <button class="nav-tab-btn" id="btn-nav-materi" onclick="switchNav('materi')">📖 Materi Peranan</button>
-      <button class="nav-tab-btn active" id="btn-nav-lkpd" onclick="switchNav('lkpd')">🖐️ LKPD Papan Tulis (4 Regu)</button>
-      <button class="nav-tab-btn" id="btn-nav-galeri" onclick="switchNav('galeri')">🔬 Galeri Morfologi</button>
+      <button class="nav-tab-btn" id="btn-nav-beranda" onclick="switchNav('beranda')">🧬 Beranda Virologi</button>
+      <button class="nav-tab-btn" id="btn-nav-materi" onclick="switchNav('materi')">🦠 Materi Peranan Virus</button>
+      <button class="nav-tab-btn active" id="btn-nav-lkpd" onclick="switchNav('lkpd')">🧪 LKPD Misi Detektif (4 Regu)</button>
+      <button class="nav-tab-btn" id="btn-nav-galeri" onclick="switchNav('galeri')">🔬 Morfologi Virion</button>
     </nav>
 
     <div class="header-actions">
+      <span class="chip" style="--c:var(--ac);margin:0;font-size:0.75rem;padding:3px 10px;background:rgba(0,229,190,0.12)">🧪 BSL-2 VIRO-LAB</span>
       <button class="tool-btn" onclick="toggleFullscreen()" title="Layar Penuh TV">⛶ Fullscreen</button>
       <button class="tool-btn" onclick="toggleTheme()" title="Ganti Tema">🌓 Tema</button>
     </div>
@@ -1261,34 +1327,77 @@ input:focus {
 <main class="main-content">
 
   <!-- =====================================================
-       HALAMAN 1: BERANDA
+       HALAMAN 1: BERANDA VIROLOGI
        ===================================================== -->
   <section id="section-beranda" class="site-section">
-    <div class="card" style="background:linear-gradient(135deg, color-mix(in srgb, var(--ac) 15%, var(--card)) 0%, var(--card) 100%);padding:28px 24px">
-      <span class="chip" style="--c:var(--ac);background:var(--card)">🧬 Kurikulum Merdeka • Fase E SMA</span>
-      <h1 style="font-size:2.2rem;font-weight:900;margin:8px 0 10px">Portal Materi & LKPD Papan Tulis Multi-Touch</h1>
-      <p style="color:var(--mute);font-size:1.05rem;max-width:70ch;margin-bottom:18px">Desain seimbang yang dioptimalkan untuk papan tulis interaktif layar sentuh (*Interactive Flat Panel / Smartboard*). Pelajari materi biologi virologi, lalu ajak 4 perwakilan kelompok berdiri bersama di depan kelas untuk menyelesaikan 4 misi investigasi serentak!</p>
-      <div style="display:flex;gap:12px;flex-wrap:wrap">
-        <button class="btn" onclick="switchNav('materi')">📖 Buka Materi Peranan Virus ➔</button>
-        <button class="btn" style="background:var(--card-sub);color:var(--ink);border:2px solid var(--line)" onclick="switchNav('lkpd')">🖐️ Buka LKPD Papan Tulis Multi-Touch</button>
+    <div class="card" style="background:radial-gradient(circle at 90% 20%, color-mix(in srgb, var(--ac) 18%, transparent) 0%, transparent 50%), linear-gradient(135deg, color-mix(in srgb, var(--ac) 15%, var(--card)) 0%, var(--card) 100%);padding:22px 24px;position:relative;overflow:hidden;border:2px solid color-mix(in srgb, var(--ac) 40%, var(--line));margin-bottom:10px">
+      <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:6px">
+        <span class="chip" style="--c:var(--ac);background:var(--card);margin:0">🧬 Kurikulum Merdeka • Fase E SMA</span>
+        <span class="chip" style="--c:var(--gold);background:var(--card);margin:0">🧫 Modul Digital Virologi & Bioteknologi</span>
+        <span class="chip" style="--c:var(--ok);background:var(--card);margin:0">🖐️ Multi-Touch Interactive Board</span>
+      </div>
+      <h1 style="font-size:2rem;font-weight:900;margin:4px 0 6px;letter-spacing:-0.02em">Stasiun Edukasi Virologi & Arena Investigasi LKPD</h1>
+      <p style="color:var(--mute);font-size:0.95rem;max-width:75ch;margin-bottom:14px;line-height:1.5">Eksplorasi komprehensif dunia virion: pelajari morfologi aseluler, spektrum patogenisitas manusia-hewan-tumbuhan, serta peran revolusioner virus dalam bioteknologi kesehatan modern. Uji ketangkasan dan kolaborasi 4 regu ilmuwan muda serentak di layar sentuh multi-touch papan tulis interaktif!</p>
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <button class="btn btn-sm" onclick="switchNav('materi')">🦠 Telusuri Materi & 10 Poster Virion ➔</button>
+        <button class="btn btn-sm" style="background:var(--card-sub);color:var(--ink);border:2px solid var(--ac);box-shadow:0 3px 12px var(--ac-glow)" onclick="switchNav('lkpd')">🧪 Mulai Arena LKPD 4 Regu (Papan Tulis)</button>
+        <button class="btn btn-sm" style="background:var(--card-sub);color:var(--ink);border:1.5px solid var(--line)" onclick="switchNav('galeri')">🔬 Mikroskop Morfologi Kapsid</button>
       </div>
     </div>
 
-    <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(260px, 1fr));gap:14px;margin-top:14px">
-      <div class="card" style="cursor:pointer" onclick="switchNav('materi')">
-        <span style="font-size:2rem">📖</span>
-        <b style="display:block;font-size:1.15rem;margin:6px 0 4px">Materi Peranan Virus</b>
-        <p class="mute" style="margin:0">Patogenitas virus vs manfaat rekayasa bioteknologi kesehatan modern.</p>
+    <!-- 3 Pintu Utama Modul -->
+    <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(260px, 1fr));gap:10px;margin-bottom:10px">
+      <div class="card" style="cursor:pointer;border-left:5px solid var(--ac);margin-bottom:0;padding:12px 14px;transition:all .2s ease" onclick="switchNav('materi')">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:4px">
+          <span style="font-size:1.8rem;line-height:1">🦠</span>
+          <div>
+            <b style="font-size:1.05rem;display:block">Ensiklopedia & Poster Virion</b>
+            <span class="chip" style="--c:var(--ac);margin:0;font-size:0.68rem;padding:1px 6px">10 Spesimen • PDF HD • Live Filter</span>
+          </div>
+        </div>
+        <p class="mute" style="margin:0;font-size:0.82rem;line-height:1.35">10 patologi klinis (Poster Edukasi Kesehatan), rute transmisi aerosol/darah/vektor, organ target, serta peranan bioteknologi menguntungkan.</p>
       </div>
-      <div class="card" style="cursor:pointer" onclick="switchNav('lkpd')">
-        <span style="font-size:2rem">🖐️</span>
-        <b style="display:block;font-size:1.15rem;margin:6px 0 4px">LKPD Papan Tulis Multi-Touch</b>
-        <p class="mute" style="margin:0">4 panel seimbang berdampingan, muat dalam 1 layar tanpa scroll untuk disentuh bersamaan!</p>
+
+      <div class="card" style="cursor:pointer;border-left:5px solid var(--t0);margin-bottom:0;padding:12px 14px;transition:all .2s ease" onclick="switchNav('lkpd')">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:4px">
+          <span style="font-size:1.8rem;line-height:1">🧪</span>
+          <div>
+            <b style="font-size:1.05rem;display:block">Arena Detektif Virus (4 Regu)</b>
+            <span class="chip" style="--c:var(--t0);margin:0;font-size:0.68rem;padding:1px 6px">Zero Scroll • 4 Layar Sentuh • Timer</span>
+          </div>
+        </div>
+        <p class="mute" style="margin:0;font-size:0.82rem;line-height:1.35">4 panel seimbang berdampingan: pendaftaran tim, pencocokan patogen, kotak rekayasa viroterapi, triase puskesmas, dan kuis virologiwan.</p>
       </div>
-      <div class="card" style="cursor:pointer" onclick="switchNav('galeri')">
-        <span style="font-size:2rem">🔬</span>
-        <b style="display:block;font-size:1.15rem;margin:6px 0 4px">Galeri Morfologi Virus</b>
-        <p class="mute" style="margin:0">Bakteriofag T4, Coronavirus, TMV batang, dan Adenovirus.</p>
+
+      <div class="card" style="cursor:pointer;border-left:5px solid var(--t3);margin-bottom:0;padding:12px 14px;transition:all .2s ease" onclick="switchNav('galeri')">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:4px">
+          <span style="font-size:1.8rem;line-height:1">🔬</span>
+          <div>
+            <b style="font-size:1.05rem;display:block">Laboratorium Morfologi Virion</b>
+            <span class="chip" style="--c:var(--t3);margin:0;font-size:0.68rem;padding:1px 6px">4 Arsitektur Kapsid • Struktur Genom</span>
+          </div>
+        </div>
+        <p class="mute" style="margin:0;font-size:0.82rem;line-height:1.35">Visualisasi 4 bentuk virion: Bakteriofag T4 kompleks, Coronavirus beramplop spike, TMV heliks batang silindris, dan Adenovirus ikosahedral.</p>
+      </div>
+    </div>
+
+    <!-- Strip Infografis Prinsip Virologi Cepat -->
+    <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(200px, 1fr));gap:8px">
+      <div style="background:var(--card-sub);border:1px solid var(--line);border-radius:8px;padding:8px 10px;font-size:0.78rem">
+        <b style="color:var(--ac);display:block;margin-bottom:2px">📏 Ukuran Virion</b>
+        <span class="mute">20 – 400 nm (100x lebih kecil dari bakteri; lolos filter porselen).</span>
+      </div>
+      <div style="background:var(--card-sub);border:1px solid var(--line);border-radius:8px;padding:8px 10px;font-size:0.78rem">
+        <b style="color:var(--t2);display:block;margin-bottom:2px">🧬 Materi Genetik</b>
+        <span class="mute">Hanya memiliki DNA saja atau RNA saja, diselubungi kapsid protein.</span>
+      </div>
+      <div style="background:var(--card-sub);border:1px solid var(--line);border-radius:8px;padding:8px 10px;font-size:0.78rem">
+        <b style="color:var(--t0);display:block;margin-bottom:2px">⚡ Sifat Aseluler</b>
+        <span class="mute">Parasit obligat intraseluler; hanya dapat bereplikasi di sel inang hidup.</span>
+      </div>
+      <div style="background:var(--card-sub);border:1px solid var(--line);border-radius:8px;padding:8px 10px;font-size:0.78rem">
+        <b style="color:var(--ok);display:block;margin-bottom:2px">🛡️ Pencegahan Utama</b>
+        <span class="mute">Vaksinasi spesifik & PHBS. Antibiotik mutlak tidak membunuh virus.</span>
       </div>
     </div>
   </section>
@@ -1342,7 +1451,7 @@ input:focus {
           </div>
         </div>
 
-        <!-- 10 Kartu Virus (Persis dari Poster Virus.pdf) -->
+        <!-- 10 Kartu Virus (Persis dari Poster Virus.pdf dengan Sentuhan Virologi Mendalam) -->
         <div class="poster-cards-grid" id="materi-cards-grid">
           
           <!-- 1. INFLUENZA -->
@@ -1356,6 +1465,7 @@ input:focus {
             <div class="pvc-content">
               <span class="pvc-virus-label">VIRUS</span>
               <div class="pvc-virus-name">Influenza</div>
+              <span class="chip" style="--c:#00E5BE;font-size:0.68rem;padding:1px 6px;margin:1px 0 4px;display:inline-block">🧬 (-)ssRNA • Kapsid Enveloped (HA/NA)</span>
               <span class="pvc-disease-label">PENYAKIT</span>
               <div class="pvc-disease-name">Flu (Influenza)</div>
               <p class="pvc-desc">Demam, batuk, nyeri otot. Menular lewat percikan batuk dan bersin.</p>
@@ -1377,6 +1487,7 @@ input:focus {
             <div class="pvc-content">
               <span class="pvc-virus-label">VIRUS</span>
               <div class="pvc-virus-name">SARS-CoV-2</div>
+              <span class="chip" style="--c:#FF5252;font-size:0.68rem;padding:1px 6px;margin:1px 0 4px;display:inline-block">🧬 (+)ssRNA • Enveloped Spike Glikoprotein (S)</span>
               <span class="pvc-disease-label">PENYAKIT</span>
               <div class="pvc-disease-name">COVID-19</div>
               <p class="pvc-desc">Demam, batuk, sesak napas. Menular lewat droplet dan aerosol.</p>
@@ -1398,6 +1509,7 @@ input:focus {
             <div class="pvc-content">
               <span class="pvc-virus-label">VIRUS</span>
               <div class="pvc-virus-name">HIV</div>
+              <span class="chip" style="--c:#FFC107;font-size:0.68rem;padding:1px 6px;margin:1px 0 4px;display:inline-block">🧬 (+)ssRNA Retroviridae • Reverse Transcriptase</span>
               <span class="pvc-disease-label">PENYAKIT</span>
               <div class="pvc-disease-name">AIDS</div>
               <p class="pvc-desc">Merusak sel CD4 hingga daya tahan tubuh melemah. Menular lewat darah dan cairan tubuh.</p>
@@ -1419,6 +1531,7 @@ input:focus {
             <div class="pvc-content">
               <span class="pvc-virus-label">VIRUS</span>
               <div class="pvc-virus-name">Virus Dengue</div>
+              <span class="chip" style="--c:#69F0AE;font-size:0.68rem;padding:1px 6px;margin:1px 0 4px;display:inline-block">🧬 (+)ssRNA Flaviviridae • Vektor Nyamuk</span>
               <span class="pvc-disease-label">PENYAKIT</span>
               <div class="pvc-disease-name">Demam Berdarah (DBD)</div>
               <p class="pvc-desc">Demam tinggi, trombosit turun. Ditularkan nyamuk Aedes aegypti.</p>
@@ -1440,6 +1553,7 @@ input:focus {
             <div class="pvc-content">
               <span class="pvc-virus-label">VIRUS</span>
               <div class="pvc-virus-name">Virus Hepatitis B</div>
+              <span class="chip" style="--c:#7C4DFF;font-size:0.68rem;padding:1px 6px;margin:1px 0 4px;display:inline-block">🧬 Parsial dsDNA Hepadnaviridae • Tropisme Sel Hati</span>
               <span class="pvc-disease-label">PENYAKIT</span>
               <div class="pvc-disease-name">Hepatitis B</div>
               <p class="pvc-desc">Peradangan hati. Menular lewat darah dan cairan tubuh.</p>
@@ -1461,6 +1575,7 @@ input:focus {
             <div class="pvc-content">
               <span class="pvc-virus-label">VIRUS</span>
               <div class="pvc-virus-name">Virus Rabies</div>
+              <span class="chip" style="--c:#FF4081;font-size:0.68rem;padding:1px 6px;margin:1px 0 4px;display:inline-block">🧬 (-)ssRNA Rhabdoviridae • Kapsid Peluru Neurotropik</span>
               <span class="pvc-disease-label">PENYAKIT</span>
               <div class="pvc-disease-name">Rabies</div>
               <p class="pvc-desc">Menyerang sistem saraf. Menular lewat gigitan hewan yang terinfeksi.</p>
@@ -1482,6 +1597,7 @@ input:focus {
             <div class="pvc-content">
               <span class="pvc-virus-label">VIRUS</span>
               <div class="pvc-virus-name">Virus Campak</div>
+              <span class="chip" style="--c:#00B0FF;font-size:0.68rem;padding:1px 6px;margin:1px 0 4px;display:inline-block">🧬 (-)ssRNA Paramyxoviridae • Kapsid Beramplop</span>
               <span class="pvc-disease-label">PENYAKIT</span>
               <div class="pvc-disease-name">Campak</div>
               <p class="pvc-desc">Demam dan ruam merah. Menular lewat udara dan droplet.</p>
@@ -1503,6 +1619,7 @@ input:focus {
             <div class="pvc-content">
               <span class="pvc-virus-label">VIRUS</span>
               <div class="pvc-virus-name">HPV</div>
+              <span class="chip" style="--c:#FF9800;font-size:0.68rem;padding:1px 6px;margin:1px 0 4px;display:inline-block">🧬 Sirkuler dsDNA Papillomaviridae • Ikosahedral Onkogenik</span>
               <span class="pvc-disease-label">PENYAKIT</span>
               <div class="pvc-disease-name">Kanker Serviks</div>
               <p class="pvc-desc">Sebagian tipe HPV memicu kanker leher rahim. Dapat dicegah dengan vaksin.</p>
@@ -1524,6 +1641,7 @@ input:focus {
             <div class="pvc-content">
               <span class="pvc-virus-label">VIRUS</span>
               <div class="pvc-virus-name">Varicella-zoster</div>
+              <span class="chip" style="--c:#00BFA5;font-size:0.68rem;padding:1px 6px;margin:1px 0 4px;display:inline-block">🧬 dsDNA Herpesviridae • Latensi Ganglion Saraf</span>
               <span class="pvc-disease-label">PENYAKIT</span>
               <div class="pvc-disease-name">Cacar Air</div>
               <p class="pvc-desc">Lenting berisi cairan yang gatal. Menular lewat udara dan kontak.</p>
@@ -1545,6 +1663,7 @@ input:focus {
             <div class="pvc-content">
               <span class="pvc-virus-label">VIRUS</span>
               <div class="pvc-virus-name">Poliovirus</div>
+              <span class="chip" style="--c:#FF6E40;font-size:0.68rem;padding:1px 6px;margin:1px 0 4px;display:inline-block">🧬 (+)ssRNA Picornaviridae • Ikosahedral Non-enveloped</span>
               <span class="pvc-disease-label">PENYAKIT</span>
               <div class="pvc-disease-name">Polio</div>
               <p class="pvc-desc">Dapat menyebabkan kelumpuhan. Menular lewat air dan makanan tercemar.</p>
@@ -1628,7 +1747,7 @@ input:focus {
 
     <!-- Tombol Cepat Menuju LKPD -->
     <div style="text-align:center;margin-top:10px;flex-shrink:0">
-      <button class="btn" onclick="switchNav('lkpd')">🖐️ Mulai Tantangan LKPD Papan Tulis (4 Kelompok) ➔</button>
+      <button class="btn" onclick="switchNav('lkpd')">🧪 Buka Arena Investigasi LKPD (4 Strain Kelompok) ➔</button>
     </div>
   </section>
 
@@ -1641,22 +1760,22 @@ input:focus {
     <div class="smartboard-top-bar">
       <div class="smartboard-title">
         <span class="live-dot"></span>
-        <span>LKPD Multi-Touch</span>
+        <span>🧪 Viro-Race Live</span>
       </div>
 
-      <!-- Skor Ringkas 4 Kelompok -->
+      <!-- Skor Ringkas 4 Kelompok (Strain Virologi) -->
       <div class="smartboard-chips-row">
-        <div class="sb-chip" style="--c:var(--t0)">🔴 <span id="chip-name-0">K1</span>: <b id="top-pts-0">0 pts</b></div>
-        <div class="sb-chip" style="--c:var(--t1)">🟢 <span id="chip-name-1">K2</span>: <b id="top-pts-1">0 pts</b></div>
-        <div class="sb-chip" style="--c:var(--t2)">🟡 <span id="chip-name-2">K3</span>: <b id="top-pts-2">0 pts</b></div>
-        <div class="sb-chip" style="--c:var(--t3)">🟣 <span id="chip-name-3">K4</span>: <b id="top-pts-3">0 pts</b></div>
+        <div class="sb-chip" style="--c:var(--t0)">🔴 <span id="chip-name-0">Strain Alfa</span>: <b id="top-pts-0">0 pts</b></div>
+        <div class="sb-chip" style="--c:var(--t1)">🟢 <span id="chip-name-1">Strain Beta</span>: <b id="top-pts-1">0 pts</b></div>
+        <div class="sb-chip" style="--c:var(--t2)">🟡 <span id="chip-name-2">Strain Gama</span>: <b id="top-pts-2">0 pts</b></div>
+        <div class="sb-chip" style="--c:var(--t3)">🟣 <span id="chip-name-3">Strain Delta</span>: <b id="top-pts-3">0 pts</b></div>
       </div>
 
       <!-- Timer Pengerjaan & Pengaturan Penalti -->
       <div class="smartboard-timer-box">
         <button class="timer-play-btn" id="btn-timer-toggle" onclick="toggleTimer()" title="Mulai / Jeda Waktu">▶️</button>
         <div class="timer-display" id="timer-display" onclick="openTimerModal()" title="Klik untuk ubah waktu">10:00</div>
-        <button class="timer-btn-sm" onclick="openTimerModal()" title="Atur durasi waktu">⚙️ Waktu</button>
+        <button class="timer-btn-sm" onclick="openTimerModal()" title="Atur durasi waktu">⚙️ Protokol</button>
         <span class="penalty-tag" id="penalty-badge" onclick="openTimerModal()" title="Pengurangan nilai jawaban salah">⚠️ Salah: -5 pts</span>
       </div>
 
@@ -1676,22 +1795,22 @@ input:focus {
 
     <!-- Tab Bar (Hanya muncul jika mode tab aktif) -->
     <div class="tab-select-bar" id="tab-bar-wrap">
-      <button class="tab-sel-btn active" style="--c:var(--t0)" onclick="selectTeamTab(0)">🔴 Kelompok 1</button>
-      <button class="tab-sel-btn" style="--c:var(--t1)" onclick="selectTeamTab(1)">🟢 Kelompok 2</button>
-      <button class="tab-sel-btn" style="--c:var(--t2)" onclick="selectTeamTab(2)">🟡 Kelompok 3</button>
-      <button class="tab-sel-btn" style="--c:var(--t3)" onclick="selectTeamTab(3)">🟣 Kelompok 4</button>
+      <button class="tab-sel-btn active" style="--c:var(--t0)" onclick="selectTeamTab(0)">🔴 Regu 1: Strain Alfa (Lisis)</button>
+      <button class="tab-sel-btn" style="--c:var(--t1)" onclick="selectTeamTab(1)">🟢 Regu 2: Strain Beta (Vektor)</button>
+      <button class="tab-sel-btn" style="--c:var(--t2)" onclick="selectTeamTab(2)">🟡 Regu 3: Strain Gama (Vaksin)</button>
+      <button class="tab-sel-btn" style="--c:var(--t3)" onclick="selectTeamTab(3)">🟣 Regu 4: Strain Delta (Fag)</button>
     </div>
 
     <!-- AREA WORKSPACE: 4 PANEL SEIMBANG TANPA SCROLL -->
     <div class="lkpd-workspace">
       <div class="lkpd-panels-grid" id="panels-container">
         
-        <!-- Panel 1: Ruby Rose -->
+        <!-- Panel 1: Ruby Rose (Strain Alfa - Lisis) -->
         <div class="team-panel tab-active" id="panel-0" style="--c:var(--t0);--c-glow:var(--t0-glow);--c-bg:var(--t0-bg)">
           <div class="panel-header">
             <div class="panel-title-area">
-              <div class="panel-team-avatar">1</div>
-              <div class="panel-team-name" id="p-name-0">Kelompok 1</div>
+              <div class="panel-team-avatar" title="Virion Strain Alfa">🦠</div>
+              <div class="panel-team-name" id="p-name-0">Regu 1 (Strain Alfa)</div>
             </div>
             <div class="panel-score-badge" id="p-pts-0">0 pts</div>
             <span class="panel-mission-badge" id="p-badge-0">Misi 1</span>
@@ -1703,12 +1822,12 @@ input:focus {
           <div class="panel-body" id="p-body-0"></div>
         </div>
 
-        <!-- Panel 2: Emerald Teal -->
+        <!-- Panel 2: Emerald Teal (Strain Beta - Vektor) -->
         <div class="team-panel" id="panel-1" style="--c:var(--t1);--c-glow:var(--t1-glow);--c-bg:var(--t1-bg)">
           <div class="panel-header">
             <div class="panel-title-area">
-              <div class="panel-team-avatar">2</div>
-              <div class="panel-team-name" id="p-name-1">Kelompok 2</div>
+              <div class="panel-team-avatar" title="Virion Strain Beta">🧬</div>
+              <div class="panel-team-name" id="p-name-1">Regu 2 (Strain Beta)</div>
             </div>
             <div class="panel-score-badge" id="p-pts-1">0 pts</div>
             <span class="panel-mission-badge" id="p-badge-1">Misi 1</span>
@@ -1720,12 +1839,12 @@ input:focus {
           <div class="panel-body" id="p-body-1"></div>
         </div>
 
-        <!-- Panel 3: Solar Amber -->
+        <!-- Panel 3: Solar Amber (Strain Gama - Vaksin) -->
         <div class="team-panel" id="panel-2" style="--c:var(--t2);--c-glow:var(--t2-glow);--c-bg:var(--t2-bg)">
           <div class="panel-header">
             <div class="panel-title-area">
-              <div class="panel-team-avatar">3</div>
-              <div class="panel-team-name" id="p-name-2">Kelompok 3</div>
+              <div class="panel-team-avatar" title="Virion Strain Gama">💉</div>
+              <div class="panel-team-name" id="p-name-2">Regu 3 (Strain Gama)</div>
             </div>
             <div class="panel-score-badge" id="p-pts-2">0 pts</div>
             <span class="panel-mission-badge" id="p-badge-2">Misi 1</span>
@@ -1737,12 +1856,12 @@ input:focus {
           <div class="panel-body" id="p-body-2"></div>
         </div>
 
-        <!-- Panel 4: Cyber Violet -->
+        <!-- Panel 4: Cyber Violet (Strain Delta - Bakteriofag) -->
         <div class="team-panel" id="panel-3" style="--c:var(--t3);--c-glow:var(--t3-glow);--c-bg:var(--t3-bg)">
           <div class="panel-header">
             <div class="panel-title-area">
-              <div class="panel-team-avatar">4</div>
-              <div class="panel-team-name" id="p-name-3">Kelompok 4</div>
+              <div class="panel-team-avatar" title="Virion Strain Delta">🔬</div>
+              <div class="panel-team-name" id="p-name-3">Regu 4 (Strain Delta)</div>
             </div>
             <div class="panel-score-badge" id="p-pts-3">0 pts</div>
             <span class="panel-mission-badge" id="p-badge-3">Misi 1</span>
@@ -1762,26 +1881,45 @@ input:focus {
        HALAMAN 4: GALERI MORFOLOGI VIRUS
        ===================================================== -->
   <section id="section-galeri" class="site-section">
-    <div style="margin-bottom:14px">
-      <span class="chip" style="--c:var(--ac)">Galeri Morfologi</span>
-      <h2>Visualisasi 4 Bentuk Morfologi Virus</h2>
+    <div style="margin-bottom:12px">
+      <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:4px">
+        <span class="chip" style="--c:var(--ac)">🔬 Mikroskop Elektron & Morfologi Virion</span>
+        <span class="chip" style="--c:var(--t3)">📐 Arsitektur Kapsid Simetris</span>
+      </div>
+      <h2 style="font-size:1.5rem;margin:0 0 4px">Visualisasi 4 Bentuk Morfologi Kapsid Virus</h2>
+      <p class="mute" style="margin:0;font-size:0.86rem">Klasifikasi bentuk virion berdasarkan susunan subunit protein kapsomer dan keberadaan membran selubung lipid (*envelope*):</p>
     </div>
 
-    <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(240px, 1fr));gap:12px;overflow-y:auto">
-      <div class="card" style="text-align:center">
-        <svg viewBox="0 0 100 120" fill="none" style="width:90px;height:90px;margin:0 auto 8px">
+    <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(250px, 1fr));gap:12px;overflow-y:auto;padding-right:4px">
+      <!-- 1. Kompleks -->
+      <div class="card" style="text-align:center;border-top:5px solid var(--ac);position:relative">
+        <div style="display:flex;justify-content:center;gap:4px;margin-bottom:6px">
+          <span class="chip" style="--c:var(--ac);font-size:0.68rem;padding:1px 6px;margin:0">🧬 dsDNA Ganda</span>
+          <span class="chip" style="--c:var(--line);font-size:0.68rem;padding:1px 6px;color:var(--ink);margin:0">📐 ~200 nm</span>
+        </div>
+        <svg viewBox="0 0 100 120" fill="none" style="width:85px;height:85px;margin:0 auto 6px">
           <path d="M50 10 L75 25 L75 55 L50 70 L25 55 L25 25 Z" stroke="var(--ac)" stroke-width="2.5" fill="color-mix(in srgb, var(--ac) 20%, transparent)" />
           <path d="M38 32 Q50 24 62 32 Q50 48 38 40" stroke="var(--ac)" stroke-width="2" />
           <rect x="46" y="70" width="8" height="20" rx="3" fill="var(--ac)" />
           <ellipse cx="50" cy="90" rx="9" ry="4" fill="var(--ink)" />
           <path d="M43 91 L25 115 M47 92 L35 118 M53 92 L65 118 M57 91 L75 115" stroke="var(--ac)" stroke-width="2.2" stroke-linecap="round" />
         </svg>
-        <b style="font-size:1.05rem;display:block">1. Bakteriofag T4 (Kompleks)</b>
-        <p class="mute" style="font-size:0.84rem;margin-top:4px">Kepala ikosahedral (DNA), leher kontraktil, lempeng dasar, dan serabut ekor.</p>
+        <b style="font-size:1.05rem;display:block;color:var(--ink)">1. Bakteriofag T4 (Kompleks)</b>
+        <div style="display:flex;justify-content:center;gap:4px;flex-wrap:wrap;margin:4px 0 6px">
+          <span style="font-size:0.7rem;background:var(--card-sub);padding:1px 6px;border-radius:4px;border:1px solid var(--line)">Kepala Ikosahedral</span>
+          <span style="font-size:0.7rem;background:var(--card-sub);padding:1px 6px;border-radius:4px;border:1px solid var(--line)">Leher Heliks</span>
+          <span style="font-size:0.7rem;background:var(--card-sub);padding:1px 6px;border-radius:4px;border:1px solid var(--line)">Serabut Ekor</span>
+        </div>
+        <p class="mute" style="font-size:0.8rem;margin:0;line-height:1.35">Kepala ikosahedral pelindung DNA, selubung ekor kontraktil, dan 6 serabut ekor penembus dinding murein bakteri <i>E. coli</i>.</p>
       </div>
 
-      <div class="card" style="text-align:center">
-        <svg viewBox="0 0 120 120" fill="none" style="width:90px;height:90px;margin:0 auto 8px">
+      <!-- 2. Berselubung -->
+      <div class="card" style="text-align:center;border-top:5px solid var(--t0);position:relative">
+        <div style="display:flex;justify-content:center;gap:4px;margin-bottom:6px">
+          <span class="chip" style="--c:var(--t0);font-size:0.68rem;padding:1px 6px;margin:0">🧬 (+)ssRNA</span>
+          <span class="chip" style="--c:var(--line);font-size:0.68rem;padding:1px 6px;color:var(--ink);margin:0">📐 ~120 nm</span>
+        </div>
+        <svg viewBox="0 0 120 120" fill="none" style="width:85px;height:85px;margin:0 auto 6px">
           <circle cx="60" cy="60" r="36" stroke="var(--t0)" stroke-width="3" fill="color-mix(in srgb, var(--t0) 18%, transparent)" />
           <g stroke="var(--t0)" stroke-width="2.5" stroke-linecap="round">
             <line x1="60" y1="24" x2="60" y2="10" /><circle cx="60" cy="9" r="4" fill="var(--t0)" />
@@ -1791,12 +1929,22 @@ input:focus {
           </g>
           <path d="M48 48 Q60 40 72 48 Q78 60 70 68" stroke="var(--t0)" stroke-width="2.2" />
         </svg>
-        <b style="font-size:1.05rem;display:block">2. Coronavirus (Berselubung)</b>
-        <p class="mute" style="font-size:0.84rem;margin-top:4px">Bulat beramplop lipid dengan glikoprotein spike penempel reseptor ACE2.</p>
+        <b style="font-size:1.05rem;display:block;color:var(--ink)">2. Coronavirus (Berselubung)</b>
+        <div style="display:flex;justify-content:center;gap:4px;flex-wrap:wrap;margin:4px 0 6px">
+          <span style="font-size:0.7rem;background:var(--card-sub);padding:1px 6px;border-radius:4px;border:1px solid var(--line)">Amplop Lipid</span>
+          <span style="font-size:0.7rem;background:var(--card-sub);padding:1px 6px;border-radius:4px;border:1px solid var(--line)">Spike Protein (S)</span>
+          <span style="font-size:0.7rem;background:var(--card-sub);padding:1px 6px;border-radius:4px;border:1px solid var(--line)">Reseptor ACE2</span>
+        </div>
+        <p class="mute" style="font-size:0.8rem;margin:0;line-height:1.35">Bulat beramplop membran lipid inang dipenuhi trimer glikoprotein spike menyerupai mahkota pengikat reseptor sel napas.</p>
       </div>
 
-      <div class="card" style="text-align:center">
-        <svg viewBox="0 0 90 120" fill="none" style="width:90px;height:90px;margin:0 auto 8px">
+      <!-- 3. Heliks -->
+      <div class="card" style="text-align:center;border-top:5px solid var(--t2);position:relative">
+        <div style="display:flex;justify-content:center;gap:4px;margin-bottom:6px">
+          <span class="chip" style="--c:var(--t2);font-size:0.68rem;padding:1px 6px;margin:0">🧬 ssRNA Tunggal</span>
+          <span class="chip" style="--c:var(--line);font-size:0.68rem;padding:1px 6px;color:var(--ink);margin:0">📐 300x18 nm</span>
+        </div>
+        <svg viewBox="0 0 90 120" fill="none" style="width:85px;height:85px;margin:0 auto 6px">
           <rect x="25" y="10" width="40" height="100" rx="10" stroke="var(--t2)" stroke-width="2.5" fill="color-mix(in srgb, var(--t2) 20%, transparent)" />
           <line x1="25" y1="30" x2="65" y2="30" stroke="var(--t2)" stroke-width="2" />
           <line x1="25" y1="50" x2="65" y2="50" stroke="var(--t2)" stroke-width="2" />
@@ -1804,12 +1952,22 @@ input:focus {
           <line x1="25" y1="90" x2="65" y2="90" stroke="var(--t2)" stroke-width="2" />
           <path d="M45 15 V105" stroke="var(--gold)" stroke-width="2.5" stroke-dasharray="3 3" />
         </svg>
-        <b style="font-size:1.05rem;display:block">3. TMV (Batang Heliks)</b>
-        <p class="mute" style="font-size:0.84rem;margin-top:4px">Kapsomer protein tersusun melingkari sumbu heliks pelindung RNA.</p>
+        <b style="font-size:1.05rem;display:block;color:var(--ink)">3. TMV (Batang Heliks)</b>
+        <div style="display:flex;justify-content:center;gap:4px;flex-wrap:wrap;margin:4px 0 6px">
+          <span style="font-size:0.7rem;background:var(--card-sub);padding:1px 6px;border-radius:4px;border:1px solid var(--line)">2.130 Kapsomer</span>
+          <span style="font-size:0.7rem;background:var(--card-sub);padding:1px 6px;border-radius:4px;border:1px solid var(--line)">Silindris Kaku</span>
+          <span style="font-size:0.7rem;background:var(--card-sub);padding:1px 6px;border-radius:4px;border:1px solid var(--line)">Fitopatogen</span>
+        </div>
+        <p class="mute" style="font-size:0.8rem;margin:0;line-height:1.35">Subunit kapsomer protein tersusun melingkar heliks rapat membentuk tabung berongga pelindung untai tunggal RNA.</p>
       </div>
 
-      <div class="card" style="text-align:center">
-        <svg viewBox="0 0 100 100" fill="none" style="width:90px;height:90px;margin:0 auto 8px">
+      <!-- 4. Ikosahedral -->
+      <div class="card" style="text-align:center;border-top:5px solid var(--t3);position:relative">
+        <div style="display:flex;justify-content:center;gap:4px;margin-bottom:6px">
+          <span class="chip" style="--c:var(--t3);font-size:0.68rem;padding:1px 6px;margin:0">🧬 dsDNA Linier</span>
+          <span class="chip" style="--c:var(--line);font-size:0.68rem;padding:1px 6px;color:var(--ink);margin:0">📐 ~90 nm</span>
+        </div>
+        <svg viewBox="0 0 100 100" fill="none" style="width:85px;height:85px;margin:0 auto 6px">
           <polygon points="50,15 80,32 80,68 50,85 20,68 20,32" stroke="var(--t3)" stroke-width="2.5" fill="color-mix(in srgb, var(--t3) 20%, transparent)" />
           <line x1="50" y1="15" x2="50" y2="50" stroke="var(--t3)" stroke-width="1.8" />
           <line x1="80" y1="32" x2="50" y2="50" stroke="var(--t3)" stroke-width="1.8" />
@@ -1818,8 +1976,13 @@ input:focus {
           <line x1="20" y1="68" x2="50" y2="50" stroke="var(--t3)" stroke-width="1.8" />
           <line x1="20" y1="32" x2="50" y2="50" stroke="var(--t3)" stroke-width="1.8" />
         </svg>
-        <b style="font-size:1.05rem;display:block">4. Adenovirus (Ikosahedral)</b>
-        <p class="mute" style="font-size:0.84rem;margin-top:4px">Polihedron simetris 20 sisi segitiga tanpa selubung membran lipid.</p>
+        <b style="font-size:1.05rem;display:block;color:var(--ink)">4. Adenovirus (Ikosahedral)</b>
+        <div style="display:flex;justify-content:center;gap:4px;flex-wrap:wrap;margin:4px 0 6px">
+          <span style="font-size:0.7rem;background:var(--card-sub);padding:1px 6px;border-radius:4px;border:1px solid var(--line)">20 Muka Segitiga</span>
+          <span style="font-size:0.7rem;background:var(--card-sub);padding:1px 6px;border-radius:4px;border:1px solid var(--line)">Serabut Penton</span>
+          <span style="font-size:0.7rem;background:var(--card-sub);padding:1px 6px;border-radius:4px;border:1px solid var(--line)">Vektor Vaksin</span>
+        </div>
+        <p class="mute" style="font-size:0.8rem;margin:0;line-height:1.35">Polihedron simetris 20 sisi (252 kapsomer) tanpa selubung membran lipid, dilengkapi antena serat protein penempel sel.</p>
       </div>
     </div>
   </section>
@@ -2266,18 +2429,18 @@ function showTimeoutModal(mode) {
   }
   if (titleEl) {
     if (mode === 'timeout') {
-      titleEl.innerText = 'WAKTU PENGERJAAN SELESAI!';
+      titleEl.innerText = '⏰ WAKTU INVESTIGASI SELESAI!';
       titleEl.style.color = 'var(--gold)';
     } else if (allDone) {
-      titleEl.innerText = '🎉 PERLOMBAAN SELESAI: KLASEMEN JUARA!';
+      titleEl.innerText = '🎉 INVESTIGASI LENGKAP: KLASEMEN ILMUWAN VIROLOGI!';
       titleEl.style.color = 'var(--ok)';
     } else {
-      titleEl.innerText = '🏆 KLASEMEN & PERINGKAT JUARA LKPD';
+      titleEl.innerText = '🏆 KLASEMEN AKHIR ILMUWAN VIROLOGI';
       titleEl.style.color = 'var(--gold)';
     }
   }
   if (descEl) {
-    descEl.innerHTML = 'Penentuan peringkat ditentukan berdasarkan <b>skor tertinggi</b> & <b>waktu tercepat</b> menyelesaikan LKPD:';
+    descEl.innerHTML = 'Peringkat resmi ditentukan berdasarkan <b>skor investigasi tertinggi</b> & <b>efisiensi waktu isolasi tercepat</b>:';
   }
 
   var sorted = getRankedTeams();
@@ -2334,7 +2497,7 @@ function showTimeoutModal(mode) {
   h += '</div>';
 
   h += '<div style="background:var(--card);border:1px solid var(--line);border-radius:8px;padding:8px 12px;margin-top:12px;font-size:0.78rem;color:var(--mute);text-align:left">';
-  h += '⚖️ <b>Penentuan Peringkat:</b> Prioritas 1: <b>Jumlah Skor Tertinggi</b>. Prioritas 2 (Pemecah Seri): <b>Waktu Tercepat</b> menyelesaikan seluruh misi LKPD.';
+  h += '⚖️ <b>Protokol Evaluasi Peringkat:</b> Prioritas 1: <b>Jumlah Skor Investigasi Tertinggi</b>. Prioritas 2 (Pemecah Seri): <b>Waktu Tercepat</b> menyelesaikan seluruh misi virologi.';
   h += '</div>';
 
   box.innerHTML = h;
@@ -2395,14 +2558,21 @@ var Q = [
   ['Dalam terapi gen, peran utama virus adalah...', ['Penghancur organ tubuh', 'Pengganti vaksin', 'Vektor pembawa gen sehat ke inti sel target', 'Sumber energi sel'], 2]
 ];
 
-// STATE 4 KELOMPOK
+// STATE 4 KELOMPOK (STRAIN VIROLOGI)
 var TEAMS = [];
+var defaultStrainNames = [
+  'Regu 1 (Strain Alfa)',
+  'Regu 2 (Strain Beta)',
+  'Regu 3 (Strain Gama)',
+  'Regu 4 (Strain Delta)'
+];
+
 function initTeams() {
   TEAMS = [];
   for (var i = 0; i < 4; i++) {
     TEAMS.push({
       id: i,
-      name: 'Kelompok ' + (i + 1),
+      name: defaultStrainNames[i],
       members: '',
       score: 0,
       step: 0, // 0=Register, 1=Briefing, 2=Misi1, 3=Misi2, 4=Misi3, 5=Misi4, 6=Selesai
@@ -2514,7 +2684,7 @@ function renderTeamPanel(i) {
   if (nameEl) nameEl.innerText = t.name;
   if (ptsEl) ptsEl.innerText = t.score + ' pts';
   
-  var badges = ['Daftar', 'Briefing', 'Misi 1', 'Misi 2', 'Misi 3', 'Misi 4', 'Selesai 🏆'];
+  var badges = ['Daftar 🧬', 'Briefing 🚨', 'Misi 1 🦠', 'Misi 2 💡', 'Misi 3 🏥', 'Misi 4 🔬', 'Selesai 🏆'];
   if (badgeEl) badgeEl.innerText = badges[t.step];
 
   if (!bodyEl) return;
@@ -2587,22 +2757,22 @@ function tv0(i) {
 
   var h = '<div class="panel-step-box" style="display:flex;flex-direction:column;height:100%">';
   h += '<div>';
-  h += '<h4 style="font-size:0.95rem;margin-bottom:2px;color:var(--t' + i + ')">Registrasi Regu ' + (i + 1) + '</h4>';
-  h += '<p class="mute" style="font-size:0.75rem;margin-bottom:5px">Ketik nama regu & anggota menggunakan keyboard sentuh:</p>';
+  h += '<h4 style="font-size:0.95rem;margin-bottom:2px;color:var(--t' + i + ')">🧬 Registrasi Tim Peneliti ' + (i + 1) + '</h4>';
+  h += '<p class="mute" style="font-size:0.75rem;margin-bottom:5px">Inisialisasi kode strain & anggota virolog via keyboard sentuh:</p>';
   
-  // Field 1: Nama Kelompok
-  h += '<label style="font-size:0.73rem;font-weight:800;color:var(--mute);display:block;margin-bottom:1px">Nama Kelompok / Regu:</label>';
+  // Field 1: Nama Kelompok / Kode Strain
+  h += '<label style="font-size:0.73rem;font-weight:800;color:var(--mute);display:block;margin-bottom:1px">Nama Tim / Kode Strain Virus:</label>';
   h += '<input id="inp-name-' + i + '" maxlength="22" value="' + (t.name || ('Kelompok ' + (i + 1))) + '" onclick="setKbTarget(' + i + ', \'name\')" onfocus="setKbTarget(' + i + ', \'name\')" oninput="TEAMS[' + i + '].name=this.value" style="font-size:0.86rem;padding:5px 8px;margin-bottom:5px;border-left:5px solid var(--t' + i + ');' + (currTarget === 'name' ? 'border-color:var(--t' + i + ');box-shadow:0 0 8px var(--t' + i + '-glow)' : '') + '">';
 
-  // Field 2: Nama Anggota
-  h += '<label style="font-size:0.73rem;font-weight:800;color:var(--mute);display:block;margin-bottom:1px">Nama-Nama Anggota Kelompok:</label>';
-  h += '<input id="inp-members-' + i + '" placeholder="Cth: Andi, Siti, Budi, Rian" value="' + (t.members || '') + '" onclick="setKbTarget(' + i + ', \'members\')" onfocus="setKbTarget(' + i + ', \'members\')" oninput="TEAMS[' + i + '].members=this.value" style="font-size:0.82rem;padding:5px 8px;margin-bottom:5px;border-left:5px solid var(--t' + i + ');' + (currTarget === 'members' ? 'border-color:var(--t' + i + ');box-shadow:0 0 8px var(--t' + i + '-glow)' : '') + '">';
+  // Field 2: Nama Anggota Peneliti
+  h += '<label style="font-size:0.73rem;font-weight:800;color:var(--mute);display:block;margin-bottom:1px">Nama Peneliti Virologiwan:</label>';
+  h += '<input id="inp-members-' + i + '" placeholder="Cth: Andi (Virolog), Siti, Budi" value="' + (t.members || '') + '" onclick="setKbTarget(' + i + ', \'members\')" onfocus="setKbTarget(' + i + ', \'members\')" oninput="TEAMS[' + i + '].members=this.value" style="font-size:0.82rem;padding:5px 8px;margin-bottom:5px;border-left:5px solid var(--t' + i + ');' + (currTarget === 'members' ? 'border-color:var(--t' + i + ');box-shadow:0 0 8px var(--t' + i + '-glow)' : '') + '">';
   h += '</div>';
 
   // Target Switcher Bar
   h += '<div class="kb-target-bar">';
-  h += '<button type="button" id="kb-tgt-name-' + i + '" class="kb-target-btn' + (currTarget === 'name' ? ' active' : '') + '" onclick="setKbTarget(' + i + ', \'name\')">📝 Edit Nama Regu</button>';
-  h += '<button type="button" id="kb-tgt-memb-' + i + '" class="kb-target-btn' + (currTarget === 'members' ? ' active' : '') + '" onclick="setKbTarget(' + i + ', \'members\')">👥 Edit Anggota</button>';
+  h += '<button type="button" id="kb-tgt-name-' + i + '" class="kb-target-btn' + (currTarget === 'name' ? ' active' : '') + '" onclick="setKbTarget(' + i + ', \'name\')">📝 Edit Kode Strain</button>';
+  h += '<button type="button" id="kb-tgt-memb-' + i + '" class="kb-target-btn' + (currTarget === 'members' ? ' active' : '') + '" onclick="setKbTarget(' + i + ', \'members\')">👥 Edit Peneliti</button>';
   h += '</div>';
 
   // Keyboard Virtual Sentuh Regu i
@@ -2681,20 +2851,20 @@ function tv1(i) {
   var h = '<div class="panel-step-box">';
   h += '<div>';
   h += '<div style="border-left:4px solid var(--t' + i + ');padding:8px 10px;background:var(--card-sub);border-radius:0 8px 8px 0;margin-bottom:8px">';
-  h += '<b style="font-size:0.92rem;color:var(--t' + i + ')">🚨 Kasus:</b>';
-  h += '<p style="margin:2px 0 0;font-size:0.84rem;color:var(--ink)">Puluhan warga mendadak demam. Di lab lain, virus dipakai melawan kanker!</p>';
+  h += '<b style="font-size:0.92rem;color:var(--t' + i + ')">🚨 Kasus Outbreak Virologi:</b>';
+  h += '<p style="margin:2px 0 0;font-size:0.84rem;color:var(--ink)">Laporan darurat: Puluhan warga mendadak demam akut. Di laboratorium lain, virion direkayasa membunuh sel kanker!</p>';
   h += '</div>';
   if (t.members) {
     h += '<div style="background:var(--card);border:1px solid var(--line);border-radius:6px;padding:5px 8px;margin-bottom:8px;font-size:0.8rem">';
-    h += '<span class="mute">👥 Anggota: </span><b style="color:var(--t' + i + ')">' + t.members + '</b>';
+    h += '<span class="mute">👥 Tim Virolog: </span><b style="color:var(--t' + i + ')">' + t.members + '</b>';
     h += '</div>';
   }
-  h += '<h4 style="font-size:0.95rem">Hipotesis Regu:</h4>';
-  h += '<p class="mute" style="font-size:0.82rem">Apakah virus selalu merugikan? Buktikan tebakan kelompok Anda di 4 misi ini!</p>';
+  h += '<h4 style="font-size:0.95rem">🧬 Hipotesis Peneliti:</h4>';
+  h += '<p class="mute" style="font-size:0.82rem">Apakah virus selalu parasit perusak, ataukah mitra bioteknologi masa depan? Buktikan di 4 misi ini!</p>';
   h += '</div>';
 
   h += '<div style="margin-top:auto;padding-top:8px">';
-  h += '<button class="btn btn-sm" style="width:100%" onclick="setTeamStep(' + i + ', 2)">Mulai Misi 1 (Pasangan Patogen) ➔</button>';
+  h += '<button class="btn btn-sm" style="width:100%" onclick="setTeamStep(' + i + ', 2)">Mulai Misi 1 (Pasangan Virion Patogen) ➔</button>';
   h += '</div>';
   h += '</div>';
   return h;
@@ -2706,7 +2876,7 @@ function tv2(i) {
   var doneCount = Object.keys(t.m1_done).length;
   var h = '<div class="panel-step-box">';
   h += '<div>';
-  h += '<div style="font-size:0.84rem;font-weight:800;margin-bottom:6px">Cocokkan virus & penyakit (+10 pts/pasang):</div>';
+  h += '<div style="font-size:0.84rem;font-weight:800;margin-bottom:6px">Cocokkan Virion & Gejala Patologis (+10 pts/pasang):</div>';
   
   h += '<div class="panel-match-cols">';
   // Kiri: Virus
@@ -2731,13 +2901,13 @@ function tv2(i) {
   h += '</div>';
   h += '</div>';
 
-  h += '<div class="mute" style="font-size:0.78rem">' + (t.m1_msg || 'Pilih virus (kiri), lalu penyakit (kanan). Cocok: ' + doneCount + '/6') + '</div>';
+  h += '<div class="mute" style="font-size:0.78rem">' + (t.m1_msg || 'Pilih isolat virion (kiri), lalu manifestasi klinis (kanan). Teridentifikasi: ' + doneCount + '/6') + '</div>';
   h += '</div>';
 
   if (doneCount === 6) {
     h += '<div style="background:var(--ok-bg);border:1.5px solid var(--ok);color:var(--ok);padding:8px;border-radius:8px;font-size:0.84rem;margin-top:auto">';
-    h += '<b>🎉 Lengkap!</b> Semua pasangan cocok (+60 pts).';
-    h += '<button class="btn btn-sm" style="width:100%;margin-top:6px" onclick="setTeamStep(' + i + ', 3)">Lanjut Misi 2 (Pahlawan) ➔</button>';
+    h += '<b>🎉 Lengkap!</b> Semua isolat patogen cocok (+60 pts).';
+    h += '<button class="btn btn-sm" style="width:100%;margin-top:6px" onclick="setTeamStep(' + i + ', 3)">Lanjut Misi 2 (Kapsid Bioteknologi) ➔</button>';
     h += '</div>';
   }
   h += '</div>';
@@ -2750,13 +2920,13 @@ function teamMatch(teamIdx, side, idx) {
 
   if (side === 0) {
     t.m1_sel = idx;
-    t.m1_msg = 'Memilih <b>' + pairs[idx][0] + '</b>. Sekarang klik pasangannya di kanan!';
+    t.m1_msg = 'Memilih <b>' + pairs[idx][0] + '</b>. Sekarang cocokkan manifestasi klinis di kanan!';
   } else if (t.m1_sel === null) {
-    t.m1_msg = 'Pilih virus di kolom kiri terlebih dahulu!';
+    t.m1_msg = 'Pilih isolat virus di kolom kiri terlebih dahulu!';
   } else if (t.m1_sel === idx) {
     t.m1_done[idx] = 1;
     t.score += 10;
-    t.m1_msg = '✅ Benar: ' + pairs[idx][0] + ' (+10 pts)';
+    t.m1_msg = '✅ Virion Terverifikasi: ' + pairs[idx][0] + ' (+10 pts)';
     t.m1_sel = null;
     playSound('correct');
   } else {
@@ -2764,9 +2934,9 @@ function teamMatch(teamIdx, side, idx) {
       t.score = Math.max(0, t.score - PENALTY_PTS);
       flashScorePenalty(teamIdx);
       playSound('wrong');
-      t.m1_msg = '❌ Pasangan tidak tepat! Nilai berkurang (-' + PENALTY_PTS + ' pts). Coba lagi!';
+      t.m1_msg = '❌ Diagnosis klinis keliru! Nilai berkurang (-' + PENALTY_PTS + ' pts). Isolasi ulang!';
     } else {
-      t.m1_msg = '❌ Belum tepat. Coba lagi!';
+      t.m1_msg = '❌ Diagnosis belum tepat. Coba lagi!';
     }
     t.m1_sel = null;
   }
@@ -2780,26 +2950,26 @@ function tv3(i) {
   var openedCount = Object.keys(t.m2_open).length;
   var h = '<div class="panel-step-box">';
   h += '<div>';
-  h += '<div style="font-size:0.84rem;font-weight:800;margin-bottom:6px">Buka kotak misteri teknologi (+4 pts/kotak):</div>';
+  h += '<div style="font-size:0.84rem;font-weight:800;margin-bottom:6px">Dekripsi Kapsid Rekayasa Bioteknologi (+4 pts/kapsid):</div>';
 
   h += '<div class="panel-hero-grid">';
   H.forEach(function(item, hIdx) {
     var isOpen = !!t.m2_open[hIdx];
     h += '<div class="panel-hero-card' + (isOpen ? ' open' : '') + '" onclick="teamOpenHero(' + i + ', ' + hIdx + ')">';
     h += '<span style="font-size:1.3rem">' + item[0] + '</span>';
-    h += '<b>' + (isOpen ? item[1] : 'Kotak #' + (hIdx + 1)) + '</b>';
-    h += '<small>' + (isOpen ? item[2] : 'Sentuh untuk membuka...') + '</small>';
+    h += '<b>' + (isOpen ? item[1] : 'Kapsid #' + (hIdx + 1)) + '</b>';
+    h += '<small>' + (isOpen ? item[2] : 'Sentuh untuk dekripsi...') + '</small>';
     h += '</div>';
   });
   h += '</div>';
 
-  h += '<div class="mute" style="font-size:0.8rem">Terbuka: ' + openedCount + ' dari 5 kotak</div>';
+  h += '<div class="mute" style="font-size:0.8rem">Terdekripsi: ' + openedCount + ' dari 5 kapsid rekayasa</div>';
   h += '</div>';
 
   if (openedCount === 5) {
     h += '<div style="background:var(--ok-bg);border:1.5px solid var(--ok);color:var(--ok);padding:8px;border-radius:8px;font-size:0.84rem;margin-top:auto">';
-    h += '<b>💡 Berhasil!</b> Bukti bioteknologi terungkap (+20 pts).';
-    h += '<button class="btn btn-sm" style="width:100%;margin-top:6px" onclick="setTeamStep(' + i + ', 4)">Lanjut Misi 3 (Puskesmas) ➔</button>';
+    h += '<b>💡 Berhasil!</b> Bukti bioteknologi virus terungkap (+20 pts).';
+    h += '<button class="btn btn-sm" style="width:100%;margin-top:6px" onclick="setTeamStep(' + i + ', 4)">Lanjut Misi 3 (Triase Puskesmas) ➔</button>';
     h += '</div>';
   }
   h += '</div>';
@@ -2824,7 +2994,7 @@ function tv4(i) {
 
   var h = '<div class="panel-step-box">';
   h += '<div>';
-  h += '<div style="font-size:0.82rem;font-weight:800;color:var(--c);margin-bottom:4px">Skenario ' + (t.m3_idx + 1) + ' dari 2:</div>';
+  h += '<div style="font-size:0.82rem;font-weight:800;color:var(--c);margin-bottom:4px">Triase Epidemiologi ' + (t.m3_idx + 1) + ' dari 2:</div>';
   h += '<div style="background:var(--card-sub);padding:8px 10px;border-radius:8px;font-size:0.86rem;font-weight:700;margin-bottom:8px;border-left:4px solid var(--c)">';
   h += sc.q;
   h += '</div>';
@@ -2849,9 +3019,9 @@ function tv4(i) {
   if (isAnswered) {
     h += '<div style="margin-top:auto;padding-top:6px">';
     if (t.m3_idx === 0) {
-      h += '<button class="btn btn-sm" style="width:100%" onclick="teamNextPuskesmas(' + i + ')">Lanjut Skenario 2 ➔</button>';
+      h += '<button class="btn btn-sm" style="width:100%" onclick="teamNextPuskesmas(' + i + ')">Lanjut Skenario Triase 2 ➔</button>';
     } else {
-      h += '<button class="btn btn-sm" style="width:100%" onclick="setTeamStep(' + i + ', 5)">Lanjut Misi 4 (Kuis) ➔</button>';
+      h += '<button class="btn btn-sm" style="width:100%" onclick="setTeamStep(' + i + ', 5)">Lanjut Misi 4 (Uji Virolog) ➔</button>';
     }
     h += '</div>';
   }
@@ -2889,7 +3059,7 @@ function teamNextPuskesmas(teamIdx) {
 function tv5(i) {
   var t = TEAMS[i];
   if (t.m4_idx >= Q.length) {
-    return '<div class="panel-step-box"><h4 style="color:var(--ok)">Misi 4 Selesai!</h4><p class="mute" style="font-size:0.84rem">Seluruh soal kuis telah selesai dijawab.</p><div style="margin-top:auto"><button class="btn btn-sm" style="width:100%" onclick="finishTeam(' + i + ')">Lihat Rekap Peringkat ➔</button></div></div>';
+    return '<div class="panel-step-box"><h4 style="color:var(--ok)">Misi 4 Selesai!</h4><p class="mute" style="font-size:0.84rem">Seluruh uji kompetensi virologi telah terjawab.</p><div style="margin-top:auto"><button class="btn btn-sm" style="width:100%" onclick="finishTeam(' + i + ')">Lihat Klasemen Virologi ➔</button></div></div>';
   }
 
   var q = Q[t.m4_idx];
@@ -2897,7 +3067,7 @@ function tv5(i) {
 
   var h = '<div class="panel-step-box">';
   h += '<div>';
-  h += '<div style="font-size:0.82rem;font-weight:800;color:var(--c);margin-bottom:4px">Soal ' + (t.m4_idx + 1) + ' dari ' + Q.length + ' (+10 pts):</div>';
+  h += '<div style="font-size:0.82rem;font-weight:800;color:var(--c);margin-bottom:4px">Uji Virolog ' + (t.m4_idx + 1) + ' dari ' + Q.length + ' (+10 pts):</div>';
   h += '<div style="background:var(--card-sub);padding:8px 10px;border-radius:8px;font-size:0.86rem;font-weight:700;margin-bottom:8px;border-left:4px solid var(--c)">';
   h += q[0];
   h += '</div>';
@@ -2924,7 +3094,7 @@ function tv5(i) {
 
   if (isAnswered) {
     h += '<div style="margin-top:auto;padding-top:6px">';
-    h += '<button class="btn btn-sm" style="width:100%" onclick="teamNextQuiz(' + i + ')">' + (t.m4_idx < Q.length - 1 ? 'Soal Berikutnya ➔' : 'Selesai & Kunci Hasil ➔') + '</button>';
+    h += '<button class="btn btn-sm" style="width:100%" onclick="teamNextQuiz(' + i + ')">' + (t.m4_idx < Q.length - 1 ? 'Soal Berikutnya ➔' : 'Kunci Diagnosis & Rekap ➔') + '</button>';
     h += '</div>';
   }
   h += '</div>';
@@ -2995,9 +3165,9 @@ function tv6(i) {
   var h = '<div class="panel-step-box" style="text-align:center">';
   h += '<div>';
   h += '<span style="font-size:2.2rem;line-height:1;display:block">🏆</span>';
-  h += '<h4 style="font-size:1.05rem;margin:2px 0;color:var(--t' + i + ')">' + t.name + ' Selesai!</h4>';
+  h += '<h4 style="font-size:1.05rem;margin:2px 0;color:var(--t' + i + ')">' + t.name + ' Investigasi Selesai!</h4>';
   if (t.members) {
-    h += '<p class="mute" style="font-size:0.75rem;margin:2px 0 5px">Anggota: <b style="color:var(--ink)">' + t.members + '</b></p>';
+    h += '<p class="mute" style="font-size:0.75rem;margin:2px 0 5px">Peneliti: <b style="color:var(--ink)">' + t.members + '</b></p>';
   }
 
   // Box Hasil Juara, Poin, & Waktu Selesai
@@ -3009,15 +3179,15 @@ function tv6(i) {
 
   h += '</div>';
 
-  // Peran Debat Ilmiah
+  // Peran Debat Ilmiah Virologi
   h += '<div style="background:var(--card-sub);padding:6px 8px;border-radius:8px;font-size:0.75rem;text-align:left;margin-top:auto;border-left:4px solid var(--t' + i + ')">';
-  h += '<b>Peran Debat Ilmiah:</b><br>';
-  h += (i % 2 === 0) ? '• Membela: <i>"Virus adalah Lawan"</i> (siapkan 2 bukti patogen).' : '• Membela: <i>"Virus adalah Kawan"</i> (siapkan 2 bukti bioteknologi).';
+  h += '<b>Peran Debat Forum Virologi:</b><br>';
+  h += (i % 2 === 0) ? '• Membela: <i>"Virus Musuh Mutlak (Patogenik)"</i> (kemukakan 2 bukti lisis & wabah).' : '• Membela: <i>"Virus Mitra Masa Depan (Bioteknologi)"</i> (kemukakan 2 bukti vektor terapi gen & vaksin).';
   h += '</div>';
 
   // Tombol Aksi: Klasemen Lengkap & Ulangi
   h += '<div style="margin-top:6px;display:flex;gap:4px;flex-direction:column">';
-  h += '<button class="btn btn-sm" style="width:100%;background:var(--t' + i + ');color:#fff;box-shadow:0 2px 8px var(--t' + i + '-glow);padding:6px" onclick="showTimeoutModal()">🏆 Papan Peringkat Lengkap</button>';
+  h += '<button class="btn btn-sm" style="width:100%;background:var(--t' + i + ');color:#fff;box-shadow:0 2px 8px var(--t' + i + '-glow);padding:6px" onclick="showTimeoutModal()">🏆 Klasemen Lengkap Virologi</button>';
   h += '<button class="btn btn-sm" style="width:100%;background:var(--card-sub);color:var(--ink);border:1px solid var(--line);padding:5px;font-size:0.78rem" onclick="setTeamStep(' + i + ', 2)">🔄 Ulangi Misi</button>';
   h += '</div>';
   h += '</div>';
@@ -3099,7 +3269,7 @@ updatePenaltyBadge();
 <div id="modal-timer-settings" class="custom-modal-overlay" style="display:none">
   <div class="custom-modal-box">
     <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px">
-      <h3 style="margin:0;font-size:1.25rem">⏱️ Pengaturan Waktu & Penalti LKPD</h3>
+      <h3 style="margin:0;font-size:1.25rem">⏱️ Protokol Waktu & Penalti Virologi</h3>
       <button class="tool-btn" onclick="closeTimerModal()">✕</button>
     </div>
     
@@ -3158,8 +3328,8 @@ updatePenaltyBadge();
 <div id="modal-timeout" class="custom-modal-overlay" style="display:none">
   <div class="custom-modal-box" style="text-align:center;max-width:560px">
     <span id="timeout-modal-icon" style="font-size:3rem">🏆</span>
-    <h2 id="timeout-modal-title" style="margin:4px 0 6px;font-size:1.75rem;color:var(--gold)">PAPAN PERINGKAT JUARA LKPD</h2>
-    <p id="timeout-modal-desc" class="mute" style="margin-bottom:14px;font-size:0.88rem">Penentuan peringkat ditentukan dari akumulasi skor tertinggi dan waktu tercepat menyelesaikan seluruh misi:</p>
+    <h2 id="timeout-modal-title" style="margin:4px 0 6px;font-size:1.75rem;color:var(--gold)">🏆 KLASEMEN AKHIR ILMUWAN VIROLOGI</h2>
+    <p id="timeout-modal-desc" class="mute" style="margin-bottom:14px;font-size:0.88rem">Peringkat resmi ditentukan dari akumulasi skor investigasi tertinggi dan efisiensi waktu isolasi tercepat:</p>
     
     <div id="timeout-standings-box" style="margin-bottom:16px"></div>
     
