@@ -2,7 +2,7 @@
 <html lang="id" data-tv-mode="true">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
 <title>BIO PERANAN VIRUS PAK ZUL: Portal Materi & LKPD Papan Tulis Multi-Touch 4 Kelompok</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -687,6 +687,9 @@ input:focus {
   min-height: 0;
   display: flex;
   flex-direction: column;
+  touch-action: manipulation;
+  -webkit-user-select: none;
+  user-select: none;
 }
 
 /* 4 Kolom Berjejer Seimbang (4 Siswa Berdiri Bersama di Papan Tulis) */
@@ -696,6 +699,9 @@ input:focus {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 10px;
+  touch-action: manipulation;
+  -webkit-user-select: none;
+  user-select: none;
 }
 
 /* Mode Grid 2x2 */
@@ -731,6 +737,20 @@ input:focus {
   overflow: hidden;
   position: relative;
   transition: all .2s ease;
+  touch-action: manipulation;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+/* Multi-Touch Instant Feedback & Touch Action */
+.opt-btn, .kb-key, .panel-hero-card, .btn, .kb-target-btn, .tool-btn {
+  touch-action: manipulation !important;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+}
+.touch-active {
+  transform: scale(0.95) !important;
+  filter: brightness(1.25) !important;
 }
 .team-panel:focus-within, .team-panel:hover {
   border-color: var(--c);
@@ -1774,6 +1794,9 @@ input:focus {
         <span>🧪 Viro-Race Live</span>
       </div>
 
+      <!-- Tombol Mulai Serentak 4 Kelompok -->
+      <button class="btn btn-sm" id="btn-start-all" onclick="startAllTeamsTogether(2)" title="Mulai investigasi serentak untuk ke-4 kelompok langsung ke Misi 1!" style="background:#10B981;color:#fff;font-weight:900;padding:4px 12px;font-size:0.8rem;border-radius:6px;box-shadow:0 0 10px rgba(16,185,129,0.5);border:none;cursor:pointer;white-space:nowrap;display:inline-flex;align-items:center;gap:4px">🚀 MULAI SERENTAK (4 REGU)</button>
+
       <!-- Skor Ringkas 4 Kelompok (Strain Virologi) -->
       <div class="smartboard-chips-row">
         <div class="sb-chip" style="--c:var(--t0)">🔴 <span id="chip-name-0">Strain Alfa</span>: <b id="top-pts-0">0 pts</b></div>
@@ -2679,6 +2702,12 @@ function resetAllTeams() {
     resetTimer();
     for (var i = 0; i < 4; i++) renderTeamPanel(i);
     updateRaceSummary();
+    var btnStartAll = document.getElementById('btn-start-all');
+    if (btnStartAll) {
+      btnStartAll.innerText = '🚀 MULAI SERENTAK (4 REGU)';
+      btnStartAll.style.background = '#10B981';
+      btnStartAll.style.boxShadow = '0 0 10px rgba(16,185,129,0.5)';
+    }
   }
 }
 
@@ -2839,8 +2868,9 @@ function tv0(i) {
   h += '</div>'; // end panel-kb-wrap
 
   // Tombol MULAI
-  h += '<div style="margin-top:auto;padding-top:6px">';
-  h += '<button class="btn" style="width:100%;font-size:1.02rem;padding:10px;box-shadow:0 3px 12px var(--t' + i + '-glow);background:var(--t' + i + ');color:#fff" onclick="startTeam(' + i + ')">MULAI ➔</button>';
+  h += '<div style="margin-top:auto;padding-top:6px;display:flex;gap:5px">';
+  h += '<button class="btn" style="flex:1.1;font-size:0.92rem;padding:9px 6px;box-shadow:0 3px 10px var(--t' + i + '-glow);background:var(--t' + i + ');color:#fff;white-space:nowrap" onclick="startTeam(' + i + ')">MULAI REGU ' + (i + 1) + ' ➔</button>';
+  h += '<button class="btn" style="flex:1;font-size:0.86rem;padding:9px 6px;background:var(--ok);color:#fff;box-shadow:0 2px 8px rgba(16,185,129,0.4);white-space:nowrap" onclick="startAllTeamsTogether(2)" title="Mulai semua 4 kelompok secara serentak ke Misi 1!">🚀 MULAI 4 REGU</button>';
   h += '</div>';
 
   h += '</div>';
@@ -2882,8 +2912,9 @@ function tv1(i) {
   h += '<p class="mute" style="font-size:0.82rem">Apakah virus selalu parasit perusak, ataukah mitra bioteknologi masa depan? Buktikan di 4 misi ini!</p>';
   h += '</div>';
 
-  h += '<div style="margin-top:auto;padding-top:8px">';
-  h += '<button class="btn btn-sm" style="width:100%" onclick="setTeamStep(' + i + ', 2)">Mulai Misi 1 (Pasangan Virion Patogen) ➔</button>';
+  h += '<div style="margin-top:auto;padding-top:8px;display:flex;gap:5px">';
+  h += '<button class="btn btn-sm" style="flex:1.1;font-size:0.86rem;padding:7px;white-space:nowrap" onclick="setTeamStep(' + i + ', 2)">Mulai Misi 1 (Regu ' + (i + 1) + ') ➔</button>';
+  h += '<button class="btn btn-sm" style="flex:1;font-size:0.84rem;padding:7px;background:var(--ok);color:#fff;white-space:nowrap" onclick="startAllTeamsTogether(2)" title="Mulai ke Misi 1 untuk semua 4 regu serentak">🚀 Mulai Misi 1 (4 Regu)</button>';
   h += '</div>';
   h += '</div>';
   return h;
@@ -3273,6 +3304,104 @@ function triggerConfetti() {
   }
   requestAnimationFrame(draw);
 }
+
+/* =========================================================
+   START ALL TEAMS SIMULTANEOUSLY (4 REGU BERSAMAAN)
+   ========================================================= */
+function startAllTeamsTogether(targetStep) {
+  if (targetStep === undefined) targetStep = 2; // Default langsung ke Misi 1 (Pencocokan Patogen)
+  for (var i = 0; i < 4; i++) {
+    var inpName = document.getElementById('inp-name-' + i);
+    var inpMembers = document.getElementById('inp-members-' + i);
+    if (inpName && inpName.value.trim()) TEAMS[i].name = inpName.value.trim();
+    if (inpMembers && inpMembers.value.trim()) TEAMS[i].members = inpMembers.value.trim();
+    if (TEAMS[i].step < targetStep) {
+      TEAMS[i].step = targetStep;
+    }
+    if (!TEAMS[i].startedAt) {
+      TEAMS[i].startedAt = new Date();
+    }
+  }
+  if (!raceStartTime) raceStartTime = new Date();
+  startTimer();
+  playBgMusic();
+  playSound('correct');
+  triggerConfetti();
+  for (var j = 0; j < 4; j++) {
+    renderTeamPanel(j);
+  }
+  updateRaceSummary();
+
+  var btnStartAll = document.getElementById('btn-start-all');
+  if (btnStartAll) {
+    btnStartAll.innerText = '⚡ SEDANG BERLANGSUNG';
+    btnStartAll.style.background = 'var(--card-sub)';
+    btnStartAll.style.boxShadow = 'none';
+  }
+}
+
+/* =========================================================
+   TRUE MULTI-TOUCH CONCURRENCY ENGINE FOR SMART BOARDS
+   (Memungkinkan 4 Siswa Menekan Tombol Bersamaan Tanpa Konflik)
+   ========================================================= */
+(function setupMultiTouchEngine() {
+  function triggerAction(target, e) {
+    if (!target) return;
+    if (target.disabled || target.getAttribute('disabled') !== null) return;
+    
+    var now = Date.now();
+    if (target._mtLastTrigger && (now - target._mtLastTrigger < 250)) {
+      return;
+    }
+    target._mtLastTrigger = now;
+
+    target.classList.add('touch-active');
+    setTimeout(function() {
+      target.classList.remove('touch-active');
+    }, 120);
+
+    if (typeof target.onclick === 'function') {
+      try {
+        target.onclick.call(target, e);
+      } catch(err) {
+        console.error(err);
+      }
+    } else {
+      target.click();
+    }
+  }
+
+  // Intercept pointerdown for touch/pen inputs inside LKPD panels
+  document.addEventListener('pointerdown', function(e) {
+    if (e.pointerType !== 'touch' && e.pointerType !== 'pen') return;
+
+    var target = e.target.closest(
+      '.kb-key, .opt-btn, .panel-hero-card, .kb-target-btn, .btn, .tool-btn, .timer-play-btn, .timer-btn-sm, .tab-sel-btn'
+    );
+    if (!target) return;
+
+    var inLkpd = target.closest('.lkpd-workspace, .smartboard-top-bar, #section-lkpd, .custom-modal-box');
+    if (!inLkpd) return;
+
+    if (e.cancelable) {
+      e.preventDefault();
+    }
+
+    triggerAction(target, e);
+  }, { passive: false, capture: true });
+
+  // Suppress delayed synthetic click from touch
+  document.addEventListener('click', function(e) {
+    var target = e.target.closest(
+      '.kb-key, .opt-btn, .panel-hero-card, .kb-target-btn, .btn, .tool-btn, .timer-play-btn, .timer-btn-sm, .tab-sel-btn'
+    );
+    if (!target) return;
+    if (target._mtLastTrigger && (Date.now() - target._mtLastTrigger < 350)) {
+      if (e.cancelable) e.preventDefault();
+      e.stopPropagation();
+    }
+  }, { passive: false, capture: true });
+})();
 
 // Initial Boot
 setLayoutMode('cols'); // 4 Kolom Berjejer Seimbang secara default untuk Papan Tulis
